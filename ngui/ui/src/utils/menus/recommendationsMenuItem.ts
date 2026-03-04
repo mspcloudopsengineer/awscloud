@@ -1,4 +1,4 @@
-import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import TipsAndUpdatesOutlinedIcon from "@mui/icons-material/TipsAndUpdatesOutlined";
 import { PRODUCT_TOUR_IDS } from "components/Tour";
 import { OPTSCALE_CAPABILITY } from "utils/constants";
 import recommendations from "utils/routes/recommendationsRoute";
@@ -13,7 +13,7 @@ class RecommendationsMenuItem extends BaseMenuItem {
 
   dataProductTourId = PRODUCT_TOUR_IDS.RECOMMENDATIONS;
 
-  icon = ThumbUpAltOutlinedIcon;
+  icon = TipsAndUpdatesOutlinedIcon;
 
   capability = OPTSCALE_CAPABILITY.FINOPS;
 

@@ -1,4 +1,4 @@
-import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
+import BuildCircleOutlinedIcon from "@mui/icons-material/BuildCircleOutlined";
 import k8sRightsizing from "utils/routes/k8sRightsizingRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class K8sRightsizingMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_k8s_rightsizing";
 
-  icon = ViewInArOutlinedIcon;
+  icon = BuildCircleOutlinedIcon;
 }
 
 export default new K8sRightsizingMenuItem();

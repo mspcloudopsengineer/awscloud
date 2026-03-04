@@ -1,4 +1,4 @@
-import EventOutlined from "@mui/icons-material/EventOutlined";
+import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import events from "utils/routes/eventsRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class EventsMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_events";
 
-  icon = EventOutlined;
+  icon = HistoryOutlinedIcon;
 }
 
 export default new EventsMenuItem();

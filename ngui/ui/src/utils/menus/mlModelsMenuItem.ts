@@ -1,4 +1,4 @@
-import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
+import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
 import mlModelsRoute from "utils/routes/mlModelsRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class MlModelsMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_ml_models";
 
-  icon = HubOutlinedIcon;
+  icon = AccountTreeOutlinedIcon;
 
   isActive = (currentPath) => currentPath.startsWith(this.route.link);
 }

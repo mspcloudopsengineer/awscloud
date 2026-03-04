@@ -1,4 +1,4 @@
-import ScreenShareOutlinedIcon from "@mui/icons-material/ScreenShareOutlined";
+import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 import { PRODUCT_TOUR_IDS } from "components/Tour";
 import { ENVIRONMENT_CREATE } from "urls";
 import { OPTSCALE_CAPABILITY } from "utils/constants";
@@ -14,7 +14,7 @@ class EnvironmentsMenuItem extends BaseMenuItem {
 
   dataProductTourId = PRODUCT_TOUR_IDS.ENVIRONMENTS;
 
-  icon = ScreenShareOutlinedIcon;
+  icon = DevicesOutlinedIcon;
 
   capability = OPTSCALE_CAPABILITY.FINOPS;
 

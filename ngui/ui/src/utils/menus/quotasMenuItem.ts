@@ -1,4 +1,4 @@
-import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
+import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
 import quotas from "utils/routes/quotasRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -11,7 +11,7 @@ class QuotasMenuItem extends BaseMenuItem {
 
   isActive = (currentPath) => currentPath.startsWith(this.route.link);
 
-  icon = CurrencyExchangeOutlinedIcon;
+  icon = SavingsOutlinedIcon;
 }
 
 export default new QuotasMenuItem();

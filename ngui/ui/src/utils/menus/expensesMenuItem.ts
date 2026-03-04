@@ -1,4 +1,4 @@
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined";
 import { CLOUD_EXPENSES_BASE, POOL_EXPENSES_BASE, OWNER_EXPENSES_BASE } from "urls";
 import { FILTER_BY } from "utils/constants";
 import expenses from "utils/routes/expensesRoute";
@@ -11,7 +11,7 @@ class ExpensesMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_cost_explorer_page";
 
-  icon = BarChartOutlinedIcon;
+  icon = AnalyticsOutlinedIcon;
 
   isRootPath = (currentPath, currentQueryParams) =>
     currentPath === this.route.link && currentQueryParams[FILTER_BY] === undefined;

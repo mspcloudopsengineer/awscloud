@@ -1,4 +1,4 @@
-import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
+import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
 import { BI_EXPORTS } from "urls";
 import { OPTSCALE_CAPABILITY } from "utils/constants";
 import integrations from "utils/routes/integrationsRoute";
@@ -11,7 +11,7 @@ class IntegrationsMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_integrations";
 
-  icon = SyncAltOutlinedIcon;
+  icon = ExtensionOutlinedIcon;
 
   capability = OPTSCALE_CAPABILITY.FINOPS;
 

@@ -1,4 +1,4 @@
-import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
+import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import { PRODUCT_TOUR_IDS } from "components/Tour";
 import { ASSIGNMENT_RULE_CREATE, ASSIGNMENT_RULE } from "urls";
 import { OPTSCALE_CAPABILITY } from "utils/constants";
@@ -15,7 +15,7 @@ class PoolsMenuItem extends BaseMenuItem {
 
   dataProductTourId = PRODUCT_TOUR_IDS.POOLS;
 
-  icon = CalculateOutlinedIcon;
+  icon = AccountBalanceWalletOutlinedIcon;
 
   capability = OPTSCALE_CAPABILITY.FINOPS;
 

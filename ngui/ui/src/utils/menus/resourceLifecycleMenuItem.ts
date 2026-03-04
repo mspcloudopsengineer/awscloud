@@ -1,4 +1,4 @@
-import CloudSyncOutlinedIcon from "@mui/icons-material/CloudSyncOutlined";
+import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import resourceLifecycle from "utils/routes/resourceLifecycleRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class ResourceLifecycleMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_resource_lifecycle";
 
-  icon = CloudSyncOutlinedIcon;
+  icon = AutorenewOutlinedIcon;
 
   isActive = (currentPath) => currentPath.startsWith(this.route.link);
 }

@@ -1,4 +1,4 @@
-import RunningWithErrorsOutlinedIcon from "@mui/icons-material/RunningWithErrorsOutlined";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import anomalies from "utils/routes/anomaliesRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class AnomaliesMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_anomalies";
 
-  icon = RunningWithErrorsOutlinedIcon;
+  icon = NotificationsActiveOutlinedIcon;
 
   isActive = (currentPath) => currentPath.startsWith(this.route.link);
 }

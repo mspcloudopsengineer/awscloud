@@ -1,4 +1,4 @@
-import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import powerSchedulesRoute from "utils/routes/powerSchedulesRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class PowerSchedulesMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_power_schedules";
 
-  icon = ScheduleOutlinedIcon;
+  icon = AccessTimeOutlinedIcon;
 
   isActive = (currentPath) => currentPath.startsWith(this.route.link);
 }

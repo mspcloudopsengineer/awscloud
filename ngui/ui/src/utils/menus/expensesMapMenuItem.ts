@@ -1,4 +1,4 @@
-import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+import TravelExploreOutlinedIcon from "@mui/icons-material/TravelExploreOutlined";
 import expensesMap from "utils/routes/expensesMapRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class ExpensesMapMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_cost_map";
 
-  icon = PublicOutlinedIcon;
+  icon = TravelExploreOutlinedIcon;
 }
 
 export default new ExpensesMapMenuItem();

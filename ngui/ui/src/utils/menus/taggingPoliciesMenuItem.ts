@@ -1,4 +1,4 @@
-import TagIcon from "@mui/icons-material/Tag";
+import LabelOutlinedIcon from "@mui/icons-material/LabelOutlined";
 import taggingPolicies from "utils/routes/taggingPoliciesRoute";
 import BaseMenuItem from "./baseMenuItem";
 
@@ -9,7 +9,7 @@ class TaggingPoliciesMenuItem extends BaseMenuItem {
 
   dataTestId = "btn_tagging_policies";
 
-  icon = TagIcon;
+  icon = LabelOutlinedIcon;
 
   isActive = (currentPath) => currentPath.startsWith(this.route.link);
 }

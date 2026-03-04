@@ -1,4 +1,4 @@
-import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
+import CloudQueueOutlinedIcon from "@mui/icons-material/CloudQueueOutlined";
 import { PRODUCT_TOUR_IDS } from "components/Tour";
 import { CLOUD_ACCOUNT_CONNECT } from "urls";
 import dataSources from "utils/routes/dataSourcesRoute";
@@ -13,7 +13,7 @@ class DataSourcesMenuItem extends BaseMenuItem {
 
   dataProductTourId = PRODUCT_TOUR_IDS.DATA_SOURCES;
 
-  icon = CloudOutlinedIcon;
+  icon = CloudQueueOutlinedIcon;
 
   isActive = (currentPath: string) => currentPath.startsWith(this.route.link) || currentPath === CLOUD_ACCOUNT_CONNECT;
 }
