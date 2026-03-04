@@ -297,7 +297,8 @@ class Aws(S3CloudMixin):
                 secret_key = self.config.get('secret_access_key')
             if not region_name:
                 region_name = self.config.get(
-                    'region_name', self.DEFAULT_S3_REGION_NAME
+                    'region_name',
+                    self._partition_config['default_s3_region']
                 )
 
             base_session = boto3.Session(
@@ -306,7 +307,12 @@ class Aws(S3CloudMixin):
                 region_name=region_name,
             )
 
-            sts_client = base_session.client('sts', config=IAM_CLIENT_CONFIG)
+            sts_client = base_session.client(
+                'sts',
+                region_name=self._partition_config['sts_region'],
+                endpoint_url=self._partition_config['sts_endpoint'],
+                config=IAM_CLIENT_CONFIG,
+            )
             response = sts_client.assume_role(
                 RoleArn=f'{self._arn_prefix}:iam::{role_account_id}:role/{role_name}',
                 RoleSessionName=role_session_name,
@@ -327,7 +333,12 @@ class Aws(S3CloudMixin):
                 refresh_session()
 
             try:
-                self._session.client('sts').get_caller_identity()
+                cfg = self._partition_config
+                self._session.client(
+                    'sts',
+                    region_name=cfg['sts_region'],
+                    endpoint_url=cfg['sts_endpoint'],
+                ).get_caller_identity()
             except ClientError as exc:
                 if exc.response['Error'].get('Code') in (
                         'ExpiredToken', 'InvalidToken'
@@ -371,7 +382,13 @@ class Aws(S3CloudMixin):
 
     @property
     def sts(self):
-        return self.session.client('sts')
+        cfg = self._partition_config
+        return self.session.client(
+            'sts',
+            region_name=cfg['sts_region'],
+            endpoint_url=cfg['sts_endpoint'],
+            config=IAM_CLIENT_CONFIG,
+        )
 
     @property
     def ec2(self):
