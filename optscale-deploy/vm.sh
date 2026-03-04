@@ -553,7 +553,7 @@ function vm_deploy_service {
         elk_flag="--with-elk"
     fi
 
-    vm_ssh "cd optscale/optscale-deploy && .venv/bin/python runkube.py --no-pull $elk_flag $overlay_args -- optscale local"
+    vm_ssh "cd optscale/optscale-deploy && .venv/bin/python runkube.py $elk_flag $overlay_args -- optscale local"
 }
 
 function vm_update_only {

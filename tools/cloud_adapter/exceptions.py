@@ -80,3 +80,8 @@ class InvalidResourceStateException(CloudAdapterBaseException):
 
 class ForbiddenException(CloudAdapterBaseException):
     pass
+
+
+class PricingNotAvailableException(CloudAdapterBaseException):
+    pass
+

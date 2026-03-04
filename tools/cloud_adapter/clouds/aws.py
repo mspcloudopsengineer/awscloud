@@ -54,6 +54,31 @@ BUCKET_ACCEPTED_URIS = [
 DEFAULT_STS_REGION_NAME = "us-east-1"
 DEFAULT_STS_ENDPOINT_URL = "https://sts.amazonaws.com"
 
+PARTITION_CONFIG = {
+    'aws': {
+        'arn_prefix': 'arn:aws',
+        'sts_endpoint': 'https://sts.amazonaws.com',
+        'sts_region': 'us-east-1',
+        'cur_region': 'us-east-1',
+        'console_url': 'https://console.aws.amazon.com',
+        'ec2_region': 'us-east-1',
+        'default_s3_region': 'eu-central-1',
+        'ssm_region': 'us-east-1',
+        'pricing_available': True,
+    },
+    'aws-cn': {
+        'arn_prefix': 'arn:aws-cn',
+        'sts_endpoint': 'https://sts.cn-north-1.amazonaws.com.cn',
+        'sts_region': 'cn-north-1',
+        'cur_region': 'cn-northwest-1',
+        'console_url': 'https://console.amazonaws.cn',
+        'ec2_region': 'cn-north-1',
+        'default_s3_region': 'cn-northwest-1',
+        'ssm_region': 'cn-north-1',
+        'pricing_available': False,
+    },
+}
+
 # maximum value for MaxResults (AWS limitation)
 MAX_RESULTS = 1000
 CSV_FORMAT_PATTERN = r'\.csv.(gz|zip)$'
@@ -169,6 +194,65 @@ class Aws(S3CloudMixin):
     DEFAULT_S3_REGION_NAME = 'eu-central-1'
     SUPPORTS_REPORT_UPLOAD = True
 
+    def _detect_partition(self):
+        """Detect AWS partition (aws or aws-cn) via STS ARN,
+        falling back to region_name prefix."""
+        try:
+            sts = self._base_session().client('sts', config=IAM_CLIENT_CONFIG)
+            identity = sts.get_caller_identity()
+            arn = identity.get('Arn', '')
+            parts = arn.split(':')
+            if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
+                return parts[1]
+        except Exception:
+            pass
+        region = self.config.get('region_name', '')
+        if region.startswith('cn-'):
+            return 'aws-cn'
+        return 'aws'
+
+    @property
+    def partition(self):
+        if not hasattr(self, '_partition') or self._partition is None:
+            self._partition = self._detect_partition()
+        return self._partition
+
+    @property
+    def _is_cn_partition(self):
+        return self.partition == 'aws-cn'
+
+    @property
+    def _partition_config(self):
+        return PARTITION_CONFIG[self.partition]
+
+    @property
+    def _console_base_url(self):
+        return self._partition_config['console_url']
+
+    @property
+    def _cur_region(self):
+        return self._partition_config['cur_region']
+
+    @property
+    def _ec2_default_region(self):
+        return self._partition_config['ec2_region']
+
+    @property
+    def _arn_prefix(self):
+        return self._partition_config['arn_prefix']
+
+    @property
+    def _pricing_available(self):
+        return self._partition_config['pricing_available']
+
+    @property
+    def _ssm_region(self):
+        return self._partition_config['ssm_region']
+
+    @property
+    def _default_s3_region(self):
+        return self._partition_config['default_s3_region']
+
     def get_session(self, access_key=None, secret_key=None, region_name=None):
         if not hasattr(self, "_session_lock"):
             self._session_lock = threading.RLock()
@@ -199,7 +283,7 @@ class Aws(S3CloudMixin):
 
             sts_client = base_session.client('sts', config=IAM_CLIENT_CONFIG)
             response = sts_client.assume_role(
-                RoleArn=f'arn:aws:iam::{role_account_id}:role/{role_name}',
+                RoleArn=f'{self._arn_prefix}:iam::{role_account_id}:role/{role_name}',
                 RoleSessionName=role_session_name,
             )
             creds = response['Credentials']
@@ -265,8 +349,7 @@ class Aws(S3CloudMixin):
 
     @property
     def cur(self):
-        # hardcoded, because service is only available in us-east-1
-        return self.session.client('cur', 'us-east-1')
+        return self.session.client('cur', self._cur_region)
 
     @property
     def cur_2(self):
@@ -278,6 +361,8 @@ class Aws(S3CloudMixin):
 
     @property
     def pricing(self):
+        if self._is_cn_partition:
+            return None
         return self.session.client('pricing', 'us-east-1')
 
     @property
@@ -313,12 +398,14 @@ class Aws(S3CloudMixin):
     @property
     def _sts_global(self):
         base = self._base_session(region_name=self.config.get("region_name"))
+        default_sts_region = self._partition_config['sts_region']
+        default_sts_endpoint = self._partition_config['sts_endpoint']
         return base.client(
             "sts",
             region_name=self.config.get(
-                "sts_region_name") or DEFAULT_STS_REGION_NAME,
+                "sts_region_name") or default_sts_region,
             endpoint_url=self.config.get(
-                "sts_endpoint_url") or DEFAULT_STS_ENDPOINT_URL,
+                "sts_endpoint_url") or default_sts_endpoint,
             config=IAM_CLIENT_CONFIG,
         )
 
@@ -339,7 +426,7 @@ class Aws(S3CloudMixin):
 
         with self._allowed_regions_lock:
             if getattr(self, "_allowed_regions", None) is None:
-                ec2 = self.session.client("ec2", "us-east-1")
+                ec2 = self.session.client("ec2", self._ec2_default_region)
                 resp = ec2.describe_regions(AllRegions=True)
                 allowed = []
                 for r in resp.get("Regions", []):
@@ -404,25 +491,25 @@ class Aws(S3CloudMixin):
             tags[tag['Key']] = tag['Value']
         return tags
 
-    @staticmethod
-    def _generate_cloud_link(resource_type, region, resource_value):
+    def _generate_cloud_link(self, resource_type, region, resource_value):
+        base_url = self._console_base_url
         cloud_link_map = {
             InstanceResource: CLOUD_LINK_PATTERN % (
-                DEFAULT_BASE_URL, 'ec2', region,
+                base_url, 'ec2', region,
                 'InstanceDetails:instanceId', resource_value),
             VolumeResource: CLOUD_LINK_PATTERN % (
-                DEFAULT_BASE_URL, 'ec2', region,
+                base_url, 'ec2', region,
                 'Volumes:volumeId', resource_value),
             SnapshotResource: CLOUD_LINK_PATTERN % (
-                DEFAULT_BASE_URL, 'ec2', region,
+                base_url, 'ec2', region,
                 'Snapshots:snapshotId', resource_value),
             BucketResource: BUCKET_CLOUD_LINK_PATTERN % (
-                DEFAULT_BASE_URL, 's3', resource_value, region),
+                base_url, 's3', resource_value, region),
             IpAddressResource: CLOUD_LINK_PATTERN % (
-                DEFAULT_BASE_URL, 'ec2', region,
+                base_url, 'ec2', region,
                 'ElasticIpDetails:AllocationId', resource_value),
             LoadBalancerResource: CLOUD_LINK_PATTERN % (
-                DEFAULT_BASE_URL, 'ec2', region,
+                base_url, 'ec2', region,
                 'LoadBalancer:loadBalancerArn', resource_value),
         }
         return cloud_link_map.get(resource_type)
@@ -967,7 +1054,7 @@ class Aws(S3CloudMixin):
                 'TagDescriptions', [])
             tags = self._parse_lb_tags(tags)
             # ARN is not returned for classic LBs, generate it
-            cloud_resource_id = (f'arn:aws:elasticloadbalancing:{region}:'
+            cloud_resource_id = (f'{self._arn_prefix}:elasticloadbalancing:{region}:'
                                  f'{self.config["account_id"]}:'
                                  f'loadbalancer/{name}')
             lb_resource = LoadBalancerResource(
@@ -1690,6 +1777,8 @@ class Aws(S3CloudMixin):
         return response['AccessKeyLastUsed']
 
     def get_pricing(self, filters):
+        if self._is_cn_partition:
+            return []
         session = self.get_session()
         pricing = session.client('pricing', 'us-east-1')
         api_filters = []
@@ -1723,6 +1812,8 @@ class Aws(S3CloudMixin):
         return result
 
     def get_similar_sku_prices(self, sku):
+        if self._is_cn_partition:
+            return []
         location_related_fields = [
             'location',
             'locationType',
@@ -1736,6 +1827,8 @@ class Aws(S3CloudMixin):
         return self._format_prices(similar_infos)
 
     def get_prices(self, filters):
+        if self._is_cn_partition:
+            return []
         if not filters:
             return []
         prices_infos = self.get_pricing(filters)
@@ -1743,9 +1836,13 @@ class Aws(S3CloudMixin):
 
     @property
     def ssm(self):
-        return self.session.client('ssm', 'us-east-1')
+        return self.session.client('ssm', self._ssm_region)
 
     def get_region_name_code_map(self):
+        if self._is_cn_partition:
+            coords = self._get_coordinates_map()
+            return {v['name']: k for k, v in coords.items()
+                    if k.startswith('cn-')}
         url_tmp = '/aws/service/global-infrastructure/regions/%s/longName'
         code_name_map = {}
         for region in self.list_regions():
@@ -1858,6 +1955,8 @@ class Aws(S3CloudMixin):
 
     @_wrap_timeout_exception()
     def get_pricing_score_base(self, regions, skus):
+        if self._is_cn_partition:
+            return {r: 0 for r in regions}
         region_name_code_map = self.get_region_name_code_map()
         region_scores = {r: 0 for r in regions}
         for sku in skus:
@@ -1895,6 +1994,8 @@ class Aws(S3CloudMixin):
 
     @_wrap_timeout_exception()
     def get_oregon_sku_for_types(self, instance_types):
+        if self._is_cn_partition:
+            return []
         result = []
         for instance_type in instance_types:
             skus = self.get_pricing({
@@ -1915,6 +2016,8 @@ class Aws(S3CloudMixin):
         return result
 
     def get_price_checking_skus(self):
+        if self._is_cn_partition:
+            return []
         skus = self.get_oregon_sku_for_types(
             self.get_instance_types_present_in_all_regions(self.list_regions())
         )
