@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.196 45"><defs><style>.a{fill:#fff}</style></defs><path class="a" d="M18.93 13.694a.647.647 0 0 0-.25-.471 11.592 11.592 0 0 0-16.26 16.26.647.647 0 0 0 .47.25l.042.002a.647.647 0 0 0 .457-.19l2.114-2.113a.647.647 0 0 0 .072-.829A7.342 7.342 0 0 1 15.8 16.38a.647.647 0 0 0 .829-.073l2.113-2.113a.647.647 0 0 0 .188-.5ZM20.777 15.32a.647.647 0 0 0-.97-.063l-2.114 2.114a.647.647 0 0 0-.072.829A7.342 7.342 0 0 1 7.396 28.424a.647.647 0 0 0-.829.073L4.454 30.61a.647.647 0 0 0 .062.97A11.594 11.594 0 0 0 11.61 34q.344 0 .69-.02a11.592 11.592 0 0 0 8.477-18.66Z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
+  <defs>
+    <linearGradient id="cloudGradSW" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4AB4EE"/>
+      <stop offset="100%" style="stop-color:#87D4F5"/>
+    </linearGradient>
+  </defs>
+  <path d="M10 30C5.04 30 1 25.96 1 21c0-4.36 3.1-7.99 7.22-8.82C9.54 7.55 13.5 4 18.13 4c5.48 0 9.99 4.06 10.7 9.32C31.87 14.17 34.4 17.37 34.4 21.12c0 4.48-3.63 8.1-8.1 8.1H10z" fill="url(#cloudGradSW)"/>
+  <text x="5" y="42" font-family="Ubuntu, Arial, sans-serif" font-weight="bold" font-size="11" fill="#FFFFFF">CH</text>
+</svg>

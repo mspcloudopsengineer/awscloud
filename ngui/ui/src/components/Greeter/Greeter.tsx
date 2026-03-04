@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -12,56 +10,21 @@ import finopsCloudCostOptimization from "assets/welcome/finops-cloud-cost-optimi
 import finopsReadinessMaturityAssessment from "assets/welcome/finops-readiness-maturity-assessment.svg";
 import geoNetworkTrafficCostMap from "assets/welcome/geo-network-traffic-cost-map.svg";
 import itEnvironmentManagement from "assets/welcome/it-environment-management.svg";
-import Button from "components/Button";
-import CustomersGallery from "components/CustomersGallery";
-import IconLabel from "components/IconLabel";
-import IntegrationsGallery from "components/IntegrationsGallery";
 import Logo from "components/Logo";
 import SubTitle from "components/SubTitle";
 import TopAlertWrapper from "components/TopAlertWrapper";
 import { ALERT_TYPES } from "components/TopAlertWrapper/constants";
 import { useIsDownMediaQuery, useIsUpMediaQuery } from "hooks/useMediaQueries";
-import { HYSTAX } from "urls";
-import { tag as tagHotjar } from "utils/hotjar";
 import { SPACING_2, SPACING_6, SPACING_1 } from "utils/layouts";
-import { isEven } from "utils/math";
 import useStyles from "./Greeter.styles";
 
 type GreeterProps = {
   content: ReactNode;
 };
 
-const OptScaleLink = () => {
-  const { classes, cx } = useStyles();
-  const intl = useIntl();
-
-  return (
-    <Typography component="div" variant="body2" color="white">
-      <IconLabel
-        icon={<LanguageOutlinedIcon className={cx(classes.webIconMargin)} />}
-        label={
-          <Link
-            data-test-id="link_optscale_site"
-            href={HYSTAX}
-            onClick={() => {
-              tagHotjar(["went_optscale_website"]);
-            }}
-            color="inherit"
-            target="_blank"
-            rel="noopener"
-          >
-            {intl.formatMessage({ id: "hystaxDotCom" })}
-          </Link>
-        }
-      />
-    </Typography>
-  );
-};
-
 const ImagesWithCaptions = () => {
   const intl = useIntl();
   const { classes, cx } = useStyles();
-
   const isUpLg = useIsUpMediaQuery("lg");
 
   return (
@@ -90,127 +53,63 @@ const ImagesWithCaptions = () => {
   );
 };
 
-const defaultOrder = [0, 1, 2, 3, 4, 5] as const;
-
-const getVerticalOrder = () => {
-  const [evenNumbers, oddNumbers] = defaultOrder.reduce(
-    ([even, odd]: [number[], number[]], curr) => {
-      if (isEven(curr)) {
-        return [[...even, curr], [...odd]];
-      }
-      return [[...even], [...odd, curr]];
-    },
-    [[], []]
-  );
-  return [...evenNumbers, ...oddNumbers];
-};
-
 const Greeter = ({ content }: GreeterProps) => {
   const { classes, cx } = useStyles();
   const theme = useTheme();
-
   const isInVerticalOrder = useIsDownMediaQuery("md");
-
-  // default order
-  //    order0 - empty
-  //    order1 - link/button
-  //    order2 - form
-  //    order3 - map and text
-  //    order4 - customers
-  //    order5 - empty
-  // ------------------------------
-  // vertical order
-  //    order0 - empty
-  //    order1 - form
-  //    order2 - customers
-  //    order3 - link/button
-  //    order4 - map and text
-  //    order5 - empty
-  const order = isInVerticalOrder ? getVerticalOrder() : defaultOrder;
-
-  const gridDefinition = [
-    {
-      key: "empty",
-    },
-    {
-      key: "link",
-      children: (
-        <div className={classes.linkWrapper}>
-          <OptScaleLink />
-        </div>
-      ),
-    },
-    {
-      key: "form",
-      children: (
-        <Stack className={classes.wrapper} spacing={SPACING_1}>
-          <div>
-            <Logo width={200} dataTestId="img_logo" />
-          </div>
-          <div>{content}</div>
-        </Stack>
-      ),
-      className: classes.centeredFlexColumnDirection,
-    },
-    {
-      key: "bannerAndText",
-      className: classes.centeredFlexColumnDirection,
-      children: <ImagesWithCaptions />,
-    },
-    {
-      key: "customers",
-      className: classes.centeredFlexColumnDirection,
-      children: <CustomersGallery />,
-    },
-    {
-      key: "integrations",
-      className: classes.centeredFlexColumnDirection,
-      children: <IntegrationsGallery />,
-    },
-  ];
 
   const spacing = SPACING_2;
   const halfSpacing = spacing / 2;
 
-  /**
-   * TODO: Remove custom padding and margin when mui-v5 fixes will released
-   *    https://gitlab.com/hystax/ngui/-/merge_requests/2495
-   *    https://github.com/mui-org/material-ui/issues/29266
-   *    https://github.com/mui-org/material-ui/pull/30333
-   */
   return (
     <>
       <TopAlertWrapper blacklistIds={[ALERT_TYPES.DATA_SOURCES_ARE_PROCESSING, ALERT_TYPES.DATA_SOURCES_PROCEEDED]} />
-      <div
-        style={{
-          padding: theme.spacing(halfSpacing),
-        }}
-      >
+      <div style={{ padding: theme.spacing(halfSpacing) }}>
         <Grid
-          sx={{
-            m: -halfSpacing,
-          }}
+          sx={{ m: -halfSpacing }}
           spacing={spacing}
           container
           className={classes.root}
         >
-          {order.map((gridIndex) => {
-            const { key, children = null, className = "" } = gridDefinition[gridIndex];
-            return (
-              <Grid
-                sx={{
-                  p: spacing,
-                }}
-                key={key}
-                md={6}
-                xs={12}
-                item
-                className={cx(gridIndex % 2 === 0 ? classes.leftSideGrid : classes.rightSideGrid, className)}
-              >
-                {children}
-              </Grid>
-            );
-          })}
+          {/* Left side - Login form */}
+          <Grid
+            sx={{ p: spacing }}
+            md={6}
+            xs={12}
+            item
+            className={cx(classes.leftSideGrid, classes.centeredFlexColumnDirection)}
+          >
+            <Stack className={classes.wrapper} spacing={SPACING_1}>
+              <div>
+                <Logo width={200} dataTestId="img_logo" />
+              </div>
+              <div>{content}</div>
+            </Stack>
+          </Grid>
+
+          {/* Right side - Branding */}
+          <Grid
+            sx={{ p: spacing }}
+            md={6}
+            xs={12}
+            item
+            className={cx(classes.rightSideGrid, classes.centeredFlexColumnDirection)}
+          >
+            {isInVerticalOrder ? null : (
+              <Stack spacing={3} alignItems="center" sx={{ width: "100%" }}>
+                <Logo width={240} white dataTestId="img_logo_white" />
+                <Typography
+                  variant="h6"
+                  color="white"
+                  align="center"
+                  sx={{ maxWidth: 480, opacity: 0.9, fontWeight: 400, lineHeight: 1.5 }}
+                >
+                  <FormattedMessage id="cloudHubTagline" defaultMessage="Multi-cloud cost management and FinOps platform" />
+                </Typography>
+                <ImagesWithCaptions />
+              </Stack>
+            )}
+          </Grid>
         </Grid>
       </div>
     </>

@@ -70,7 +70,7 @@ const useStyles = makeStyles()((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
   rightSideGrid: {
-    backgroundColor: "#333F53",
+    background: "linear-gradient(135deg, #1a2a3a 0%, #333F53 50%, #1a2a3a 100%)",
   },
   ...getFormAndMapWrapperClasses(theme),
 }));
