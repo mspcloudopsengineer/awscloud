@@ -412,8 +412,23 @@ class Aws(S3CloudMixin):
         return self.session.resource('ec2')
 
     @property
+    def s3(self):
+        region = self.config.get('region_name', self._default_s3_region)
+        kwargs = {'region_name': region}
+        if self._is_cn_partition:
+            kwargs['endpoint_url'] = f'https://s3.{region}.amazonaws.com.cn'
+        s3_endpoint = self.config.get('s3_endpoint')
+        if s3_endpoint:
+            kwargs['endpoint_url'] = s3_endpoint
+        return self.session.client('s3', **kwargs)
+
+    @property
     def s3_resource(self):
-        return self.session.resource('s3')
+        kwargs = {}
+        if self._is_cn_partition:
+            region = self.config.get('region_name', self._default_s3_region)
+            kwargs['endpoint_url'] = f'https://s3.{region}.amazonaws.com.cn'
+        return self.session.resource('s3', **kwargs)
     
     @property
     def logs(self):
@@ -455,7 +470,11 @@ class Aws(S3CloudMixin):
 
     @property
     def cloudwatch(self):
-        return self.session.client('cloudwatch')
+        return self._cn_client(
+            'cloudwatch',
+            self.config.get('region_name', self._ec2_default_region),
+            'monitoring'
+        )
 
     @retry(retry_on_exception=_retry_on_error, wait_fixed=2000,
            stop_max_attempt_number=10)
@@ -754,7 +773,7 @@ class Aws(S3CloudMixin):
                 "[S3_SKIP_REGION] bucket=%s bucket_region=%s reason=region_not_opted_in",
                 bucket, region)
             return None
-        return self.session.client("s3", region_name=region)
+        return self._cn_client('s3', region)
 
     def snapshot_discovery_calls(self):
         """
@@ -2136,8 +2155,7 @@ class Aws(S3CloudMixin):
         with ThreadPoolExecutor(max_workers=50) as executor:
             futures_map = {}
             for instance_id in instance_ids:
-                session = self.get_session()
-                cloudwatch = session.client('cloudwatch', region_name=region)
+                cloudwatch = self._cn_client('cloudwatch', region, 'monitoring')
                 params = {
                     'Dimensions': [{
                         'Name': dimension,
@@ -2160,7 +2178,7 @@ class Aws(S3CloudMixin):
     def get_cloud_watch_metric_data(self, region, queries, start_date,
                                     end_date, scan_by='TimestampDescending'):
         try:
-            cloudwatch = self.session.client('cloudwatch', region_name=region)
+            cloudwatch = self._cn_client('cloudwatch', region, 'monitoring')
             return cloudwatch.get_metric_data(
                 MetricDataQueries=queries,
                 StartTime=start_date,
