@@ -75,6 +75,30 @@ class TestPartitionDetection(unittest.TestCase):
         result = adapter._detect_partition()
         self.assertEqual(result, 'aws')
 
+    @patch.object(Aws, '_base_session')
+    def test_detect_cn_partition_via_cn_probe(self, mock_base):
+        """When global STS fails but CN STS succeeds, detect aws-cn."""
+        call_count = [0]
+
+        def side_effect(*args, **kwargs):
+            call_count[0] += 1
+            if call_count[0] == 1:
+                # First call (global) fails
+                raise Exception('InvalidClientTokenId')
+            # Second call (CN probe) succeeds
+            sts_cn = MagicMock()
+            sts_cn.get_caller_identity.return_value = {
+                'Arn': 'arn:aws-cn:iam::123456789012:user/cnuser'
+            }
+            session = MagicMock()
+            session.client.return_value = sts_cn
+            return session
+
+        mock_base.side_effect = side_effect
+        adapter = _make_adapter({'access_key_id': 'AK', 'secret_access_key': 'SK'})
+        result = adapter._detect_partition()
+        self.assertEqual(result, 'aws-cn')
+
     def test_partition_property_caches(self):
         adapter = _make_adapter(partition_override='aws-cn')
         self.assertEqual(adapter.partition, 'aws-cn')
@@ -222,6 +246,33 @@ class TestPartitionConfig(unittest.TestCase):
         self.assertEqual(cfg['cur_region'], 'cn-northwest-1')
         self.assertEqual(cfg['default_s3_region'], 'cn-northwest-1')
         self.assertFalse(cfg['pricing_available'])
+
+
+class TestSessionPartitionAware(unittest.TestCase):
+    """Verify session uses partition-aware default region."""
+
+    @patch.object(Aws, 'get_session')
+    def test_session_uses_cn_default_region_for_cn_partition(self, mock_get):
+        mock_get.return_value = MagicMock()
+        adapter = _make_adapter(partition_override='aws-cn')
+        _ = adapter.session
+        # Should use cn-northwest-1 (CN default_s3_region), not eu-central-1
+        call_args = mock_get.call_args
+        region_arg = call_args[0][2] if len(call_args[0]) > 2 else call_args[1].get('region_name')
+        self.assertEqual(region_arg, 'cn-northwest-1')
+
+    @patch.object(Aws, 'get_session')
+    def test_session_uses_explicit_region_over_partition_default(self, mock_get):
+        mock_get.return_value = MagicMock()
+        adapter = _make_adapter(
+            config={'access_key_id': 'AK', 'secret_access_key': 'SK',
+                    'region_name': 'cn-north-1'},
+            partition_override='aws-cn')
+        _ = adapter.session
+        call_args = mock_get.call_args
+        region_arg = call_args[0][2] if len(call_args[0]) > 2 else call_args[1].get('region_name')
+        self.assertEqual(region_arg, 'cn-north-1')
+
 
 
 if __name__ == '__main__':

@@ -196,7 +196,8 @@ class Aws(S3CloudMixin):
 
     def _detect_partition(self):
         """Detect AWS partition (aws or aws-cn) via STS ARN,
-        falling back to region_name prefix."""
+        falling back to CN endpoint probe, then region_name prefix."""
+        # Try with the configured (or default) region first
         try:
             sts = self._base_session().client('sts', config=IAM_CLIENT_CONFIG)
             identity = sts.get_caller_identity()
@@ -206,6 +207,30 @@ class Aws(S3CloudMixin):
                 return parts[1]
         except Exception:
             pass
+
+        # If the default region failed, try the CN endpoint explicitly.
+        # AWS CN credentials are invalid on global STS and vice-versa,
+        # so a successful call here means the credentials belong to CN.
+        try:
+            cn_cfg = PARTITION_CONFIG['aws-cn']
+            cn_session = self._base_session(region_name=cn_cfg['sts_region'])
+            sts_cn = cn_session.client(
+                'sts',
+                region_name=cn_cfg['sts_region'],
+                endpoint_url=cn_cfg['sts_endpoint'],
+                config=IAM_CLIENT_CONFIG,
+            )
+            identity = sts_cn.get_caller_identity()
+            arn = identity.get('Arn', '')
+            parts = arn.split(':')
+            if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
+                return parts[1]
+            # Call succeeded on CN endpoint, so it's CN partition
+            return 'aws-cn'
+        except Exception:
+            pass
+
+        # Final fallback: check region_name prefix
         region = self.config.get('region_name', '')
         if region.startswith('cn-'):
             return 'aws-cn'
@@ -322,6 +347,27 @@ class Aws(S3CloudMixin):
             BucketResource: self.bucket_discovery_calls,
             LoadBalancerResource: self.load_balancer_discovery_calls,
         }
+
+    @property
+    def session(self):
+        """Override parent to ensure partition-aware default region.
+
+        AWS CN credentials fail on global endpoints, so we detect the
+        partition first and use the correct default region when the user
+        hasn't provided one explicitly.
+        """
+        if self._session is None:
+            region = self.config.get('region_name')
+            if not region:
+                # Trigger partition detection before creating the session
+                # so CN credentials get a CN default region.
+                region = self._partition_config['default_s3_region']
+            self._session = self.get_session(
+                self.config.get('access_key_id'),
+                self.config.get('secret_access_key'),
+                region,
+            )
+        return self._session
 
     @property
     def sts(self):
