@@ -15,7 +15,7 @@ info:
         Permission definitions: \n\n
         -   `CLUSTER_SECRET`: Private API, used inside the cluster by services
         with special secret key\n\n
-    title: OptScale cloud pricing warehouse
+    title: CloudHub cloud pricing warehouse
     version: 1.0.0
 securityDefinitions:
     secret:

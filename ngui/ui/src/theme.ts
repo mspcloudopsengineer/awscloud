@@ -1,4 +1,4 @@
-// Hystax palette: https://cdn.hystax.com/Hystax/Hystax-Guideline-2020.pdf
+// CloudHub palette
 // Material design color tool: https://material.io/resources/color/
 
 import { common } from "@mui/material/colors";

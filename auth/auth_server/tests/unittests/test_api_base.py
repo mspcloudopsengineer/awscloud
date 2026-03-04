@@ -82,7 +82,7 @@ class TestAuthBase(tornado.testing.AsyncHTTPTestCase):
             session.commit()
         return type_
 
-    def create_root_user(self, email='root@hystax.com', password='toor'):
+    def create_root_user(self, email='root@cloudhub.com', password='toor'):
         session = self.db_session
         type_ = self.create_root_type()
         salt = gen_salt()

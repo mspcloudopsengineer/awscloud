@@ -1,2 +1,2 @@
-Hystax Subspector client package
+CloudHub Subspector client package
 ====================================

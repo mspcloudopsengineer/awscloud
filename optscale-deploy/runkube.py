@@ -20,7 +20,7 @@ from kubernetes.client.rest import ApiException as K8SApiException
 from kubernetes.stream import stream as k8s_stream
 from kubernetes.stream.ws_client import ERROR_CHANNEL
 
-DESCRIPTION = "Script to deploy OptScale on k8s (local-only build mode)."
+DESCRIPTION = "Script to deploy CloudHub on k8s (local-only build mode)."
 HELM_DELETE_CMD = 'helm uninstall {release}'
 HELM_UPDATE_CMD = 'helm upgrade --install {overlays} {release} {chart}'
 HELM_LIST_CMD = 'helm list -a'

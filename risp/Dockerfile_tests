@@ -2,7 +2,7 @@ ARG BUILDTAG=build
 ARG IMAGE=risp_worker
 FROM ${IMAGE}:${BUILDTAG}
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-LABEL org.opencontainers.image.authors="Hystax"
+LABEL org.opencontainers.image.authors="CloudHub"
 
 COPY tools tools
 ADD risp/risp_worker/tests risp/risp_worker/tests

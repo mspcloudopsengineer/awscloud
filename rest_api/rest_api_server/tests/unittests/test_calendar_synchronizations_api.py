@@ -141,7 +141,7 @@ class TestCalendarSynchronizationsApi(TestApiBase):
         self.assertIsNone(res.get('service_account'))
         self.assertDictEqual(c_sync, res['calendar_synchronization'])
 
-        client_email = 'example@hystax.com'
+        client_email = 'example@cloudhub.com'
         patch('optscale_client.config_client.client.Client.google_calendar_service_key',
               return_value={'client_email': client_email}).start()
         code, res = self.client.organization_calendar_get(self.org_id)

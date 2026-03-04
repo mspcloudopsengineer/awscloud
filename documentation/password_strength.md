@@ -2,7 +2,7 @@
 
 To set up custom password strength:
 
-1\. Fill in these fields in overlay/user_template.yml ([optscale/optscale-deploy/overlay/user_template.yml](../optscale-deploy/overlay/user_template.yml)):
+1\. Fill in these fields in overlay/user_template.yml ([CloudHub/CloudHub-deploy/overlay/user_template.yml](../CloudHub-deploy/overlay/user_template.yml)):
 
 ```
 # settings for password strength policy with integer values

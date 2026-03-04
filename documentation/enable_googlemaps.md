@@ -6,7 +6,7 @@ This image on the Cost Map page indicates that Google Maps is not correctly set 
 
 Follow the instructions to fix it:
 
-1\. To configure Google Maps, specify the `google_map_api_key` parameter in your [user_template.yml](https://github.com/hystax/optscale/blob/integration/optscale-deploy/overlay/user_template.yml#L98) file.
+1\. To configure Google Maps, specify the `google_map_api_key` parameter in your [user_template.yml](https://github.com/mspcloudopsengineer/awscloud/blob/integration/CloudHub-deploy/overlay/user_template.yml#L98) file.
 
 2\. Update your cluster with the new overlay:
 
@@ -19,4 +19,4 @@ Follow the instructions to fix it:
 > 
 > `./runkube.py -o overlay/user_template.yml --with-elk --no-pull -- <deployment name> local`
 
-3\. Obtain the value of `google_map_api_key` in the Google Cloud Console: go to the section *APIs & Services* â†’ *Credentials* â†’ *CREATE CREDENTIALS* â†’ *API key*.
+3\. Obtain the value of `google_map_api_key` in the Google Cloud Console: go to the section *APIs & Services* â†?*Credentials* â†?*CREATE CREDENTIALS* â†?*API key*.

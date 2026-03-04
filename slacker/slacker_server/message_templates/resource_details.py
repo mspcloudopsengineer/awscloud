@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from currency_symbols.currency_symbols import CURRENCY_SYMBOLS_MAP
-from tools.optscale_time import utcnow_timestamp
+from tools.CloudHub_time import utcnow_timestamp
 
 __all__ = ['get_resource_details_block', 'get_resource_details_message']
 
@@ -309,7 +309,7 @@ def get_resource_details_message(
                     "text": f":pushpin: You can also check this resource "
                             f"details in <https://{public_ip}/resources/{r_id}"
                             f"?tab=details&organizationId={org_id}"
-                            f"|OptScale web console>"
+                            f"|CloudHub web console>"
                 }
             ]
         }

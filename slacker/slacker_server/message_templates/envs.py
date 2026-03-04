@@ -25,7 +25,7 @@ def get_envs_message(org_id, org_name, resources, resource_status_map,
                     "type": "mrkdwn",
                     "text": ":pushpin: More resources and details are "
                             f"available in <https://{public_ip}/environments"
-                            f"?organizationId={org_id}|OptScale web console>"
+                            f"?organizationId={org_id}|CloudHub web console>"
                 }
             ]
         }

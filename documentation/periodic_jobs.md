@@ -1,6 +1,6 @@
 # Periodic jobs and schedulers
 
-OptScale has several periodic jobs implemented as Kubernetes CronJobs or Deployments.  
+CloudHub has several periodic jobs implemented as Kubernetes CronJobs or Deployments.  
 To modify a job's default schedule, update the corresponding value in `user_template.yaml` and update the cluster.
 
 

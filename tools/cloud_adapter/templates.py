@@ -52,7 +52,7 @@ class AwsTemplates:
                     }
                 }
             },
-            'Description': 'Optscale data export',
+            'Description': 'CloudHub data export',
             'DestinationConfigurations': {
                 'S3Destination': {
                     'S3Bucket': bucket,

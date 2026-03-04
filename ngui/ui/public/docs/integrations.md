@@ -18,6 +18,6 @@ The **Integrations** page allows to connect and manage third-party tools to enha
 
 -   Collaborate Tools: Connect integrations to automate workflows and foster better teamwork across platforms.
 
--   Google Calendar: Get instructions at the [OptScale Documentation](https://hystax.com/documentation/optscale/integrations.html#google-calendar).
+-   Google Calendar: Get instructions at the [CloudHub Documentation](https://docs.cloudhub.com/integrations.html#google-calendar).
 
--   Slack App: Get instructions at the [OptScale Documentation](https://hystax.com/documentation/optscale/integrations.html#slack-app).
+-   Slack App: Get instructions at the [CloudHub Documentation](https://docs.cloudhub.com/integrations.html#slack-app).

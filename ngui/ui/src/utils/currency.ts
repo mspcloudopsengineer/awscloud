@@ -6,7 +6,7 @@
  * * {@link https://www.iso.org/iso-4217-currency-codes.html ISO-4217 currency codes}
  * * {@link https://en.wikipedia.org/wiki/ISO_4217 ISO-4217 wiki}
  *
- * Some currencies are not supported by the OptScale and was excluded from the ISO list:
+ * Some currencies are not supported by CloudHub and was excluded from the ISO list:
  *
  * `[XBA, XBB, XBC, XBD, XTS, XXX, XAU, XPD, XPT, XAG]`
  */

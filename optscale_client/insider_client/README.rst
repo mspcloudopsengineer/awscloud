@@ -1,2 +1,2 @@
-Hystax Insider client package
+CloudHub Insider client package
 =============================

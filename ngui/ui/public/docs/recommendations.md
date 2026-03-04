@@ -1,6 +1,6 @@
 ### **Summary**
 
-The **Recommendations** page provides personalized advice. Get practical information about suggesting services and features available in OptScale. Find a brief description and other pertinent information in the cards to help you assess the situation quickly.
+The **Recommendations** page provides personalized advice. Get practical information about suggesting services and features available in CloudHub. Find a brief description and other pertinent information in the cards to help you assess the situation quickly.
 
 ### **View**
 
@@ -24,8 +24,8 @@ The **Recommendations** page provides personalized advice. Get practical informa
 
 - Explore Beyond the Familiar: Use recommendation cards as a way to discover new content, products, or ideas that you might not have found on your own. They’re designed to introduce you to options that align with your interests, but may not be immediately obvious.
 
-Want to learn more about the utilization of recommendation cards? Check out this post - [How to use recommendation cards in OptScale](https://hystax.com/how-to-use-recommendation-cards-in-optscale/)
+Want to learn more about the utilization of recommendation cards? Check out this post - [How to use recommendation cards in CloudHub](https://docs.cloudhub.com/how-to-use-recommendation-cards-in-CloudHub/)
 
-OptScale helps identify and clean up unused volumes and obsolete snapshots across various cloud providers, offering automated scripts and recommendations to optimize costs and improve efficiency in cloud resource management.
+CloudHub helps identify and clean up unused volumes and obsolete snapshots across various cloud providers, offering automated scripts and recommendations to optimize costs and improve efficiency in cloud resource management.
 
-To learn more about this capability, check out the post - [How to get rid of unused volumes and snapshots using OptScale](https://hystax.com/how-to-get-rid-of-unused-volumes-and-snapshots-using-optscale/)
+To learn more about this capability, check out the post - [How to get rid of unused volumes and snapshots using CloudHub](https://docs.cloudhub.com/how-to-get-rid-of-unused-volumes-and-snapshots-using-CloudHub/)

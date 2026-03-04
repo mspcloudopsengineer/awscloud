@@ -1,4 +1,4 @@
-# How to apply SSL certificate to OptScale NGINX
+# How to apply SSL certificate to CloudHub NGINX
 
 Copy Key and CRT files to host as the following files: ```/tmp/key.pem``` and ```/tmp/cert.pem```
 
@@ -22,9 +22,9 @@ You can use [cert-manager](https://cert-manager.io) to manage the SSL certificat
 The installation of **cert-manager** and the setup of an Issuer is out of the scope of this guide.
 Please read the [cert-manager documentation](https://cert-manager.io/docs/getting-started/).
 
-To setup Optscale to use cert-manager:
+To setup CloudHub to use cert-manager:
 
-Edit file with overlay - [optscale-deploy/overlay/user_template.yml](optscale-deploy/overlay/user_template.yml); see comments in overlay file for guidance.
+Edit file with overlay - [CloudHub-deploy/overlay/user_template.yml](CloudHub-deploy/overlay/user_template.yml); see comments in overlay file for guidance.
 
 Apply the changes using `runkube.py`:
 

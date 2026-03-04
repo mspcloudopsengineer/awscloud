@@ -5,21 +5,21 @@ export default {
   component: WrapperCard,
   argTypes: {
     link: { name: "Link", control: "text", defaultValue: "/test" },
-    href: { name: "Href", control: "text", defaultValue: "https://hystax.com/" }
+    href: { name: "Href", control: "text", defaultValue: "https://cloudhub.com/" }
   }
 };
 
-export const basic = () => <WrapperCard title="Optscale" buttonText="Go to OptScale" />;
+export const basic = () => <WrapperCard title="CloudHub" buttonText="Go to CloudHub" />;
 
 export const withText = () => (
-  <WrapperCard title="Optscale" button={{ show: true, messageId: "goToDashboard" }}>
+  <WrapperCard title="CloudHub" button={{ show: true, messageId: "goToDashboard" }}>
     Some text
   </WrapperCard>
 );
 
 export const withInternalLink = (args) => (
   <WrapperCard
-    title="Optscale"
+    title="CloudHub"
     button={{
       show: true,
       messageId: "goToDashboard",
@@ -32,7 +32,7 @@ export const withInternalLink = (args) => (
 
 export const withExternalLink = (args) => (
   <WrapperCard
-    title="Optscale"
+    title="CloudHub"
     button={{
       show: true,
       messageId: "buy",
@@ -45,7 +45,7 @@ export const withExternalLink = (args) => (
 
 export const withTitleButton = () => (
   <WrapperCard
-    title="Optscale"
+    title="CloudHub"
     titleButton={{
       type: "button",
       tooltip: {
@@ -62,7 +62,7 @@ export const withTitleButton = () => (
 
 export const withTitleIconButton = () => (
   <WrapperCard
-    title="Optscale"
+    title="CloudHub"
     titleButton={{
       type: "icon",
       tooltip: {

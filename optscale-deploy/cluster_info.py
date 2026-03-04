@@ -61,7 +61,7 @@ class ClusterInfo:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    parser = argparse.ArgumentParser(description='Get OptScale cluster info')
+    parser = argparse.ArgumentParser(description='Get CloudHub cluster info')
     parser.add_argument(
         '--config',
         default=os.path.join(os.environ.get('HOME'), '.kube/config'),
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--no-urls',
         action='store_true',
-        help='Only show content of the OptScale version configmap, don\'t print build URLs for images',
+        help='Only show content of the CloudHub version configmap, don\'t print build URLs for images',
     )
     parser.add_argument(
         '--insecure',

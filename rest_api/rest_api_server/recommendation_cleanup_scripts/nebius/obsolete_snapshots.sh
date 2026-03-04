@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------
-# Hystax
-# Copyright 2016-2024 Hystax
+# CloudHub
+# Copyright 2016-2024 CloudHub
 # All Rights Reserved
 #
-# NOTICE:  Hystax permits you to use this file in accordance
-# with the terms of the Hystax license agreement
+# NOTICE:  CloudHub permits you to use this file in accordance
+# with the terms of the CloudHub license agreement
 # accompanying it.  If you have received this file from a source
-# other than Hystax, then your use, modification, or distribution
-# of it requires the prior written permission of Hystax.
+# other than CloudHub, then your use, modification, or distribution
+# of it requires the prior written permission of CloudHub.
 #-------------------------------------------------------------------
 
-echo "OptScale cleanup script for obsolete_snapshots recommendations module.
+echo "CloudHub cleanup script for obsolete_snapshots recommendations module.
 Script will delete all snapshots based on json file downloaded from recommendations page.
 Only snapshots related to cloud account ###CLOUD_ACCOUNT_NAME### which is associated with
 ###CLOUD_ACCOUNT_TYPE### - ###CLOUD_ACCOUNT_ACCOUNT_ID### will be deleted."

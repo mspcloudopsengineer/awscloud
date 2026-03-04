@@ -106,7 +106,7 @@ class AvailableFiltersController(CleanExpenseController):
             for k, v in r.items():
                 r_sets[k].update(v)
         result.update(r_sets)
-        # add all available optscale entities
+        # add all available CloudHub entities
         for entity_name, v in self.JOINED_ENTITY_MAP.items():
             _, entity_key, fields = v
             entities_dict = entities.get(entity_key, {})

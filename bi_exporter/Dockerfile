@@ -1,6 +1,6 @@
 FROM python:3.12.11-slim
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-LABEL org.opencontainers.image.authors="Hystax"
+LABEL org.opencontainers.image.authors="CloudHub"
 
 ENV PYTHONUNBUFFERED 1
 

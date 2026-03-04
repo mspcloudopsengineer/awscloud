@@ -9,7 +9,7 @@ class TestContextApi(TestApiBase):
         patch('optscale_client.config_client.client.Client.delete').start()
         patch('optscale_client.config_client.client.Client.read').start()
         patch('tools.cloud_adapter.clouds.aws.Aws.configure_report').start()
-        _, self.organization = self.organization_create("Hystax")
+        _, self.organization = self.organization_create("CloudHub")
         self.user_id = self.gen_id()
         _, self.employee = self.client.employee_create(
             self.organization['id'],

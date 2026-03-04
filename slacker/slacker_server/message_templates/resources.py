@@ -171,7 +171,7 @@ def get_resources_message(org_id, org_name, shown_data, total_count,
                     "type": "mrkdwn",
                     "text": ":pushpin: More resources and details are "
                             f"available in <https://{public_ip}/resources"
-                            f"?organizationId={org_id}|OptScale web console>"
+                            f"?organizationId={org_id}|CloudHub web console>"
                 }
             ]
         }

@@ -154,7 +154,7 @@ def get_env_property_updated_block(env_properties, public_ip, resource_id):
                         "text": f"Only first 5 changed properties are shown. "
                                 f"See more details in <https://{public_ip}/"
                                 f"resources/{resource_id}?tab=details"
-                                f"|OptScale web console>"
+                                f"|CloudHub web console>"
                     }
                 ]
             },

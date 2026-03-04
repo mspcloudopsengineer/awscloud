@@ -945,7 +945,7 @@ class Alibaba(CloudBase):
         # "India (Mumbai)" and "Australia (Sydney)" regions were renamed to
         # "India (Mumbai) Closing Down" and "Australia (Sydney) (Closing
         # down)", but they still remains in old expenses. Let's create a fake
-        # region with the outdated name, as optscale uses regions names
+        # region with the outdated name, as CloudHub uses regions names
         # instead of ids for Alibaba cloud
         return {
             'ap-south-1-fake': {

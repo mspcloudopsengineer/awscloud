@@ -1,4 +1,4 @@
-# How to integrate new cloud to OptScale (checklist)
+# How to integrate new cloud to CloudHub (checklist)
 
 ## Essential methods
 ### restapi
@@ -84,8 +84,8 @@
 
 ### deploy
 
-- optscale/templates/tpl/_config.tpl
-- optscale/values.yaml
+- CloudHub/templates/tpl/_config.tpl
+- CloudHub/values.yaml
 - update overlays in overlay/
 
 ## NGUI

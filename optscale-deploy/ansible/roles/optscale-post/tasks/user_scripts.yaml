@@ -10,7 +10,7 @@
   become: yes
 
 - name: Get key ID
-  shell: "gpg --list-secret-keys --keyid-format LONG root@hystax.com | awk '/^ssb/ {print $2}' | awk -F '/' '{print $2}'"
+  shell: "gpg --list-secret-keys --keyid-format LONG root@cloudhub.com | awk '/^ssb/ {print $2}' | awk -F '/' '{print $2}'"
   register: key_details
   become: yes
 

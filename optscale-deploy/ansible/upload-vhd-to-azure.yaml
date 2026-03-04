@@ -2,12 +2,12 @@
 - hosts: localhost
   gather_facts: no
   vars:
-    vhd_path: '/tmp/hystax-ogi.vhd'
-    vhd_name: 'hystax-ogi-test.vhd'
-    container_name: 'hystax-optscale'
-    storage_account: 'optscalegoldenimageus2'
-    resource_group: 'OptScaleGoldenImageUS2'
-    image_name: 'Hystax_OGI_TEST'
+    vhd_path: '/tmp/cloudhub-ogi.vhd'
+    vhd_name: 'cloudhub-ogi-test.vhd'
+    container_name: 'cloudhub'
+    storage_account: 'CloudHubGoldenImageus2'
+    resource_group: 'CloudHubGoldenImageUS2'
+    image_name: 'CloudHub_OGI_TEST'
 
   tasks:
   - name: Check if the image was already uploaded

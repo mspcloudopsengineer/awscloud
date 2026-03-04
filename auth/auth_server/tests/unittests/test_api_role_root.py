@@ -32,7 +32,7 @@ class TestApiRoleRoot(TestAuthBase):
                             parent=self.admin_user.type)
         self.user_partner_password = 'passwd!!!111'
         salt_p = gen_salt()
-        self.user_partner = User('partner@hystax.com', type_=type_partner,
+        self.user_partner = User('partner@cloudhub.com', type_=type_partner,
                                  password=hash_password(
                                      self.user_partner_password, salt_p),
                                  display_name='Partner user',

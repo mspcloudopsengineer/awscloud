@@ -5,7 +5,7 @@ class OptException(Exception):
 
     def __init__(self, error_code, params):
         """
-        Creates a new OptScale exception
+        Creates a new CloudHub exception
 
         :type error_code: Enum
         :type params: list

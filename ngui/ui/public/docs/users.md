@@ -1,6 +1,6 @@
 ### Summary
 
-The **User Management** page in OptScale allows to view, manage, and control user access within the selected organization.
+The **User Management** page in CloudHub allows to view, manage, and control user access within the selected organization.
 
 ### View
 
@@ -10,7 +10,7 @@ The **User Management** page in OptScale allows to view, manage, and control use
 
 -   Invite: Add new users to the selected organization. Invite new team members directly by clicking the green "INVITE" button. Assign appropriate roles during invitation to ensure they have the right level of access from the beginning.
 
--   Leverage Integrations: Use the "Slack" and "Jira" integration buttons to connect OptScale with your team’s communication and task management tools.
+-   Leverage Integrations: Use the "Slack" and "Jira" integration buttons to connect CloudHub with your team’s communication and task management tools.
 
 -   Download the User List: Click the "DOWNLOAD" button to export the user list. Select the format: JSON or XLSX.
 

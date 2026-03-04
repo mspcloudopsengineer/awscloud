@@ -13,11 +13,11 @@ OPENAPI_SPEC = """
 swagger: '2.0'
 info:
     description: >
-        Jira Bus API. Only optscale-specific APIs covered.\n\n
+        Jira Bus API. Only CloudHub-specific APIs covered.\n\n
         Permission definitions: \n\n
         -   `CLUSTER_SECRET`: Private API, used inside the cluster by services
         with special secret key\n\n
-        -   `TOKEN`: Valid OptScale token required.\n\n
+        -   `TOKEN`: Valid CloudHub token required.\n\n
         -   `ATLASSIAN`: Valid JWT token from Atlassian required.\n\n
         -   `ATLASSIAN_ASYMMETRIC`: Valid asymmetric JWT token from Atlassian
         required.\n\n

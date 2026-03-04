@@ -1134,7 +1134,7 @@ class TestPoolApi(TestApiBase):
         user_name = 'John'
         self.p_get_user_info.return_value = {
             'display_name': user_name, 'id': self._user_id,
-            'email': 'example@hystax.com'}
+            'email': 'example@cloudhub.com'}
         p_publish_activities = patch(
             'rest_api.rest_api_server.controllers.base.BaseController.'
             'publish_activities_task'
@@ -1152,7 +1152,7 @@ class TestPoolApi(TestApiBase):
         user_name = 'John'
         self.p_get_user_info.return_value = {
             'display_name': user_name, 'id': self._user_id,
-            'email': 'example@hystax.com'}
+            'email': 'example@cloudhub.com'}
         p_publish_activities = patch(
             'rest_api.rest_api_server.controllers.base.BaseController.'
             'publish_activities_task'
@@ -1167,7 +1167,7 @@ class TestPoolApi(TestApiBase):
             'organization_id': self.org_id,
             'organization_name': self.org['name'],
             'user_name': user_name,
-            'user_email': 'example@hystax.com'
+            'user_email': 'example@cloudhub.com'
         }
         activity_param_tuples = self.get_publish_activity_tuple(
             self.org_id, pool['id'], 'pool',

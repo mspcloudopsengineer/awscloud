@@ -27,7 +27,7 @@ a new resource allocation sequence that uses the current order of cluster types 
 ### **Tips**
 
 -   Automatically Adding Resources to Clusters: Sub-resources are automatically added to clusters 
-based on cluster type definitions when they are discovered in OptScale (through billing or direct discovery).
+based on cluster type definitions when they are discovered in CloudHub (through billing or direct discovery).
 
 -   Monitor Resource Utilization Regularly: Check the resource utilization of each 
 cluster type regularly to ensure you’re not over-provisioned or under-provisioned. Adjust configurations 

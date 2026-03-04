@@ -40,7 +40,7 @@ def _retry_not_exist(exception):
 
 
 class Client(etcd.Client):
-    """ OptScale config client """
+    """ CloudHub config client """
 
     @retry(**DEFAULT_RETRY_ARGS, retry_on_exception=_should_retry)
     def api_execute(self, *args, **kwargs):
@@ -408,7 +408,7 @@ class Client(etcd.Client):
 
     def optscale_email_recipient(self):
         """
-        Gets optscale recipient for service emails
+        Gets CloudHub recipient for service emails
         :return:
         """
         result = self.read_branch("/optscale_service_emails")
@@ -416,7 +416,7 @@ class Client(etcd.Client):
 
     def optscale_error_email_recipient(self):
         """
-        Gets optscale recipient for service emails
+        Gets CloudHub recipient for service emails
         :return:
         """
         result = self.read_branch("/optscale_error_emails")
@@ -566,13 +566,13 @@ class Client(etcd.Client):
 
     def product_name(self):
         """
-        Gets the product name (Optscale)
+        Gets the product name (CloudHub)
         """
         return self.get("/product_name").value
 
     def company_name(self):
         """
-        Gets the Company name (Hystax)
+        Gets the Company name (CloudHub)
         """
         return self.get("/company_name").value
 

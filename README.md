@@ -1,5 +1,5 @@
 <p align="center">
-⭐ Drop a star to support OptScale ⭐
+�?Drop a star to support CloudHub �?
 </p>
 
 # FinOps and cloud cost management platform to run any cloud workload with optimal performance and cost
@@ -7,11 +7,11 @@
 <p align="center">
 <a href="documentation/images/cover-GitHub.png"><img src="documentation/images/FinOps-platform.png" width="40%" align="middle"></a>
 </p>
-OptScale is an open source FinOps platform that optimizes cloud costs and performance for any workload, providing effective cloud cost management for all types of organizations.
+CloudHub is an open source FinOps platform that optimizes cloud costs and performance for any workload, providing effective cloud cost management for all types of organizations.
 <br>
 <br>
 <p align="center">
-<a href="https://my.optscale.com/live-demo?emailbypass=true&utm_source=github&utm_medium=readme"><img src="documentation/images/button-live-demo-github.svg" width="25%" align="middle"></a>
+<a href="https://my.cloudhub.com/live-demo?emailbypass=true&utm_source=github&utm_medium=readme"><img src="documentation/images/button-live-demo-github.svg" width="25%" align="middle"></a>
 </p>
 <br>
 <div align="center">
@@ -35,7 +35,7 @@ OptScale is an open source FinOps platform that optimizes cloud costs and perfor
 <div>
   <img src="documentation/images/Max_Kuzkin.png" width="80" align="left" style="border-radius: 50%; margin-right: 15px">
   <i>
-    “Hystax OptScale has been a game-changer for our FinOps practice. Its powerful capabilities, flexibility, and seamless integration have empowered us to deliver unprecedented transparency, control, and cost optimization for our clients. We truly value our partnership with Hystax and are excited to innovate further together.”
+    “Hystax CloudHub has been a game-changer for our FinOps practice. Its powerful capabilities, flexibility, and seamless integration have empowered us to deliver unprecedented transparency, control, and cost optimization for our clients. We truly value our partnership with CloudHub and are excited to innovate further together.�?
   </i>
   <div align="right">
     <i><b>Max Kuzkin</b>, General Manager, SoftwareOne Platform</i>
@@ -46,7 +46,7 @@ OptScale is an open source FinOps platform that optimizes cloud costs and perfor
 
 <br>
 
-## OptScale FinOps and cloud cost optimization capabilities
+## CloudHub FinOps and cloud cost optimization capabilities
 
 <li>Optimal utilization of Reserved Instances, Savings Plans, and Spot Instances</li>
 <li>Unused resource detection</li>
@@ -59,8 +59,8 @@ OptScale is an open source FinOps platform that optimizes cloud costs and perfor
 <li>VM Power Schedules</li>
 
   
-<br>You can check OptScale [live demo](https://my.optscale.com/live-demo) to explore product features on a pre-generated demo organization.
-<br>Learn more about the Hystax OptScale platform and its capabilities at [our website](https://hystax.com).
+<br>You can check CloudHub [live demo](https://my.cloudhub.com/live-demo) to explore product features on a pre-generated demo organization.
+<br>Learn more about the CloudHub platform and its capabilities at [our website](https://cloudhub.com).
 
 
 ## Demos
@@ -82,17 +82,17 @@ OptScale is an open source FinOps platform that optimizes cloud costs and perfor
 | :---------------------------------------------------------: | :---------------------------------------------------------------------: |
 | <img src="documentation/images/RI-SP-page.png" width="500"> | <img src="documentation/images/Cost-explorer-by-owner.png" width="500"> |
 
-## OptScale components and architecture
+## CloudHub components and architecture
 
 <div align="center">
-  <img src="documentation/images/optscale-architecture-services.drawio.png" height="400" />
+  <img src="documentation/images/CloudHub-architecture-services.drawio.png" height="400" />
 <br>
   <br>
 </div>
 
 ## Getting started
 
-The minimum hardware requirements for OptScale cluster: CPU: 8+ cores, RAM: 16Gb, SSD: 150+ Gb.
+The minimum hardware requirements for CloudHub cluster: CPU: 8+ cores, RAM: 16Gb, SSD: 150+ Gb.
 
 NVMe SSD is recommended.  
 
@@ -112,18 +112,18 @@ Run the following commands:
 sudo apt update; sudo apt install python3-pip sshpass git python3-virtualenv python3 python3-venv python3-dev -y
 ```
 
-#### Pulling optscale-deploy scripts
+#### Pulling CloudHub-deploy scripts
 
 Clone the repository
 
 ```markdown
-git clone https://github.com/hystax/optscale.git
+git clone https://github.com/mspcloudopsengineer/awscloud.git
 ```
 
 Change current directory:
 
 ```
-cd optscale/optscale-deploy
+cd CloudHub/CloudHub-deploy
 ```
 
 #### Preparing virtual environment
@@ -168,9 +168,9 @@ Images will build with version(tag) = local
 
 #### Creating user overlay
 
-Edit file with overlay - [optscale-deploy/overlay/user_template.yml](optscale-deploy/overlay/user_template.yml); see comments in overlay file for guidance.
+Edit file with overlay - [CloudHub-deploy/overlay/user_template.yml](CloudHub-deploy/overlay/user_template.yml); see comments in overlay file for guidance.
 
-Pay attention to "service_credentials" parameter, as OptScale uses it to retrieve cloud pricing data for recommendations calculation.
+Pay attention to "service_credentials" parameter, as CloudHub uses it to retrieve cloud pricing data for recommendations calculation.
 
 #### Cluster installation
 
@@ -204,13 +204,13 @@ If you have insecure registry (with self-signed certificate) you can use --insec
 
 **version**:
 
-- Use hystax/optscale git tag (eg: latest) if you use optscale public version.
-- Use your own tag version if you build your optscale images (eg: local).
+- Use CloudHub/CloudHub git tag (eg: latest) if you use CloudHub public version.
+- Use your own tag version if you build your CloudHub images (eg: local).
 
 **please note**: if you use key authentication, you should have the required key (id_rsa) on the machine
 
 Check the state of the pods using `kubectl get pods` command.
-When all the pods are running your OptScale is ready to use. Try to access it by `https://<ip address>`.
+When all the pods are running your CloudHub is ready to use. Try to access it by `https://<ip address>`.
 
 #### Cluster update
 
@@ -292,7 +292,7 @@ resources:
 
 ## Documentation
 
-Read the [full OptScale documentation](https://hystax.com/documentation/optscale/) 📖
+Read the [full CloudHub documentation](https://docs.cloudhub.com/) 📖
 
 ## Contributing
 
@@ -300,16 +300,16 @@ Please read and accept our [Contribution Agreement](CONTRIBUTING.md) before subm
 
 ## Community
 
-Hystax drives FinOps methodology and has crafted a community of FinOps-related people. The community discusses FinOps & cloud cost management best practices; our experts offer users how-tos and technical recommendations and provide ongoing details and updates regarding the open-source OptScale solution.
+CloudHub drives FinOps methodology and has crafted a community of FinOps-related people. The community discusses FinOps & cloud cost management best practices; our experts offer users how-tos and technical recommendations and provide ongoing details and updates regarding the open-source CloudHub solution.
 
 You can check it out on [FinOps in practice website](https://finopsinpractice.org/)
 
 ## Contacts
 
-Feel free to reach out to us with questions, feedback, or ideas at info@hystax.com.
-You can check out the latest news from Hystax at:
+Feel free to reach out to us with questions, feedback, or ideas at info@CloudHub.com.
+You can check out the latest news from CloudHub at:
 
-- [LinkedIn](https://www.linkedin.com/company/hystax)
-- [Twitter](https://twitter.com/hystaxcom)
-- [Facebook](https://www.facebook.com/hystax)
+- [LinkedIn](https://www.linkedin.com/company/CloudHub)
+- [Twitter](https://twitter.com/CloudHubcom)
+- [Facebook](https://www.facebook.com/CloudHub)
 - [YouTube](https://www.youtube.com/channel/UCP12kM-jeS2yMglN_dT44lA)

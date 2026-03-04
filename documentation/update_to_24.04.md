@@ -1,55 +1,55 @@
-## Update Optscale to new release
+## Update CloudHub to new release
 #### _(Update to [Ubuntu 24.04 LTS Noble Numbat](https://releases.ubuntu.com/noble/), [k8s](https://kubernetes.io/), [BuildKit](https://docs.docker.com/build/buildkit/), [nerdctl](https://github.com/containerd/nerdctl))_
 
 > :warning: Before pulling new release
-> - make sure you backed up data folder/volume ``` /optscale ```
-> - make sure you backed up user overlays ``` ~/optscale/optscale-deploy/overlay/ ```
+> - make sure you backed up data folder/volume ``` /CloudHub ```
+> - make sure you backed up user overlays ``` ~/CloudHub/CloudHub-deploy/overlay/ ```
 
-In this example instruction data directory is placed in ```/optscale```, sources placed in ```~/optscale```
+In this example instruction data directory is placed in ```/CloudHub```, sources placed in ```~/CloudHub```
 
-#### 1. navigate to optscale-deploy repo:
+#### 1. navigate to CloudHub-deploy repo:
 
 ```
-$ cd ~/optscale/optscale-deploy/
+$ cd ~/CloudHub/CloudHub-deploy/
 ```
 #### 2. activate .venv
 
 ``
-~/optscale/optscale-deploy$ source .venv/bin/activate
+~/CloudHub/CloudHub-deploy$ source .venv/bin/activate
 ``
 
 #### 3. delete deployment
 
 ```
-~/optscale/optscale-deploy$ ./runkube.py -d  -- <release_name> local
+~/CloudHub/CloudHub-deploy$ ./runkube.py -d  -- <release_name> local
 ```
 
 if you're forgotten release name, you can use this command:
 ```
-$ helm list | grep optscale
+$ helm list | grep CloudHub
 ```
 The output should be like:
 ```
-$ helm list | grep optscale
+$ helm list | grep CloudHub
 NAME         	REVISION	UPDATED                 	STATUS  	CHART               	APP VERSION	NAMESPACE
-os-1      	1       	Thu Dec 26 12:32:35 2024	DEPLOYED	optscale-0.1.0      	           	default
+os-1      	1       	Thu Dec 26 12:32:35 2024	DEPLOYED	CloudHub-0.1.0      	           	default
 ```
 
 according to the output, my release is: __os-1__ and the command will be:
 
 ```
-~/optscale/optscale-deploy$ ./runkube.py -d  -- os-1 local
+~/CloudHub/CloudHub-deploy$ ./runkube.py -d  -- os-1 local
 ```
 ```
-12:29:10.285: Deleting optscale cluster os-1 on k8s 172.24.1.14
+12:29:10.285: Deleting CloudHub cluster os-1 on k8s 172.24.1.14
 release "os-1" deleted
 
 ```
 #### 4. deactivate and remove virtual environment
 
 ```
-~/optscale/optscale-deploy$ deactivate
-~/optscale/optscale-deploy$ rm -r .venv/
+~/CloudHub/CloudHub-deploy$ deactivate
+~/CloudHub/CloudHub-deploy$ rm -r .venv/
 ```
 
 #### 5. reset k8s
@@ -121,30 +121,30 @@ $ sudo apt update; sudo apt install python3-pip sshpass git python3-virtualenv p
 
 #### 11. pull new version
 ```
-~/optscale$ git fetch && git pull
+~/CloudHub$ git fetch && git pull
 ```
 
 #### 12. create new venv
 ```
-~/optscale$ cd optscale-deploy/
+~/CloudHub$ cd CloudHub-deploy/
 ```
 
 ```
-~/optscale/optscale-deploy$ virtualenv -p python3 .venv
+~/CloudHub/CloudHub-deploy$ virtualenv -p python3 .venv
 ```
 ```
-~/optscale/optscale-deploy$ source .venv/bin/activate
+~/CloudHub/CloudHub-deploy$ source .venv/bin/activate
 ```
 
 ```
-~/optscale/optscale-deploy$ pip install -r requirements.txt
+~/CloudHub/CloudHub-deploy$ pip install -r requirements.txt
 ```
 
 
 #### 13. run ansible playbook
 
 ```
-~/optscale/optscale-deploy$  ansible-playbook -e "ansible_ssh_user=<user>" -k -K -i "<ip>," ansible/k8s-master.yaml
+~/CloudHub/CloudHub-deploy$  ansible-playbook -e "ansible_ssh_user=<user>" -k -K -i "<ip>," ansible/k8s-master.yaml
 ```
 when __user__ - your actual user
 __ip__ - our cluster ip address

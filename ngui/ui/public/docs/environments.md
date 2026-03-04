@@ -22,4 +22,4 @@ Use the **Shared Environments** page to book cloud environments for specific per
 
 - Monitor Resource Usage: Monitor and track resource usage regularly to prevent overconsumption, manage costs effectively, and identify potential security issues or inefficiencies.
 
-Want to learn more? Check out this post - [How to organize access to shared resources using OptScale](https://hystax.com/how-to-organize-access-to-shared-resources-using-optscale/)
+Want to learn more? Check out this post - [How to organize access to shared resources using CloudHub](https://docs.cloudhub.com/how-to-organize-access-to-shared-resources-using-CloudHub/)

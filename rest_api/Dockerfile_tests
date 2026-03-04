@@ -4,7 +4,7 @@ FROM rest_api:${BUILDTAG}
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-LABEL org.opencontainers.image.authors="Hystax"
+LABEL org.opencontainers.image.authors="CloudHub"
 
 COPY rest_api/pyproject.toml rest_api/uv.lock rest_api/.pylintrc rest_api/.coveragerc rest_api/__init__.py ./rest_api/
 COPY tools/check_alembic_down_revisions tools/check_alembic_down_revisions

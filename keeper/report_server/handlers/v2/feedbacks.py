@@ -76,7 +76,7 @@ class FeedbacksAsyncHandler(ReceiveHandler):
               items:
                 type: object
                 example:
-                  email: sd@hystax.com
+                  email: sd@cloudhub.com
                   url: dashboard
                   text: my first feedback
                   time: 1576046177
@@ -160,7 +160,7 @@ class FeedbacksAsyncHandler(ReceiveHandler):
             schema:
               type: object
               example:
-                email: sd@hystax.com
+                email: sd@cloudhub.com
                 url: dashboard
                 text: my first feedback
                 time: 1576046177

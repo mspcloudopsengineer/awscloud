@@ -1,4 +1,4 @@
-# Default values for optscale.
+# Default values for CloudHub.
 
 tag: &tag local
 
@@ -914,8 +914,8 @@ databases:
 
 # filled from base overlay
 public_ip:
-company_name: Hystax
-product_name: OptScale
+company_name: CloudHub
+product_name: CloudHub
 
 # helm release name
 release:
@@ -968,7 +968,7 @@ ssl:
     issuer_type: issuer
     issuer:
 
-# list of overlays used by runkube to start Optscale (necessary to use proper defaults when adding new keys on update)
+# list of overlays used by runkube to start CloudHub (necessary to use proper defaults when adding new keys on update)
 overlay_list: ""
 
 # k8s cluster domain
@@ -996,26 +996,26 @@ demo:
 katara_scheduler_timeout: 3600
 
 # filled from optscale overlay
-# Optscale recipient for service emails
+# CloudHub recipient for service emails
 optscale_service_emails:
   recipient:
   enabled: false
 
 # filled from optscale overlay
-# Optscale recipient for error emails
+# CloudHub recipient for error emails
 optscale_error_emails:
   recipient:
   enabled: false
 
 # filled from optscale overlay
-# Optscale email domains blacklists
+# CloudHub email domains blacklists
 domains_blacklists:
   registration:
   new_employee_email:
   failed_import_email:
 
 # filled from optscale overlay
-# Optscale email domains whitelists
+# CloudHub email domains whitelists
 domains_whitelists:
   registration:
   new_employee_email:

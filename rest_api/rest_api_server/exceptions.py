@@ -449,7 +449,7 @@ class Err(enum.Enum):
     OE0445 = [
         "Organization %s (%s) doesn't have any cloud accounts connected",
         ["organization_name", "organization_id"],
-        ["Organization Hystax (e3706242-47a9-4e55-b7ab-b9f58fa9ec31) doesn't have "
+        ["Organization CloudHub (e3706242-47a9-4e55-b7ab-b9f58fa9ec31) doesn't have "
          "any cloud accounts connected"]
     ]
     OE0446 = [

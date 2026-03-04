@@ -30,13 +30,13 @@ service_credentials:
       private_key: |
         -----BEGIN PRIVATE KEY-----
         -----END PRIVATE KEY-----
-      client_email: optscale-service-credentials@yourproject.iam.gserviceaccount.com
+      client_email: cloudhub-service-credentials@yourproject.iam.gserviceaccount.com
       client_id: "111111111"
       auth_uri: https://accounts.google.com/o/oauth2/auth
       token_uri: https://oauth2.googleapis.com/token
       auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
       client_x509_cert_url: >-
-        https://www.googleapis.com/robot/v1/metadata/x509/optscale-service-credentials%40yourproject.iam.gserviceaccount.com
+        https://www.googleapis.com/robot/v1/metadata/x509/cloudhub-service-credentials%40yourproject.iam.gserviceaccount.com
     # See https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#pricing-data-schema
     # for setting up pricing data export
     pricing_data:
@@ -67,17 +67,17 @@ slacker:
 google_calendar_service:
   access_key:
     type: service_account
-    project_id: optscale
+    project_id: cloudhub
     private_key_id: eeee000
     private_key: |
       -----BEGIN PRIVATE KEY-----
       -----END PRIVATE KEY-----
-    client_email: calendar-service@optscale.iam.gserviceaccount.com
+    client_email: calendar-service@cloudhub.iam.gserviceaccount.com
     client_id: ""
     auth_uri: https://accounts.google.com/o/oauth2/auth
     token_uri: https://oauth2.googleapis.com/token
     auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
-    client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/calendar-service@optscale.iam.gserviceaccount.com
+    client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/calendar-service@cloudhub.iam.gserviceaccount.com
 
 #  encryption key
 encryption_key: fffffxdddeadb33f
@@ -121,15 +121,15 @@ grafana:
     htpasswd_user: userforgrafana
     htpasswd_pass: passwordforgrafana
 
-# Public ip of OptScale VM used in external integrations like emails,
+# Public ip of CloudHub VM used in external integrations like emails,
 # google calendar etc. Defaults to internal ip, change it if internal ip
 # is not accessible in your network
 #
-# Public ip must be set to the fully qualified domain name of your OptScale instance
+# Public ip must be set to the fully qualified domain name of your CloudHub instance
 # if you want to use cert-manager to manage the SSL certificate lifecycle.
 #
 # eg:
-#  public_ip: optscale.example.com
+#  public_ip: cloudhub.example.com
 #
 public_ip:
 

@@ -767,7 +767,7 @@ BASIC_PRESET = {
                         "objects_with_duplicates_size": 0,
                         "monthly_savings": 0.0
                     },
-                    "hystax.com": {
+                    "cloudhub.com": {
                         "total_objects": 3,
                         "filtered_objects": 3,
                         "size": 233229,
@@ -867,7 +867,7 @@ BASIC_PRESET = {
                             "duplicated_objects": 0,
                             "duplicates_size": 0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0
                         },
@@ -926,7 +926,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -993,7 +993,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1060,7 +1060,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1127,7 +1127,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1168,8 +1168,8 @@ BASIC_PRESET = {
                             "monthly_savings": 0.0
                         }
                     },
-                    "hystax.com": {
-                        "hystax.com": {
+                    "cloudhub.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1266,7 +1266,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 2,
                             "duplicates_size": 4144,
                             "monthly_savings": 8.987653989708591e-08
@@ -1333,7 +1333,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1400,7 +1400,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1467,7 +1467,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1534,7 +1534,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
@@ -1595,7 +1595,7 @@ BASIC_PRESET = {
                             "duplicated_objects": 0,
                             "duplicates_size": 0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0
                         },
@@ -1655,7 +1655,7 @@ BASIC_PRESET = {
                             "duplicates_size": 0,
                             "monthly_savings": 0.0
                         },
-                        "hystax.com": {
+                        "cloudhub.com": {
                             "duplicated_objects": 0,
                             "duplicates_size": 0,
                             "monthly_savings": 0.0

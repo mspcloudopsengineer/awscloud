@@ -43,7 +43,7 @@ POOL = {"name": "My pool", "limit": 500, "id": str(uuid.uuid4())}
 CLOUD_ACCOUNT = {"name": "My super cloud", "id": str(uuid.uuid4())}
 ORGS = [{"name": "My super org", "id": str(uuid.uuid4())}]
 PUBLIC_IP = '5.5.5.5'
-USER = {"name": "superuser", "email": "superuser@hystax.com",
+USER = {"name": "superuser", "email": "superuser@cloudhub.com",
         "id": str(uuid.uuid4())}
 EMPLOYEE = {"id": str(uuid.uuid4()), "auth_user_id": USER['id']}
 ALERT_COMMON_PARAMS = {"pool_name": POOL['name'], "pool_id": POOL['id'],

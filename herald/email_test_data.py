@@ -1,7 +1,7 @@
 EMAIL_TEST_DATA = {
     "alert": {
         "email": ["kowalski@mail.mg"],
-        "subject": "OptScale Pool limit alert",
+        "subject": "CloudHub Pool limit alert",
         "template_type": "alert",
         "template_params": {
             "texts": {
@@ -18,8 +18,8 @@ EMAIL_TEST_DATA = {
         },
     },
     "employee_greetings": {
-        "email": ["andersonmatthew_hwp@hystax.com"],
-        "subject": "Thank you for registering at OptScale. Please proceed with the setup",
+        "email": ["andersonmatthew_hwp@cloudhub.com"],
+        "subject": "Thank you for registering at CloudHub. Please proceed with the setup",
         "template_type": "employee_greetings",
         "template_params": {
             "texts": {
@@ -37,7 +37,7 @@ EMAIL_TEST_DATA = {
     },
     "invite": {
         "email": ["me@1.com"],
-        "subject": "OptScale invitation notification",
+        "subject": "CloudHub invitation notification",
         "template_type": "invite",
         "template_params": {
             "texts": {
@@ -50,7 +50,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "new_cloud_account": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.8] Data source has been connected",
         "template_type": "new_cloud_account",
         "template_params": {
@@ -69,7 +69,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "cloud_account_deleted": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.8] Data source has been deleted",
         "template_type": "cloud_account_deleted",
         "template_params": {
@@ -88,7 +88,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "organization_audit_submit": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.8] Organization submitted for technical audit",
         "template_type": "organization_audit_submit",
         "template_params": {
@@ -103,7 +103,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "new_employee": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.8] New user joined organization",
         "template_type": "new_employee",
         "reply_to_email": "me2@1.com",
@@ -124,7 +124,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "new_subscriber": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.8] New live demo subscriber",
         "template_type": "new_subscriber",
         "reply_to_email": "me2@1.com",
@@ -135,8 +135,8 @@ EMAIL_TEST_DATA = {
         },
     },
     "pool_exceed_report": {
-        "email": ["james31_pza@hystax.com"],
-        "subject": "Action Required: Hystax OptScale Pool Limit Exceed Alert",
+        "email": ["james31_pza@cloudhub.com"],
+        "subject": "Action Required: CloudHub Pool Limit Exceed Alert",
         "template_type": "pool_exceed_report",
         "template_params": {
             "texts": {
@@ -168,7 +168,7 @@ EMAIL_TEST_DATA = {
     },
     "pool_exceed_resources_report": {
         "email": ["ranxygcrfg@novaemail.com"],
-        "subject": "Action Required: Hystax OptScale Pool Limit Exceed Alert",
+        "subject": "Action Required: CloudHub Pool Limit Exceed Alert",
         "template_type": "pool_exceed_resources_report",
         "template_params": {
             "texts": {
@@ -198,7 +198,7 @@ EMAIL_TEST_DATA = {
                                 "organization_id": "955f3783-ad70-4ad8-9682-b64890ef95c6",
                                 "owner_id": "0b2287ea-c543-4b47-a8aa-a2953fad9eb4",
                                 "owner_name": "Tester",
-                                "name": "HystaxWebSite. It is very very very very very very very very very very very "
+                                "name": "CloudHubWebSite. It is very very very very very very very very very very very "
                                 "very very very very very long name",
                                 "pool_id": "6e4c3ef9-37a9-47ec-87f7-0a864af86016",
                                 "pool_name": "Dalek Industry",
@@ -236,7 +236,7 @@ EMAIL_TEST_DATA = {
                                 "organization_id": "955f3783-ad70-4ad8-9682-b64890ef95c6",
                                 "owner_id": "0b2287ea-c543-4b47-a8aa-a2953fad9eb4",
                                 "owner_name": "Tester",
-                                "name": "HystaxWebSite. It is very very very very very very very very very very very "
+                                "name": "CloudHubWebSite. It is very very very very very very very very very very very "
                                 "very very very very very long name",
                                 "pool_id": "6e4c3ef9-37a9-47ec-87f7-0a864af86016",
                                 "pool_name": "Dalek Industry",
@@ -276,7 +276,7 @@ EMAIL_TEST_DATA = {
                                 "organization_id": "955f3783-ad70-4ad8-9682-b64890ef95c6",
                                 "owner_id": "0b2287ea-c543-4b47-a8aa-a2953fad9eb4",
                                 "owner_name": "Tester",
-                                "name": "HystaxWebSite. It is very very very very very very very very very very very "
+                                "name": "CloudHubWebSite. It is very very very very very very very very very very very "
                                 "very very very very very long name",
                                 "pool_id": "6e4c3ef9-37a9-47ec-87f7-0a864af86016",
                                 "pool_name": "Dalek Industry",
@@ -314,7 +314,7 @@ EMAIL_TEST_DATA = {
                                 "organization_id": "955f3783-ad70-4ad8-9682-b64890ef95c6",
                                 "owner_id": "0b2287ea-c543-4b47-a8aa-a2953fad9eb4",
                                 "owner_name": "Tester",
-                                "name": "HystaxWebSite. It is very very very very very very very very very very very "
+                                "name": "CloudHubWebSite. It is very very very very very very very very very very very "
                                 "very very very very very long name",
                                 "pool_id": "6e4c3ef9-37a9-47ec-87f7-0a864af86016",
                                 "pool_name": "Dalek Industry",
@@ -339,7 +339,7 @@ EMAIL_TEST_DATA = {
                                 "image_id": "ami-057935eae1159db28",
                                 "last_seen": 1617152478,
                                 "last_seen_not_stopped": 1617152478,
-                                "name": "OptScaleWebSite",
+                                "name": "CloudHubWebSite",
                                 "organization_id": "955f3783-ad70-4ad8-9682-b64890ef95c6",
                                 "owner_id": "0b2287ea-c543-4b47-a8aa-a2953fad9eb4",
                                 "owner_name": "Tester",
@@ -709,11 +709,11 @@ EMAIL_TEST_DATA = {
                                 "active": True,
                                 "cloud_account_id": "ba5a7439-df3a-4d41-9244-4927b80770f2",
                                 "cloud_account_name": "AWS",
-                                "cloud_console_link": "https://console.aws.amazon.com/s3/buckets/hystax-eu-west-1"
+                                "cloud_console_link": "https://console.aws.amazon.com/s3/buckets/cloudhub-eu-west-1"
                                 "?region=eu-west-1&tab=objects",
-                                "cloud_resource_id": "hystax-eu-west-1",
+                                "cloud_resource_id": "cloudhub-eu-west-1",
                                 "last_seen": 1617152439,
-                                "name": "hystax-eu-west-1",
+                                "name": "cloudhub-eu-west-1",
                                 "organization_id": "955f3783-ad70-4ad8-9682-b64890ef95c6",
                                 "owner_id": "0b2287ea-c543-4b47-a8aa-a2953fad9eb4",
                                 "owner_name": "Tester",
@@ -737,8 +737,8 @@ EMAIL_TEST_DATA = {
         },
     },
     "pool_owner_violation_report": {
-        "email": ["lori54_lskqtdln@hystax.com"],
-        "subject": "Action required: Hystax OptScale Resource Constraints Report",
+        "email": ["lori54_lskqtdln@cloudhub.com"],
+        "subject": "Action required: CloudHub Resource Constraints Report",
         "template_type": "pool_owner_violation_report",
         "template_params": {
             "texts": {
@@ -793,7 +793,7 @@ EMAIL_TEST_DATA = {
     "resource_owner_violation_alert": {
         "email": ["kepler71@de.io"],
         "template_type": "resource_owner_violation_alert",
-        "subject": "Action required: Hystax OptScale Resource Constraint Violation Alert",
+        "subject": "Action required: CloudHub Resource Constraint Violation Alert",
         "template_params": {
             "texts": {
                 "total_violated": 2,
@@ -804,25 +804,25 @@ EMAIL_TEST_DATA = {
                 },
                 "violated_resources": [
                     {
-                        "cloud_resource_id": "hystax-eu-fra",
+                        "cloud_resource_id": "cloudhub-eu-fra",
                         "employee_id": "99ba5718-c73d-4cf2-84f7-62cc7df6c020",
                         "employee_name": "Iogann Kepler",
                         "hit_value": 1617706815,
                         "pool_id": "3f575a6a-237d-4f4d-a4b4-1f8005451432",
                         "pool_name": "IK_ORG",
-                        "resource_name": "hystax-eu-fra. It is very very very very very very very very very very very "
+                        "resource_name": cloudhub-eu-fra. It is very very very very very very very very very very very "
                         "very very very very very long name",
                         "type": "ttl",
                         "resource_id": "e2b0412d-d3d3-425e-bd1e-e27ac881d58e",
                     },
                     {
-                        "cloud_resource_id": "hystax-eu-fra",
+                        "cloud_resource_id": "cloudhub-eu-fra",
                         "employee_id": "99ba5718-c73d-4cf2-84f7-62cc7df6c020",
                         "employee_name": "Iogann Kepler",
                         "hit_value": 20,
                         "pool_id": "3f575a6a-237d-4f4d-a4b4-1f8005451432",
                         "pool_name": "IK_ORG",
-                        "resource_name": "hystax-eu-fra",
+                        "resource_name": "cloudhub-eu-fra",
                         "type": "expense_limit",
                         "resource_id": "2b2dd58e-366d-4138-ad72-756aec545eca",
                     },
@@ -831,16 +831,16 @@ EMAIL_TEST_DATA = {
         },
     },
     "resource_owner_violation_report": {
-        "email": ["root@hystax.com"],
+        "email": ["root@cloudhub.com"],
         "template_type": "resource_owner_violation_report",
-        "subject": "Action required: Hystax OptScale Resource Constraints Report",
+        "subject": "Action required: CloudHub Resource Constraints Report",
         "template_params": {
             "texts": {
                 "total_differ": 1,
                 "total_violated": 1,
                 "differ_resources": [
                     {
-                        "cloud_resource_id": "hystax-eu-fra",
+                        "cloud_resource_id": "cloudhub-eu-fra",
                         "created_at": 1608790595,
                         "deleted_at": 0,
                         "id": "d48a8c38-19ea-4ae5-9229-c46887508480",
@@ -852,7 +852,7 @@ EMAIL_TEST_DATA = {
                         "pool_name": "test",
                         "pool_purpose": "pool",
                         "resource_id": "4532cba1-e5cf-4785-a4ee-67c08c5440cf",
-                        "resource_name": "hystax-eu-fra. It is very very very very very very very very very very very "
+                        "resource_name": cloudhub-eu-fra. It is very very very very very very very very very very very "
                         "very very very very very long name",
                         "resource_type": "Bucket",
                         "type": "ttl",
@@ -872,7 +872,7 @@ EMAIL_TEST_DATA = {
                 "organization": {"id": "b8835bce-da4c-4c29-98a0-4b4967baba53", "name": "Czar Pictures"},
                 "violated_resources": [
                     {
-                        "cloud_resource_id": "hystax-eu-fra",
+                        "cloud_resource_id": "cloudhub-eu-fra",
                         "constraint_limit": 1,
                         "created_at": 1617025349,
                         "deleted_at": 0,
@@ -885,7 +885,7 @@ EMAIL_TEST_DATA = {
                         "pool_name": "test",
                         "pool_purpose": "pool",
                         "resource_id": "4532cba1-e5cf-4785-a4ee-67c08c5440cf",
-                        "resource_name": "hystax-eu-fra. It is very very very very very very very very very very very "
+                        "resource_name": cloudhub-eu-fra. It is very very very very very very very very very very very "
                         "very very very very very long name",
                         "resource_type": "Bucket",
                         "time": 1617025349,
@@ -896,9 +896,9 @@ EMAIL_TEST_DATA = {
         },
     },
     "weekly_expense_report": {
-        "email": ["root@hystax.com"],
+        "email": ["root@cloudhub.com"],
         "template_type": "weekly_expense_report",
-        "subject": "OptScale weekly expense report",
+        "subject": "CloudHub weekly expense report",
         "template_params": {
             "texts": {
                 "organization": {
@@ -988,7 +988,7 @@ EMAIL_TEST_DATA = {
     },
     "first_shareable_resources": {
         "email": ["azaza@ma.il"],
-        "subject": "OptScale shared environments notification",
+        "subject": "CloudHub shared environments notification",
         "template_type": "first_shareable_resources",
         "template_params": {
             "texts": {"organization": {"id": "5d3d4501-0de8-40dc-a9ed-df2fb1396141", "name": "am2"}},
@@ -1093,7 +1093,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "anomaly_detection_alert": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Anomaly detected",
         "template_type": "anomaly_detection_alert",
         "template_params": {
@@ -1134,10 +1134,10 @@ EMAIL_TEST_DATA = {
                     "assignment_type_id": 2,
                     "role_id": 3,
                     "role_name": "Manager",
-                    "role_purpose": "optscale_manager",
+                    "role_purpose": "CloudHub_manager",
                     "role_scope_id": None,
                     "user_display_name": "james31",
-                    "user_email": "james31_pza@hystax.com",
+                    "user_email": "james31_pza@cloudhub.com",
                     "user_id": "4a50413a-9703-4586-ab39-96aa289e979e",
                 },
             }
@@ -1166,7 +1166,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "saving_spike": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Saving spike",
         "template_type": "saving_spike",
         "template_params": {
@@ -1201,7 +1201,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "organization_policy_quota": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Organization policy violated",
         "template_type": "organization_policy_quota",
         "template_params": {
@@ -1242,7 +1242,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "organization_policy_recurring_budget": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Organization policy violated",
         "template_type": "organization_policy_recurring_budget",
         "template_params": {
@@ -1283,7 +1283,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "organization_policy_expiring_budget": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Organization policy violated",
         "template_type": "organization_policy_expiring_budget",
         "template_params": {
@@ -1321,7 +1321,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "organization_policy_tagging": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Organization policy violated",
         "template_type": "organization_policy_tagging",
         "template_params": {
@@ -1354,7 +1354,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "report_imports_passed_for_org": {
-        "email": ["james31_pza@hystax.com"],
+        "email": ["james31_pza@cloudhub.com"],
         "subject": "Expenses initial processing completed",
         "template_type": "report_imports_passed_for_org",
         "template_params": {
@@ -1368,12 +1368,12 @@ EMAIL_TEST_DATA = {
         },
     },
     "insider_prices_sslerror": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.6] Insider faced Azure SSLError",
         "template_type": "insider_prices_sslerror",
     },
     "incorrect_alibaba_expenses": {
-        "email": ["optscale-staging-notifications@hystax.com"],
+        "email": ["CloudHub-staging-notifications@cloudhub.com"],
         "subject": "[172.22.20.6] Incorrect expenses for Alibaba data source",
         "template_type": "incorrect_alibaba_expenses",
         "template_params": {
@@ -1393,7 +1393,7 @@ EMAIL_TEST_DATA = {
         },
     },
     "disconnect_survey": {
-        "email": ["andersonmatthew_hwp@hystax.com"],
+        "email": ["andersonmatthew_hwp@cloudhub.com"],
         "subject": "Disconnect Survey [d7092814-2b12-4e60-89c5-67919c9b17d6, Funny company]",
         "template_type": "disconnect_survey",
         "template_params": {
@@ -1418,24 +1418,24 @@ EMAIL_TEST_DATA = {
         },
     },
     "restore_password": {
-        "email": ["serviceuser@hystax.com"],
-        "subject": "OptScale password recovery",
+        "email": ["serviceuser@cloudhub.com"],
+        "subject": "CloudHub password recovery",
         "template_type": "restore_password",
         "template_params": {
             "texts": {"code": 263308},
             "links": {
-                "restore_button": "https://172.22.20.8/password-recovery?email=serviceuser%40hystax.com&code=263308"
+                "restore_button": "https://172.22.20.8/password-recovery?email=serviceuser%40cloudhub.com&code=263308"
             },
         },
     },
     "verify_email": {
-        "email": ["serviceuser@hystax.com"],
-        "subject": "OptScale email verification",
+        "email": ["serviceuser@cloudhub.com"],
+        "subject": "CloudHub email verification",
         "template_type": "verify_email",
         "template_params": {
             "texts": {"code": 263308},
             "links": {
-                "verify_button": "https://172.22.20.8/email-verification?email=serviceuser%40hystax.com&code=263308"
+                "verify_button": "https://172.22.20.8/email-verification?email=serviceuser%40cloudhub.com&code=263308"
             },
         },
     },

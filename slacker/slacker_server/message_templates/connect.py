@@ -18,7 +18,7 @@ def get_welcome_message(public_ip, secret):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Great to see you! OptScale App helps you monitor "
+                    "text": "Great to see you! CloudHub App helps you monitor "
                             "and control your cloud resources and expenses "
                             "right here in Slack. These are just a few "
                             "things that you will be able to do:"
@@ -28,8 +28,8 @@ def get_welcome_message(public_ip, secret):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "â€¢ Monitor your resources and their expenses\nâ€¢ "
-                            "Control resources TTL settings\nâ€¢ Get notified "
+                    "text": "â€?Monitor your resources and their expenses\nâ€?"
+                            "Control resources TTL settings\nâ€?Get notified "
                             "of important events regarding your resources"
                 }
             },
@@ -38,7 +38,7 @@ def get_welcome_message(public_ip, secret):
                 "text": {
                     "type": "mrkdwn",
                     "text": "But before you can do all these amazing things, "
-                            "we need you to connect your OptScale user account "
+                            "we need you to connect your CloudHub user account "
                             "to this Slack App."
                 }
             },
@@ -46,7 +46,7 @@ def get_welcome_message(public_ip, secret):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Follow this link to authorize yourself in OptScale"
+                    "text": "Follow this link to authorize yourself in CloudHub"
                             f" - \n<https://{public_ip}/slack/connect/{secret}>"
                 }
             },
@@ -58,7 +58,7 @@ def get_welcome_message(public_ip, secret):
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "Not sure if your team already uses OptScale? "
+                        "text": "Not sure if your team already uses CloudHub? "
                                 "Check with your manager and if not - show "
                                 f"them our *<https://{public_ip}/live-demo|"
                                 "live demo>*."
@@ -72,7 +72,7 @@ def get_welcome_message(public_ip, secret):
 
 def get_connection_done_message(orgs, user_email, active_org_id):
     congratulations_base = "Congratulations, you're now connected with " \
-                           "your OptScale account"
+                           "your CloudHub account"
     help_msg = {
         "type": "context",
         "elements": [

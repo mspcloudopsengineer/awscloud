@@ -227,7 +227,7 @@ class CalendarSynchronizationController(BaseController, MongoMixin):
             'calendar_id': calendar_id,
             'start': now,
             'end': now + timedelta(hours=1),
-            'summary': "Hystax OptScale test"
+            'summary': "CloudHub test"
         }
         try:
             event = self.google_calendar_cl.create_event(**test_template)

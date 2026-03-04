@@ -129,7 +129,7 @@ def is_uuid(check_str):
 
 
 def is_hystax_email(email):
-    regex = '^.+@hystax.com$'
+    regex = '^.+@cloudhub.com$'
     match = re.match(regex, str(email).lower())
     return bool(match)
 

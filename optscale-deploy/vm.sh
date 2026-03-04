@@ -597,7 +597,7 @@ function vm_update_only {
     fi
 
     echo "Running runkube update-only for release '${release_name}'..."
-    vm_ssh "cd optscale/optscale-deploy && .venv/bin/python runkube.py --update-only --no-pull $elk_flag -- ${release_name} local"
+    vm_ssh "cd optscale/optscale-deploy && .venv/bin/python runkube.py --update-only $elk_flag -- ${release_name} local"
 }
 
 require_arch_compatible_or_die "$COMMAND"

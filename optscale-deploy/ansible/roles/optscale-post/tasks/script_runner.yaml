@@ -51,7 +51,7 @@
     mode: 0455
   with_items:
    - "{{ tools_local_path }}script-runner/scripts/sign-file"
-   - "{{ tools_local_path }}script-runner/certs/hystax.certificate"
+   - "{{ tools_local_path }}script-runner/certs/cloudhub.certificate"
   become: yes
 
 - name: Install rng-tools
@@ -66,7 +66,7 @@
   become: yes
 
 - name: Check gpg keys
-  shell: "gpg --list-keys root@hystax.com"
+  shell: "gpg --list-keys root@cloudhub.com"
   register: result
   ignore_errors: yes
   become: yes
@@ -77,18 +77,18 @@
   become: yes
 
 - name: Create gpg certificate for host
-  shell: "gpg --batch --gen-key {{ script_path }}hystax.certificate"
+  shell: "gpg --batch --gen-key {{ script_path }}cloudhub.certificate"
   when: result.failed
   become: yes
 
 - name: Remove certificate config file from host
   file:
-    path: "{{ script_path }}hystax.certificate"
+    path: "{{ script_path }}cloudhub.certificate"
     state: absent
   become: yes
 
 - name: Get key ID
-  shell: "gpg --list-secret-keys --keyid-format LONG root@hystax.com | awk '/^ssb/ {print $2}' | awk -F '/' '{print $2}'"
+  shell: "gpg --list-secret-keys --keyid-format LONG root@cloudhub.com | awk '/^ssb/ {print $2}' | awk -F '/' '{print $2}'"
   register: key_details
   become: yes
 

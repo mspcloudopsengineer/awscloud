@@ -1,19 +1,19 @@
 # Set up a virtual machine for development / testing of deployment
 
-With the help of a few tools we now have the capability to run the whole optscale locally by running a few simple commands,
+With the help of a few tools we now have the capability to run the whole CloudHub locally by running a few simple commands,
 allowing new developers to contribute immediately as well as explore the codebase freely with quick feedback cycle for their
 local changes and requiring minimal knowledge about the deployment process. Virtual Machines also make it possible to have
 as close to production-level environment running locally helping with testing and making changes to the deployment process
 itself and also allowing developers to use different OS and even CPU architecture than Ubuntu 24.04 running on x86 hardware
-(which is a hard requirement at the moment for an Optscale deployment), e.g. Apple Silicon Macs.
+(which is a hard requirement at the moment for an CloudHub deployment), e.g. Apple Silicon Macs.
 
 The tools which allow us to do that are:
 
 1. [Vagrant](https://developer.hashicorp.com/vagrant/) to configure and manage the virtual machines  
 2. [QEMU](https://www.qemu.org/) as the virtualization engine used to run them  
 3. [`vagrant-qemu`](https://github.com/ppggff/vagrant-qemu) as the bridge between Vagrant and QEMU  
-4. **VirtualBox** â€” optional alternative virtualization provider  
-5. **`vagrant-disksize` plugin** â€” required when using VirtualBox to control disk size (not required for QEMU, QEMU disk sizing is controlled by the QEMU provider config (qemu.disk_resize)
+4. **VirtualBox** â€?optional alternative virtualization provider  
+5. **`vagrant-disksize` plugin** â€?required when using VirtualBox to control disk size (not required for QEMU, QEMU disk sizing is controlled by the QEMU provider config (qemu.disk_resize)
 
 > [!WARNING]
 > ## Prefer VirtualBox on Linux Kernel 6.14+
@@ -48,9 +48,9 @@ The tools which allow us to do that are:
 >
 > Without nested virtualization:
 >
-> - QEMU will run **without KVM acceleration** â†’ extremely slow  
+> - QEMU will run **without KVM acceleration** â†?extremely slow  
 > - VirtualBox may **fail to start VMs** or run in pure software mode  
-> - Provisioning times may increase from 20â€“30 minutes â†’ **several hours**
+> - Provisioning times may increase from 20â€?0 minutes â†?**several hours**
 >
 > ### How to enable nested virtualization (quick reference)
 >
@@ -83,8 +83,8 @@ The tools which allow us to do that are:
 > - If running inside a VM, ensure **nested virtualization is enabled** before using `vm.sh` with QEMU or VirtualBox  
 
 `Vagrant` already provides a great CLI to manage and run the VMs but it has a few annoying quirks and it still requires
-complicated commands to run common operations specific to Optscale, so we built a wrapper script to make it even easier to
-set up and use VMs -- `optscale-deploy/vm.sh`.
+complicated commands to run common operations specific to CloudHub, so we built a wrapper script to make it even easier to
+set up and use VMs -- `CloudHub-deploy/vm.sh`.
 
 ---
 
@@ -147,7 +147,7 @@ To force using VirtualBox:
 
 ## Set up the Virtual Machine
 
-Use the `vm.sh` script in `optscale-deploy` to manage the VM. There are currently two VMs ready for use: `arm` and `x86`.
+Use the `vm.sh` script in `CloudHub-deploy` to manage the VM. There are currently two VMs ready for use: `arm` and `x86`.
 Use whichever matches your machine's OS but the other one should also work via emulation (note that it will be
 _significantly slower_ though).
 
@@ -165,7 +165,7 @@ or omit it entirely in which case it will default to your host machines' CPU arc
 
 (running the command above on an M4 Mac will create the ARM-based virtual machine)
 
-> Creating a virtual machine also copies your local version of this repo into `~/optscale` meaning it's very easy to
+> Creating a virtual machine also copies your local version of this repo into `~/CloudHub` meaning it's very easy to
 > test local changes not yet pushed to GitHub.
 
 > Feel free to mess around with the `Vagrantfile` itself whether it's to tweak some of the settings or even create new
@@ -210,7 +210,7 @@ pip install -r requirements.txt
 ```
 #### Creating user overlay
 
-Edit file with overlay - [optscale-deploy/overlay/user_template.yml](optscale-deploy/overlay/user_template.yml); see comments in overlay file for guidance.
+Edit file with overlay - [CloudHub-deploy/overlay/user_template.yml](CloudHub-deploy/overlay/user_template.yml); see comments in overlay file for guidance.
 
 ## Optional ELK stack (`--with-elk`)
 
@@ -218,7 +218,7 @@ The `vm.sh` wrapper also supports enabling the **ELK stack** (Elasticsearch, Log
 
 Global flag:
 
-- `--with-elk` â€” enable ELK support for the current command.
+- `--with-elk` â€?enable ELK support for the current command.
 
 When `--with-elk` is used:
 
@@ -244,7 +244,7 @@ Deploy a single service with ELK-aware configuration:
 ```
 If ELK stack is required, need to set  `--with-elk` directly.
 
-Update existing OptScale release while keeping ELK enabled:
+Update existing CloudHub release while keeping ELK enabled:
 
 ```sh
 ./vm.sh --with-elk update-only
@@ -271,10 +271,10 @@ Explicit provider selection:
 
 ---
 
-## Deploy Optscale on the VM
+## Deploy CloudHub on the VM
 
-There is also an ansible playbook specifically built to allow a single command provisioning of Optscale onto a fresh Virtual
-Machine: `optscale-deploy/ansible/provision-vm.yaml`. It will do everything -- from installing dependencies, setting up the
+There is also an ansible playbook specifically built to allow a single command provisioning of CloudHub onto a fresh Virtual
+Machine: `CloudHub-deploy/ansible/provision-vm.yaml`. It will do everything -- from installing dependencies, setting up the
 cluster, building all the containers (including `elk` when `--with-elk` is used) and creating a new Kubernetes deployment
 using `runkube.py`.
 
@@ -301,7 +301,7 @@ There is also a `role` command which allows us to run a specific ansible role ag
 
 If everything goes well, you should be able to access the platform soon.
 
-Keep in mind that the initial provisioning of the VM takes quite some time (~20â€“30 mins on an M4 Macbook)
+Keep in mind that the initial provisioning of the VM takes quite some time (~20â€?0 mins on an M4 Macbook)
 mostly due to all the containers that need to be built from scratch. Also note that the Kubernetes cluster
 will need some time (~15 mins) to spin all the pods after the playbook's execution is complete.
 
@@ -323,9 +323,9 @@ Port values come from the `Vagrantfile`.
 
 The `./vm.sh` script provides useful commands to debug issues:
 
-* `info` â€” shows general information about the VM itself: status, name, process ID etc.
-* `ssh` â€” allows you to ssh into the VM and investigate issues or make persistent changes directly.
-* `optscale-info` â€” shows information specific to the Optscale deployment: frontend access URL, k8s cluster
+* `info` â€?shows general information about the VM itself: status, name, process ID etc.
+* `ssh` â€?allows you to ssh into the VM and investigate issues or make persistent changes directly.
+* `CloudHub-info` â€?shows information specific to the CloudHub deployment: frontend access URL, k8s cluster
   health, pods which are currently failing etc.
 
 ---
@@ -354,12 +354,12 @@ If ELK is enabled via `--with-elk`, the same command will keep ELK configuration
 
 ## Other commands
 
-* `stop` â€” stop the virtual machine (preserves state)
+* `stop` â€?stop the virtual machine (preserves state)
     * use `--force` to forcefully terminate VM process
-* `restart` â€” restarts the VM
-* `destroy` â€” stops and deletes the whole VM including data
-* `reset` â€” a convenience command combining `destroy` + `start`
-* `update-only` â€” rebuilds OptScale containers and redeploys without full reprovisioning
+* `restart` â€?restarts the VM
+* `destroy` â€?stops and deletes the whole VM including data
+* `reset` â€?a convenience command combining `destroy` + `start`
+* `update-only` â€?rebuilds CloudHub containers and redeploys without full reprovisioning
 
 The resource flags (`--cpus`, `--ram`, `--disk`) work with all lifecycle commands. The ELK flag (`--with-elk`) can be
 combined with any command that performs provisioning, deployment or update logic.

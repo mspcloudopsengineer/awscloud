@@ -2,7 +2,7 @@ ARG BUILDTAG=build
 FROM keeper:${BUILDTAG}
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-LABEL org.opencontainers.image.authors="Hystax"
+LABEL org.opencontainers.image.authors="CloudHub"
 
 COPY keeper/.pylintrc keeper/.coveragerc ./
 COPY keeper/pyproject.toml keeper/uv.lock keeper/__init__.py ./

@@ -1,6 +1,6 @@
 # How to get a verification code
 
-1\. Configure SMTP according to the [instructions](https://github.com/hystax/optscale/blob/integration/documentation/setting_up_smtp.md).
+1\. Configure SMTP according to the [instructions](https://github.com/mspcloudopsengineer/awscloud/blob/integration/documentation/setting_up_smtp.md).
 
 2\. Pass the registration flow:
 
@@ -20,7 +20,7 @@
     -   If the code is invalid or expired, the system displays an error and allows to retry or request a new code.
 
 > [!NOTE]
-> Disable email verification by adding `disable_email_verification: True` to the [user_template.yml](https://github.com/hystax/optscale/blob/integration/optscale-deploy/overlay/user_template.yml) file and then updating the cluster with the modified overlay:
+> Disable email verification by adding `disable_email_verification: True` to the [user_template.yml](https://github.com/mspcloudopsengineer/awscloud/blob/integration/CloudHub-deploy/overlay/user_template.yml) file and then updating the cluster with the modified overlay:
 > 
 > ```
 > ./runkube.py --with-elk -o overlay/user_template.yml -- <deployment name> <version>
@@ -28,6 +28,6 @@
 
 3\. Troubleshooting: 
 
--   Check the **"herald"** service logs in Kibana when registering a user. The verification code should be sent during this process. Use [this instructions](https://github.com/hystax/optscale/blob/integration/documentation/kibana_logs.md) to access Kibana logs.
+-   Check the **"herald"** service logs in Kibana when registering a user. The verification code should be sent during this process. Use [this instructions](https://github.com/mspcloudopsengineer/awscloud/blob/integration/documentation/kibana_logs.md) to access Kibana logs.
 
--   If you encounter SMTP errors, refer to the guide: [Setting Up SMTP](https://github.com/hystax/optscale/blob/integration/documentation/setting_up_smtp.md).
+-   If you encounter SMTP errors, refer to the guide: [Setting Up SMTP](https://github.com/mspcloudopsengineer/awscloud/blob/integration/documentation/setting_up_smtp.md).

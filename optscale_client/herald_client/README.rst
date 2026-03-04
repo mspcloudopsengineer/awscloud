@@ -1,2 +1,2 @@
-Hystax OptScale Herald client package
+CloudHub Herald client package
 ==================================

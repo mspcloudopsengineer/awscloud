@@ -134,7 +134,7 @@ def _get_auth_data(auth, user_ids_str):
           SELECT user.id, user.email, user.display_name,
             user.created_at
           FROM user
-          WHERE email NOT LIKE "%@hystax.com" AND deleted_at=0 AND
+          WHERE email NOT LIKE "%@cloudhub.com" AND deleted_at=0 AND
             id in ('{user_ids_str}')
         ) AS user_t
         LEFT JOIN (

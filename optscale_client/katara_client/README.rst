@@ -1,2 +1,2 @@
-Hystax Katara client package
+CloudHub Katara client package
 ====================================

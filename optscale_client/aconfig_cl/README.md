@@ -1,2 +1,2 @@
-Hystax OptScale Async Config client prototype
+CloudHub Async Config client prototype
 ====================================

@@ -1,5 +1,5 @@
 from currency_symbols.currency_symbols import CURRENCY_SYMBOLS_MAP as CURRENCY_MAP
-from tools.optscale_time import utcnow
+from tools.CloudHub_time import utcnow
 
 __all__ = ['get_alert_message', 'get_alert_added_message',
            'get_alert_removed_message', 'get_join_channel_message',
@@ -105,7 +105,7 @@ def get_alert_added_message(pool_name, pool_id, limit, initiator_name,
                 {
                     "type": "mrkdwn",
                     "text": ":pushpin: You can check alerts list saying "
-                            "`alerts` in DM with OptScale App"
+                            "`alerts` in DM with CloudHub App"
                 }
             ]
         }],
@@ -144,7 +144,7 @@ def get_alert_removed_message(pool_name, pool_id, limit, initiator_name,
                 {
                     "type": "mrkdwn",
                     "text": ":pushpin: You can check alerts list saying "
-                            "`alerts` in DM with OptScale App"
+                            "`alerts` in DM with CloudHub App"
                 }
             ]
         }],
@@ -167,7 +167,7 @@ def get_join_channel_message():
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "I'm OptScale bot.\nI can notify you here about "
+                    "text": "I'm CloudHub bot.\nI can notify you here about "
                             "your environments usage and let you know if cloud "
                             "usage expenses will break the comfortable amount."
                 }

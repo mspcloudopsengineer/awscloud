@@ -8,10 +8,10 @@ requirements = [
 ]
 
 setup(name='slacker-client',
-      description='OptScale Slacker API Client',
-      url='http://hystax.com',
-      author='Hystax',
-      author_email='info@hystax.com',
+      description='CloudHub Slacker API Client',
+      url='http://cloudhub.com',
+      author='CloudHub',
+      author_email='info@cloudhub.com',
       package_dir={'slacker_client': ''},
       packages=['slacker_client'],
       install_requires=requirements,

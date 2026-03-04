@@ -42,7 +42,7 @@ export const GA_EVENT_CATEGORIES = Object.freeze({
 log(`%cGA inited with ${GA_KEY}`);
 
 const analytics = Analytics({
-  app: "Optscale",
+  app: "CloudHub",
   plugins: [
     googleAnalytics({
       measurementIds: [GA_KEY],
@@ -97,8 +97,8 @@ export const trackEvent = (config) => {
  * Identify a visitor
  * @param {string} uniqueId Unique id for analytics platform
  * @param {object} newDimensions Information about user
- * @param {string} newDimensions.userId User id in optscale
- * @param {string} [newDimensions.organizationId] Selected Optscale organization id
+ * @param {string} newDimensions.userId User id in CloudHub
+ * @param {string} [newDimensions.organizationId] Selected CloudHub organization id
  */
 export const identify = (uniqueId, newDimensions) => {
   const dimensions = {

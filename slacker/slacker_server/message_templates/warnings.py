@@ -11,7 +11,7 @@ def get_archived_message_block(public_ip, pool_id, organization_id, pool_name,
         "text": {
             "type": "mrkdwn",
             "text": f"Slack channel *{channel_id}*, contains configured "
-                    f"OptScale alerts, is archived. Please recreate "
+                    f"CloudHub alerts, is archived. Please recreate "
                     f"alert to pick new slack channel:"
         }},
         get_alert_section(public_ip, pool_id, organization_id, pool_name,

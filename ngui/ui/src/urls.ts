@@ -550,19 +550,19 @@ export const getPowerScheduleDetailsUrl = (id: string) => POWER_SCHEDULE_DETAILS
 export const getEditPowerScheduleUrl = (id: string) => EDIT_POWER_SCHEDULE.replace(POWER_SCHEDULE_IDENTIFIER, id);
 
 // External urls
-export const PRODUCTION = "https://my.optscale.com";
-export const DEMO = "https://demo.optscale.com";
-export const HYSTAX = "https://hystax.com";
-export const HYSTAX_PRIVACY_POLICY = "https://hystax.com/privacy-policy/";
+export const PRODUCTION = "https://my.cloudhub.com";
+export const DEMO = "https://demo.cloudhub.com";
+export const HYSTAX = "https://cloudhub.com";
+export const HYSTAX_PRIVACY_POLICY = "https://cloudhub.com/privacy-policy/";
 
 export const FINOPS = "https://finopsinpractice.org/";
-export const FINOPS_FEATURES = "https://finopsinpractice.org/finops-in-practice-features-for-optscale/";
-export const FINOPS_HOWTOS = "https://finopsinpractice.org/blog-posts-list-for-optscale/";
+export const FINOPS_FEATURES = "https://finopsinpractice.org/finops-in-practice-features-for-cloudhub/";
+export const FINOPS_HOWTOS = "https://finopsinpractice.org/blog-posts-list-for-cloudhub/";
 
-export const JIRA_MARKETPLACE = "https://marketplace.atlassian.com/apps/1227110/hystax-optscale-for-jira";
+export const JIRA_MARKETPLACE = "https://marketplace.atlassian.com/apps/1227110/cloudhub-for-jira";
 
-// Hystax documentation urls
-export const DOCS_HYSTAX_OPTSCALE = "https://hystax.com/documentation/optscale/";
+// CloudHub documentation urls
+export const DOCS_HYSTAX_OPTSCALE = "https://docs.cloudhub.com/";
 
 const docUrl = (path: string) => `${DOCS_HYSTAX_OPTSCALE}${path}` as const;
 
@@ -597,12 +597,12 @@ export const DOCS_HYSTAX_RESOURCE_CONSTRAINTS = docUrl("resource_constraints.htm
 export const DOCS_HYSTAX_SLACK_INTEGRATION = docUrl("integrations.html#slack-app");
 export const DOCS_HYSTAX_GOOGLE_CALENDAR_INTEGRATION = docUrl("integrations.html#google-calendar");
 
-// Hystax open source links
+// CloudHub open source links
 export const GITHUB_HYSTAX_K8S_COST_METRICS_COLLECTOR =
-  "https://github.com/hystax/helm-charts/tree/main/charts/kube-cost-metrics-collector";
-export const GITHUB_HYSTAX_EXTRACT_LINKED_REPORTS = "https://github.com/hystax/optscale_tools/tree/main/extract_linked_reports";
-export const GITHUB_HYSTAX_OPTSCALE_REPO = "https://github.com/hystax/optscale";
-export const PYPI_OPTSCALE_ARCEE = "https://pypi.org/project/optscale-arcee";
+  "https://github.com/mspcloudopsengineer/helm-charts/tree/main/charts/kube-cost-metrics-collector";
+export const GITHUB_HYSTAX_EXTRACT_LINKED_REPORTS = "https://github.com/mspcloudopsengineer/awscloud_tools/tree/main/extract_linked_reports";
+export const GITHUB_HYSTAX_OPTSCALE_REPO = "https://github.com/mspcloudopsengineer/awscloud";
+export const PYPI_OPTSCALE_ARCEE = "https://pypi.org/project/cloudhub-arcee";
 
 // Nebius documentation
 export const NEBIUS_CREATE_SERVICE_ACCOUNT = "https://nebius.com/il/docs/iam/quickstart-sa#create-sa";
@@ -614,9 +614,9 @@ export const NEBIUS_GET_FOLDER_REPORT = "https://nebius.com/il/docs/billing/oper
 export const DATABRICKS_CREATE_SERVICE_PRINCIPAL = "https://docs.databricks.com/en/dev-tools/authentication-oauth.html";
 
 // Emails
-export const EMAIL_SUPPORT = "support@hystax.com";
-export const EMAIL_SALES = "sales@hystax.com";
-export const EMAIL_INFO = "info@hystax.com";
+export const EMAIL_SUPPORT = "support@cloudhub.com";
+export const EMAIL_SALES = "sales@cloudhub.com";
+export const EMAIL_INFO = "info@cloudhub.com";
 
 export const isProduction = () => window.location.origin === PRODUCTION;
 export const isDemo = () => window.location.origin === DEMO;
@@ -631,4 +631,4 @@ export const WITH_LEGEND_QUERY_PARAMETER_NAME = "withLegend";
 
 export const APPLY_FILTER_BY_CATEGORY_QUERY_PARAMETER_NAME = "applyFilterByCategory";
 
-export const CONTACT_US_URL = "https://hystax.com/contact-us/";
+export const CONTACT_US_URL = "https://cloudhub.com/contact-us/";

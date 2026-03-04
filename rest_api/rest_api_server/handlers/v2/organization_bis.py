@@ -78,7 +78,7 @@ class OrganizationBIAsyncCollectionHandler(BaseAsyncCollectionHandler, BaseAuthH
                             Name for BI subscription. If not provided - name of
                             organization is taken by default.
                         required: False
-                        example: "HystaxBI"
+                        example: "CloudHubBI"
                     days:
                         type: integer
                         description: number of days for which to export data
@@ -140,7 +140,7 @@ class OrganizationBIAsyncCollectionHandler(BaseAsyncCollectionHandler, BaseAuthH
                         "last_completed": 0,
                         "status": "ACTIVE",
                         "last_status_error": null,
-                        "name": "Hystax",
+                        "name": "CloudHub",
                         "days": 30,
                         }
             400:

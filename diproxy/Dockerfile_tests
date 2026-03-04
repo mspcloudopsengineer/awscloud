@@ -1,7 +1,7 @@
 ARG BUILDTAG=build
 FROM diproxy:${BUILDTAG}
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-LABEL org.opencontainers.image.authors="Hystax"
+LABEL org.opencontainers.image.authors="CloudHub"
 
 COPY diproxy/pyproject.toml diproxy/uv.lock diproxy/.pylintrc diproxy/.coveragerc diproxy/
 RUN uv --project diproxy sync --locked

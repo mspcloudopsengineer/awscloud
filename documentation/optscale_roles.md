@@ -1,6 +1,6 @@
-| ACTION_GROUP         | ACTION                   | optscale_member    | optscale_engineer  | optscale_manager   |
+| ACTION_GROUP         | ACTION                   | CloudHub_member    | CloudHub_engineer  | CloudHub_manager   |
 | - | - | :-: | :-: | :-: |
-| OPTSCALE_MANAGEMENT  | MANAGE_CLOUD_CREDENTIALS | :x:                | :x:                | :white_check_mark: |
+| CloudHub_MANAGEMENT  | MANAGE_CLOUD_CREDENTIALS | :x:                | :x:                | :white_check_mark: |
 |                      | MANAGE_RESOURCES         | :x:                | :x:                | :white_check_mark: |
 |                      | MANAGE_OWN_RESOURCES     | :x:                | :white_check_mark: | :white_check_mark: |
 |                      | MANAGE_POOLS             | :x:                | :white_check_mark: | :white_check_mark: |

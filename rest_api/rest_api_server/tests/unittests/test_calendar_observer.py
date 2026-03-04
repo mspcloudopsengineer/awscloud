@@ -230,7 +230,7 @@ class TestObserver(TestApiBase):
             with patch(
                     'optscale_client.config_client.client.Client.'
                     'google_calendar_service_key',
-                    return_value={'client_email': 'example@hystax.com'}):
+                    return_value={'client_email': 'example@cloudhub.com'}):
                 code, res = self.client.organization_calendar_get(self.org_id)
                 self.assertEqual(code, 200)
                 c_sync = res['calendar_synchronization']
@@ -362,7 +362,7 @@ class TestObserver(TestApiBase):
                 )
         with freeze_time(dt + timedelta(days=1)):
             with patch('optscale_client.config_client.client.Client.google_calendar_service_key',
-                       return_value={'client_email': 'example@hystax.com'}):
+                       return_value={'client_email': 'example@cloudhub.com'}):
                 code, res = self.client.organization_calendar_get(self.org_id)
                 self.assertEqual(code, 200)
                 c_sync = res['calendar_synchronization']

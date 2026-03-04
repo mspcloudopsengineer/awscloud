@@ -3,7 +3,7 @@ There is a possibility to work with an external database that is located on
 another host outside of kubernetes
 
 ## External mongodb
-1\. Add these fields in overlay/user_template.yml ([optscale/optscale-deploy/overlay/user_template.yml](../optscale-deploy/overlay/user_template.yml)):
+1\. Add these fields in overlay/user_template.yml ([CloudHub/CloudHub-deploy/overlay/user_template.yml](../CloudHub-deploy/overlay/user_template.yml)):
 You can provide credentials
 ```
 # Mongodb host and credentials
@@ -30,7 +30,7 @@ mongo:
 ```
 
 ## External clickhouse
-1\. Add these fields in overlay/user_template.yml ([optscale/optscale-deploy/overlay/user_template.yml](../optscale-deploy/overlay/user_template.yml)):
+1\. Add these fields in overlay/user_template.yml ([CloudHub/CloudHub-deploy/overlay/user_template.yml](../CloudHub-deploy/overlay/user_template.yml)):
 You can provide credentials
 ```
 # Clickhouse host and credentials

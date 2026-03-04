@@ -1,2 +1,2 @@
-Hystax Subspector async client package
+CloudHub Subspector async client package
 ======================================

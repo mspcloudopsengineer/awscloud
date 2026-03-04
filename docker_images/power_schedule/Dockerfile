@@ -1,5 +1,5 @@
 FROM python:3.12.11-slim
-LABEL org.opencontainers.image.authors = "Hystax"
+LABEL org.opencontainers.image.authors = "CloudHub"
 
 ENV PYTHONPATH /usr/src/app/
 WORKDIR /usr/src/app/

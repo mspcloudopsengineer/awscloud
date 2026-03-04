@@ -13,7 +13,7 @@ OPENAPI_SPEC = """
 swagger: '2.0'
 info:
     description: >
-        OptScale Reports API. Call `POST` `/auth/v2/tokens` with `{"email": "<email>",
+        CloudHub Reports API. Call `POST` `/auth/v2/tokens` with `{"email": "<email>",
         "password": "<password>"}` body to receive an authorization token and
         use `Bearer <token>` string in `Authorization` header to authorize.\n\n
         Permission definitions: \n\n

@@ -43,24 +43,24 @@ class TestToken(TestModelBase):
         self.assertEqual(register, caveats['register'])
 
     def test_token_root(self):
-        user_root = User('root@hystax.com', self.type_root, 'pass',
+        user_root = User('root@cloudhub.com', self.type_root, 'pass',
                          display_name='I\'m root!', scope_id=None)
         self._check_token(user_root)
 
     def test_token_partner(self):
-        user_partner = User('partner@hystax.com', self.type_partner, 'pass',
+        user_partner = User('partner@cloudhub.com', self.type_partner, 'pass',
                             display_name='Partner user',
                             scope_id=str(uuid.uuid4()))
         self._check_token(user_partner)
 
     def test_token_customer(self):
-        user_customer = User('customer@hystax.com', self.type_customer, 'pass',
+        user_customer = User('customer@cloudhub.com', self.type_customer, 'pass',
                              display_name='Customer user',
                              scope_id=str(uuid.uuid4()))
         self._check_token(user_customer)
 
     def test_token_group(self):
-        user_group = User('group@hystax.com', self.type_group, 'pass',
+        user_group = User('group@cloudhub.com', self.type_group, 'pass',
                           display_name='Group user',
                           scope_id=str(uuid.uuid4()))
         self._check_token(user_group)
@@ -68,7 +68,7 @@ class TestToken(TestModelBase):
     def test_invalid_token(self):
         session = self.db_session
         fake_token = 'dpozskidKLklskldKLKL090ilokdlakodkads'
-        user = User('customer@hystax.com', self.type_customer, 'pass',
+        user = User('customer@cloudhub.com', self.type_customer, 'pass',
                     display_name='Customer user', scope_id=str(uuid.uuid4()))
         session.add(user)
         session.commit()
@@ -77,7 +77,7 @@ class TestToken(TestModelBase):
 
     def test_token_forgery(self):
         session = self.db_session
-        user = User('customer@hystax.com', self.type_customer, 'pass',
+        user = User('customer@cloudhub.com', self.type_customer, 'pass',
                     display_name='Customer user', scope_id=str(uuid.uuid4()))
         session.add(user)
         session.commit()

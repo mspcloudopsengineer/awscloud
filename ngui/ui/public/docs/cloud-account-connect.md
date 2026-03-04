@@ -20,13 +20,13 @@ Use the **Connect Data Source** page to register the Alibaba, AWS, Azure, Databr
 
 -   Instructions for Connecting Clouds: Follow these steps to successfully connect your clouds:
 
-    -   [Alibaba](https://hystax.com/documentation/optscale/e2e_guides/e2e_alibaba.html)
-    -   [AWS Root (data export configured)](https://hystax.com/documentation/optscale/e2e_guides/e2e_aws.html#root-account-data-export-already-configured)
-    -   [AWS Root (data export not configured)](https://hystax.com/documentation/optscale/e2e_guides/e2e_aws.html#root-account-data-export-not-configured-yet)
-    -   [AWS Linked](https://hystax.com/documentation/optscale/e2e_guides/e2e_aws.html#connecting-an-aws-linked-account)
-    -   [Azure](https://hystax.com/documentation/optscale/e2e_guides/e2e_azure.html)
-    -   [GCP](https://hystax.com/documentation/optscale/e2e_guides/e2e_gcp.html)
-    -   [Kubernetes](https://hystax.com/documentation/optscale/e2e_guides/e2e_kubernetes.html)
+    -   [Alibaba](https://docs.cloudhub.com/e2e_guides/e2e_alibaba.html)
+    -   [AWS Root (data export configured)](https://docs.cloudhub.com/e2e_guides/e2e_aws.html#root-account-data-export-already-configured)
+    -   [AWS Root (data export not configured)](https://docs.cloudhub.com/e2e_guides/e2e_aws.html#root-account-data-export-not-configured-yet)
+    -   [AWS Linked](https://docs.cloudhub.com/e2e_guides/e2e_aws.html#connecting-an-aws-linked-account)
+    -   [Azure](https://docs.cloudhub.com/e2e_guides/e2e_azure.html)
+    -   [GCP](https://docs.cloudhub.com/e2e_guides/e2e_gcp.html)
+    -   [Kubernetes](https://docs.cloudhub.com/e2e_guides/e2e_kubernetes.html)
 
 -   Ensure Correct Credentials: Double-check that you've entered the correct credentials to avoid connection issues.
 

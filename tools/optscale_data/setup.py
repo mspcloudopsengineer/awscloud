@@ -6,10 +6,10 @@ requirements = [
 ]
 
 setup(name='optscale-data',
-      description='OptScale Data utils',
-      url='http://hystax.com',
-      author='Hystax',
-      author_email='info@hystax.com',
+      description='CloudHub Data utils',
+      url='http://cloudhub.com',
+      author='CloudHub',
+      author_email='info@cloudhub.com',
       package_dir={'optscale_data': ''},
       packages=['optscale_data'],
       install_requires=requirements,

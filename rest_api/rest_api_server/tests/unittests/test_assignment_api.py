@@ -1641,7 +1641,7 @@ class TestAssignmentApi(TestAssignmentApiBase):
     def test_assignment_event(self, p_authorize):
         user_info = {
             'display_name': 'John Smth', 'id': self._user_id,
-            'email': 'example@hystax.com'
+            'email': 'example@cloudhub.com'
         }
         self.p_get_user_info.return_value = user_info
         p_publish_activity = patch(

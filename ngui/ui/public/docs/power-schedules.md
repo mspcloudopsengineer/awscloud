@@ -22,4 +22,4 @@ The **Power Schedules** page allows users to manage the automated power on/off s
 
 -   Collaborate with Your Team: Share and discuss schedules with team members to ensure optimal resource management.
 
-Want to learn about setting Power Schedules using OptScale? Check out this post - [How to set Power Schedules using OptScale](https://hystax.com/how-to-set-power-schedules-using-optscale/)
+Want to learn about setting Power Schedules using CloudHub? Check out this post - [How to set Power Schedules using CloudHub](https://docs.cloudhub.com/how-to-set-power-schedules-using-CloudHub/)

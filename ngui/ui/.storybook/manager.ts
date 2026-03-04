@@ -4,8 +4,8 @@ import { addons } from "@storybook/manager-api";
 addons.setConfig({
   theme: create({
     base: "light",
-    brandTitle: "Hystax OptScale",
-    brandUrl: "https://optscale.hystax.com/",
+    brandTitle: "CloudHub",
+    brandUrl: "https://cloudhub.com/",
     barSelectedColor: "#184286"
   })
 });

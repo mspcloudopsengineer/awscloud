@@ -401,7 +401,7 @@ class InvitesAsyncItemHandler(BaseAsyncItemHandler, BaseAuthHandler):
                     example:
                     -   id: 17cb0d9f-2f42-4f26-beeb-220ef946274c
                         email: user1@example.com
-                        owner_email: owner@hystax.com,
+                        owner_email: owner@cloudhub.com,
                         owner_id: 82d18542-1fb1-4094-b48e-7fa96b4ac6c6
                         owner_name: Montezuma
                         organization: Root organization

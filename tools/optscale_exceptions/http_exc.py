@@ -2,13 +2,13 @@ import requests
 import tornado.web
 
 
-from tools.optscale_exceptions.common_exc import OptException
+from tools.CloudHub_exceptions.common_exc import OptException
 
 
 class OptHTTPError(tornado.web.HTTPError):
     def __init__(self, status_code, error_code, params):
         """
-        Creates a new OptScale HTTP error
+        Creates a new CloudHub HTTP error
 
         :type status_code: int
         :type error_code: Enum
@@ -25,7 +25,7 @@ class OptHTTPError(tornado.web.HTTPError):
     @classmethod
     def from_opt_exception(cls, status_code, opt_exception):
         """
-        Creates a new OptScale HTTP error from provided OptScale exception
+        Creates a new CloudHub HTTP error from provided CloudHub exception
 
         :type status_code: int
         :type opt_exception: OptException

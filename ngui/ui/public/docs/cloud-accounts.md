@@ -1,6 +1,6 @@
 ### **Summary**
 
-Use the **Data Source** page to register the Alibaba, AWS, Azure, Databricks, GCP cost centers, or Kubernetes clusters. Connect and configure data sources to enable cost visibility, monitoring, and optimization. Proper integration of data sources ensures accurate expense tracking, forecasting, and resource management within OptScale.
+Use the **Data Source** page to register the Alibaba, AWS, Azure, Databricks, GCP cost centers, or Kubernetes clusters. Connect and configure data sources to enable cost visibility, monitoring, and optimization. Proper integration of data sources ensures accurate expense tracking, forecasting, and resource management within CloudHub.
 
 ### **View**
 

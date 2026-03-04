@@ -1,2 +1,2 @@
-Hystax OptScale Slacker API client package
+CloudHub Slacker API client package
 ==========================================

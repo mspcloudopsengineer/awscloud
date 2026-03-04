@@ -1,4 +1,4 @@
 apiVersion: v1
-description: A Helm chart for OptScale on Kubernetes
+description: A Helm chart for CloudHub on Kubernetes
 name: optscale
 version: 0.1.0

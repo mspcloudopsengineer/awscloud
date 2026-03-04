@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from tools.optscale_time import utcnow
+from tools.CloudHub_time import utcnow
 
 __all__ = ['get_time_options', 'get_add_bookings_form', 'get_booking_block',
            'get_booking_details_message']
@@ -168,7 +168,7 @@ def get_add_bookings_form(resource, public_ip):
                     "text": f":pushpin: If you want to book "
                             f"Resource *{r_name}* for another time period, you"
                             f" can do it in <https://{public_ip}/environments|"
-                            f"OptScale web console>"
+                            f"CloudHub web console>"
                 }
             }
         ]
@@ -294,13 +294,13 @@ def get_booking_details_message(public_ip, resource_id, resource_name, org_id,
         "type": "mrkdwn",
         "text": ":pushpin: Ony first 10 bookings are shown. See all Resource "
                 f"bookings in <https://{public_ip}/environments"
-                f"&organizationId={org_id}|OptScale web console>"
+                f"&organizationId={org_id}|CloudHub web console>"
     }
     advice = {
         "type": "mrkdwn",
         "text": ":pushpin: You can also check this Resource details in "
                 f"<https://{public_ip}/resources/{resource_id}?tab=details"
-                f"&organizationId={org_id}|OptScale web console>"
+                f"&organizationId={org_id}|CloudHub web console>"
     }
     footer_blocks = [{
         "type": "context",

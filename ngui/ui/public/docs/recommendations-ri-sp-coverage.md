@@ -20,6 +20,6 @@ The **RI/SP Coverage** page gives you a visualization of your compute usage cove
 
 - Get Benefits: Optimize cost savings, resource utilization, and performance for various use cases.
 
-- Get Recommendations from OptScale: Go to the ‘Reserved Instances opportunities’ card on the ‘Recommendations’ page to get tangible recommendations for optimal RI/SP usage. 
+- Get Recommendations from CloudHub: Go to the ‘Reserved Instances opportunities�?card on the ‘Recommendations�?page to get tangible recommendations for optimal RI/SP usage. 
 
-Want to learn more? Check out this post - [How to use OptScale to optimize RI/SP usage](https://hystax.com/how-to-use-optscale-to-optimize-ri-sp-usage-for-ml-ai-teams/)
+Want to learn more? Check out this post - [How to use CloudHub to optimize RI/SP usage](https://docs.cloudhub.com/how-to-use-CloudHub-to-optimize-ri-sp-usage-for-ml-ai-teams/)

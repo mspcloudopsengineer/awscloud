@@ -140,7 +140,7 @@ const mock = {
           },
           pool: {
             id: "c288ecdf-db08-4b36-ab1c-9e6e4ddf42e2",
-            name: "Hystax",
+            name: "CloudHub",
             purpose: "business_unit",
           },
           is_excluded: false,

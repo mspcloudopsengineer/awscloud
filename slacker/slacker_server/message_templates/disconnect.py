@@ -4,14 +4,14 @@ __all__ = ['get_disconnected_message', 'get_disconnect_confirmation_message']
 def get_disconnected_message(user_email, public_ip):
     italic_user_email = '_{}_'.format(user_email)
     return {
-        "text": "You have disconnected your OptScale account "
+        "text": "You have disconnected your CloudHub account "
                 f"{user_email} from this Slack user.",
         "blocks": [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "You have disconnected your OptScale account "
+                    "text": "You have disconnected your CloudHub account "
                             f"{italic_user_email} from this Slack user."
                 }
             },
@@ -19,7 +19,7 @@ def get_disconnected_message(user_email, public_ip):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "You are still able to use OptScale using Web UI "
+                    "text": "You are still able to use CloudHub using Web UI "
                             f"at <https://{public_ip}/>",
                 }
             },
@@ -38,14 +38,14 @@ def get_disconnected_message(user_email, public_ip):
 def get_disconnect_confirmation_message(user_email, public_ip):
     italic_user_email = '_{}_'.format(user_email)
     return {
-        "text": "You are about to disconnect your OptScale "
+        "text": "You are about to disconnect your CloudHub "
                 f"account {user_email} from this Slack user.",
         "blocks": [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "You are about to disconnect your OptScale "
+                    "text": "You are about to disconnect your CloudHub "
                             f"account {italic_user_email} from this Slack user."
                 }
             },
@@ -53,7 +53,7 @@ def get_disconnect_confirmation_message(user_email, public_ip):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "You will still able to use OptScale using Web UI "
+                    "text": "You will still able to use CloudHub using Web UI "
                             f"at <https://{public_ip}/>"
                 }
             },

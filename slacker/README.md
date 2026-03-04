@@ -1,4 +1,4 @@
-## How to prepare your OptScale cluster for Slack integration
+## How to prepare your CloudHub cluster for Slack integration
 
 1. Go to https://api.slack.com/apps to create a new Slack app. Enter a name and pick a workspace.
 

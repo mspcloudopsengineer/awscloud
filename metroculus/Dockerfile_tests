@@ -2,7 +2,7 @@ ARG BUILDTAG=build
 ARG IMAGE=metroculus_api
 FROM ${IMAGE}:${BUILDTAG}
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-LABEL org.opencontainers.image.authors="Hystax"
+LABEL org.opencontainers.image.authors="CloudHub"
 
 COPY tools tools
 COPY optscale_client/metroculus_client optscale_client/metroculus_client

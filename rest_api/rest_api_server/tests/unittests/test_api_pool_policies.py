@@ -268,7 +268,7 @@ class TestPoolPolicies(TestApiBase):
     def test_policy_events(self):
         self.p_get_user_info.return_value = {
             'display_name': 'John Doe', 'id': self._user_id,
-            'email': 'example@hystax.com'}
+            'email': 'example@cloudhub.com'}
         p_publish_activity = patch(
             'rest_api.rest_api_server.controllers.base.BaseController.'
             'publish_activities_task'

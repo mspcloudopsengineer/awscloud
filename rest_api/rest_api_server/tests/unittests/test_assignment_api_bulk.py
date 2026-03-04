@@ -552,7 +552,7 @@ class TestAssignmentApiBulk(TestAssignmentApiBase):
         p_authorize.return_value = True
         user_info = {
             'display_name': 'John Smth', 'id': self._user_id,
-            'email': 'example@hystax.com'
+            'email': 'example@cloudhub.com'
         }
         self.p_get_user_info.return_value = user_info
         p_publish_activity = patch(

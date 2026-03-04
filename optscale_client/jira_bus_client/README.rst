@@ -1,2 +1,2 @@
-Hystax OptScale Jira Bus API client package
+CloudHub Jira Bus API client package
 ==========================================

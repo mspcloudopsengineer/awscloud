@@ -74,7 +74,7 @@ def get_constraint_violation_alert(org_id, org_name, violations, public_ip):
                     "text": f":pushpin: You can see all current constraints "
                             f"violations at <https://{public_ip}/resources"
                             f"?constraintViolated=true&organizationId={org_id}"
-                            f"|OptScale web console>"
+                            f"|CloudHub web console>"
                 }
             ]
         }

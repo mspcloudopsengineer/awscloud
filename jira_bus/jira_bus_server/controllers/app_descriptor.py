@@ -10,10 +10,10 @@ LOG = logging.getLogger(__name__)
 
 
 class AppDescriptorController(BaseController):
-    APP_NAME = "Hystax OptScale for Jira"
-    APP_SHORT_NAME = "OptScale"
+    APP_NAME = "CloudHub for Jira"
+    APP_SHORT_NAME = "CloudHub"
     APP_DESCRIPTION = "Manage your IT environments in Jira issues"
-    ISSUE_PANEL_NAME = "IT environments (OptScale)"
+    ISSUE_PANEL_NAME = "IT environments (CloudHub)"
     COMMON_CONDITIONS = [
         {
             # Do not show environment stuff to anonymous users without Jira account
@@ -31,8 +31,8 @@ class AppDescriptorController(BaseController):
                 base_host=base_host or self._config.public_ip(),
             ),
             "vendor": {
-                "name": "Hystax, Inc.",
-                "url": "https://hystax.com",
+                "name": "CloudHub",
+                "url": "https://cloudhub.com",
             },
             "authentication": {
                 "type": "jwt",

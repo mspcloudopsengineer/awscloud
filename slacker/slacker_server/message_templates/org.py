@@ -41,7 +41,7 @@ def get_org_switch_blocks(orgs, active_org_id):
             "text": {
                 "type": "mrkdwn",
                 "text": f"You are member of {len(orgs)} {singular_plural_org} in "
-                        f"OptScale."
+                        f"CloudHub."
             }
         },
         {
@@ -112,7 +112,7 @@ def get_org_switch_completed_message(org_name):
                     {
                         "type": "mrkdwn",
                         "text": ":runner: Log out current Slack user from "
-                                "OptScale by sending `logout` message"
+                                "CloudHub by sending `logout` message"
                     }
                 ]
             }

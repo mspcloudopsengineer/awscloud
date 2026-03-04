@@ -29,7 +29,7 @@ def get_ca_not_connected_message(org_name, public_ip):
                     "type": "mrkdwn",
                     "text": ":pushpin: Setting up cloud accounts are "
                             f"available in <https://{public_ip}/"
-                            f"cloud-accounts|OptScale web console>"
+                            f"cloud-accounts|CloudHub web console>"
                 }
             ]
         }
@@ -56,7 +56,7 @@ def get_not_have_slack_permissions_message():
             "text": {
                 "type": "mrkdwn",
                 "text": f"Application doesn’t have enough permissions. Please "
-                        f"reinstall it or connect support@hystax.com for "
+                        f"reinstall it or connect support@cloudhub.com for "
                         f"assistance."
             }
         }

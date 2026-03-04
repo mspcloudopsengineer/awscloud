@@ -1,4 +1,4 @@
-## Patching working pod on OptScale environment
+## Patching working pod on CloudHub environment
 
 ### For Ubuntu 20 (docker)
 

@@ -23,10 +23,10 @@ const preview: Preview = {
   },
   parameters: {
     backgrounds: {
-      default: "OptScale",
+      default: "CloudHub",
       values: [
         {
-          name: "OptScale",
+          name: "CloudHub",
           // TODO: Get BACKGROUND color from theme
           value: "rgb(246, 247, 248)"
         }

@@ -374,7 +374,7 @@ export const PDF_ELEMENTS = Object.freeze({
     initPortrait: "inits portrait doc",
     newPortraitPage: "new portrait page",
     newLandscapePage: "new landscape page",
-    logo: "optscale logotype",
+    logo: "CloudHub logotype",
     spacer: "vertical spacer",
     footer: "footer copyright",
   }),

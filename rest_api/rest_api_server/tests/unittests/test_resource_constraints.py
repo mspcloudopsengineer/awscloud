@@ -334,7 +334,7 @@ class TestResourceConstraints(TestApiBase):
     def test_resource_constraint_events(self):
         user_info = {
             'display_name': 'John Doe', 'id': self._user_id,
-            'email': 'example@hystax.com'
+            'email': 'example@cloudhub.com'
         }
         self.p_get_user_info.return_value = user_info
 

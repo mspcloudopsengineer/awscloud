@@ -17,10 +17,10 @@ class ConnectHandler(BaseHandler):
         """
         ---
         description: |
-            Connect slack user to OptScale auth user
+            Connect slack user to CloudHub auth user
             Required permission: TOKEN
         tags: [connect]
-        summary: Connect slack user to OptScale auth user
+        summary: Connect slack user to CloudHub auth user
         parameters:
         -   in: body
             name: body

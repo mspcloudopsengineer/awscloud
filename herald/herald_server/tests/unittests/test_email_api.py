@@ -8,7 +8,7 @@ class TestEmailApi(TestHeraldBase):
         super().setUp(*args)
 
     def test_email_send(self):
-        email = ["test@hystax.com"]
+        email = ["test@cloudhub.com"]
         template_type = "invite"
         template_params = {
             "message": "Email_message",
@@ -17,7 +17,7 @@ class TestEmailApi(TestHeraldBase):
             "object_type": "INFO",
             "level": "INFO",
         }
-        reply_to_email = "test_reply_to@hystax.com"
+        reply_to_email = "test_reply_to@cloudhub.com"
         code, response = self.client_v2.email_send(
             email, "Email_subject", template_type, template_params, reply_to_email
         )
@@ -32,7 +32,7 @@ class TestEmailApi(TestHeraldBase):
         self.assertDictEqual(result, response)
 
     def test_email_hystax_registration_send(self):
-        email = ["test@hystax.com"]
+        email = ["test@cloudhub.com"]
         template_type = "new_employee"
         template_params = {
             "message": "Email_message",
@@ -48,7 +48,7 @@ class TestEmailApi(TestHeraldBase):
         code, response = self.client_v2.email_send(email, "Email_subject", template_type, template_params)
         self.assertEqual(publish_message_p_configured.called, True)
         result = {
-            "email": ["test@hystax.com"],
+            "email": ["test@cloudhub.com"],
             "subject": "Email_subject",
             "template_type": template_type,
             "template_params": template_params,
@@ -58,7 +58,7 @@ class TestEmailApi(TestHeraldBase):
         self.assertDictEqual(result, response)
 
     def test_email_hystax_registration_not_publish(self):
-        email = ["test@hystax.com"]
+        email = ["test@cloudhub.com"]
         template_type = "new_employee"
         template_params = {
             "message": "Email_message",
@@ -66,7 +66,7 @@ class TestEmailApi(TestHeraldBase):
             "object_name": "Object_name",
             "object_type": "INFO",
             "level": "INFO",
-            "texts": {"user_email": "test+1@hystax.com"},
+            "texts": {"user_email": "test+1@cloudhub.com"},
         }
         publish_message_p_configured = patch(
             "herald.herald_server.controllers.email.EmailController.publish_message"
@@ -74,7 +74,7 @@ class TestEmailApi(TestHeraldBase):
         code, response = self.client_v2.email_send(email, "Email_subject", template_type, template_params)
         self.assertEqual(publish_message_p_configured.called, False)
         result = {
-            "email": ["test@hystax.com"],
+            "email": ["test@cloudhub.com"],
             "subject": "Email_subject",
             "template_type": template_type,
             "template_params": template_params,
@@ -84,7 +84,7 @@ class TestEmailApi(TestHeraldBase):
         self.assertDictEqual(result, response)
 
     def test_validation_email_payload(self):
-        valid_email = "test@hystax.com"
+        valid_email = "test@cloudhub.com"
         code, response = self.client_v2.email_send(email=[valid_email], subject=None)
         self.assertEqual(400, code)
         self.assertEqual("subject is not provided", response["error"]["reason"])
@@ -114,7 +114,7 @@ class TestEmailApi(TestHeraldBase):
         self.assertEqual("invalid template_params", response["error"]["reason"])
 
     def test_email_template_params(self):
-        valid_email = "test@hystax.com"
+        valid_email = "test@cloudhub.com"
         template_type = "new_employee"
         subject = "subj"
         code, response = self.client_v2.email_send(
