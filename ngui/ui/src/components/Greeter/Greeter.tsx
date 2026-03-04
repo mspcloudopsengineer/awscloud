@@ -6,7 +6,6 @@ import Link from "@mui/material/Link";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useNavigate } from "react-router-dom";
 import anomalyDetectionToAvoidBudgetOverruns from "assets/welcome/anomaly-detection-to-avoid-budget-overruns.svg";
 import cloudResourceUsageCostTransparency from "assets/welcome/cloud-resource-usage-cost-transparency.svg";
 import finopsCloudCostOptimization from "assets/welcome/finops-cloud-cost-optimization.svg";
@@ -22,12 +21,10 @@ import SubTitle from "components/SubTitle";
 import TopAlertWrapper from "components/TopAlertWrapper";
 import { ALERT_TYPES } from "components/TopAlertWrapper/constants";
 import { useIsDownMediaQuery, useIsUpMediaQuery } from "hooks/useMediaQueries";
-import { HYSTAX, LIVE_DEMO, OPTSCALE_CAPABILITY_QUERY_PARAMETER_NAME } from "urls";
+import { HYSTAX } from "urls";
 import { tag as tagHotjar } from "utils/hotjar";
 import { SPACING_2, SPACING_6, SPACING_1 } from "utils/layouts";
 import { isEven } from "utils/math";
-import { getSearchParams } from "utils/network";
-import { buildQueryParameters } from "utils/strings";
 import useStyles from "./Greeter.styles";
 
 type GreeterProps = {
@@ -93,31 +90,6 @@ const ImagesWithCaptions = () => {
   );
 };
 
-const LiveDemoButton = () => {
-  const navigate = useNavigate();
-
-  const onClick = () => {
-    const { [OPTSCALE_CAPABILITY_QUERY_PARAMETER_NAME]: capability } = getSearchParams();
-
-    const url = buildQueryParameters(LIVE_DEMO, [
-      capability ? `${OPTSCALE_CAPABILITY_QUERY_PARAMETER_NAME}=${capability}` : "",
-    ]);
-
-    navigate(url);
-  };
-
-  return (
-    <Button
-      dataTestId="btn_live_demo"
-      color="lightYellow"
-      variant="contained"
-      messageId="liveDemo"
-      size="large"
-      onClick={onClick}
-    />
-  );
-};
-
 const defaultOrder = [0, 1, 2, 3, 4, 5] as const;
 
 const getVerticalOrder = () => {
@@ -164,7 +136,6 @@ const Greeter = ({ content }: GreeterProps) => {
       key: "link",
       children: (
         <div className={classes.linkWrapper}>
-          <LiveDemoButton />
           <OptScaleLink />
         </div>
       ),
