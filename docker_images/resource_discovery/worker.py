@@ -284,6 +284,12 @@ class DiscoveryWorker(ConsumerMixin):
         res = []
         if not config:
             return res
+        LOG.info('[discover] type=%s, resource=%s, region_name=%s, '
+                 'has_access_key=%s, has_secret=%s',
+                 config.get('type'), resource_type,
+                 config.get('region_name'),
+                 bool(config.get('access_key_id')),
+                 bool(config.get('secret_access_key')))
         adapter = CloudAdapter.get_adapter(config)
         max_parallel_requests = self.max_parallel_requests(config)
         with ThreadPoolExecutor(

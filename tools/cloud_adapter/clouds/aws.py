@@ -199,32 +199,38 @@ class Aws(S3CloudMixin):
         then STS ARN probes as fallback."""
         # 1. Fast check: region_name prefix (no network call)
         region = self.config.get('region_name', '')
+        LOG.info('[partition-detect] config region_name=%r, '
+                 'access_key_id=%s...',
+                 region,
+                 (self.config.get('access_key_id') or '')[:8])
         if region.startswith('cn-'):
-            LOG.info('[partition-detect] detected aws-cn via region prefix: %s', region)
+            LOG.info('[partition-detect] detected aws-cn via region prefix')
             return 'aws-cn'
 
         # 2. Try global STS (works for standard AWS credentials)
+        global_sts_error = None
         try:
             sts = self._base_session().client('sts', config=IAM_CLIENT_CONFIG)
             identity = sts.get_caller_identity()
             arn = identity.get('Arn', '')
-            LOG.info('[partition-detect] global STS succeeded, ARN=%s', arn)
+            LOG.info('[partition-detect] global STS OK, ARN=%s', arn)
             parts = arn.split(':')
             if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
                 return parts[1]
         except ClientError as exc:
             code = (exc.response.get('Error') or {}).get('Code', '')
+            global_sts_error = f'ClientError:{code}'
             LOG.info('[partition-detect] global STS ClientError: %s', code)
-            # Auth errors on global STS strongly suggest CN credentials
             if code in ('InvalidClientTokenId', 'SignatureDoesNotMatch',
                         'AuthFailure'):
-                LOG.info('[partition-detect] global STS auth error, '
-                         'assuming aws-cn')
+                LOG.info('[partition-detect] auth error on global STS → aws-cn')
                 return 'aws-cn'
         except Exception as exc:
-            LOG.info('[partition-detect] global STS failed: %s', exc)
+            global_sts_error = f'{type(exc).__name__}:{exc}'
+            LOG.info('[partition-detect] global STS error: %s', global_sts_error)
 
-        # 3. Try CN STS endpoint explicitly
+        # 3. If global STS failed for any reason (not just auth),
+        #    try CN STS endpoint explicitly
         try:
             cn_cfg = PARTITION_CONFIG['aws-cn']
             cn_session = self._base_session(region_name=cn_cfg['sts_region'])
@@ -236,15 +242,28 @@ class Aws(S3CloudMixin):
             )
             identity = sts_cn.get_caller_identity()
             arn = identity.get('Arn', '')
-            LOG.info('[partition-detect] CN STS succeeded, ARN=%s', arn)
+            LOG.info('[partition-detect] CN STS OK, ARN=%s', arn)
             parts = arn.split(':')
             if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
                 return parts[1]
             return 'aws-cn'
         except Exception as exc:
-            LOG.info('[partition-detect] CN STS failed: %s', exc)
+            LOG.info('[partition-detect] CN STS error: %s:%s',
+                     type(exc).__name__, exc)
 
-        LOG.warning('[partition-detect] all probes failed, defaulting to aws')
+        # 4. If both STS calls failed and global returned an auth-like
+        #    error message (not just ClientError codes), assume CN.
+        if global_sts_error:
+            err_lower = global_sts_error.lower()
+            if any(needle in err_lower for needle in (
+                    'invalid', 'auth', 'signature', 'credential',
+                    'token', 'denied', 'not authorized')):
+                LOG.info('[partition-detect] global STS error looks auth-related'
+                         ' (%s), assuming aws-cn', global_sts_error)
+                return 'aws-cn'
+
+        LOG.warning('[partition-detect] all probes failed (global_err=%s), '
+                    'defaulting to aws', global_sts_error)
         return 'aws'
 
     @property
@@ -420,6 +439,8 @@ class Aws(S3CloudMixin):
         s3_endpoint = self.config.get('s3_endpoint')
         if s3_endpoint:
             kwargs['endpoint_url'] = s3_endpoint
+        LOG.debug('[s3] partition=%s, region=%s, endpoint=%s',
+                  self.partition, region, kwargs.get('endpoint_url', 'default'))
         return self.session.client('s3', **kwargs)
 
     @property
@@ -511,6 +532,8 @@ class Aws(S3CloudMixin):
         kwargs = {'region_name': r}
         if self._is_cn_partition:
             kwargs['endpoint_url'] = f'https://ec2.{r}.amazonaws.com.cn'
+        LOG.debug('[_ec2_client] region=%s, cn=%s, endpoint=%s',
+                  r, self._is_cn_partition, kwargs.get('endpoint_url', 'default'))
         return self.session.client('ec2', **kwargs)
 
     def _cn_client(self, service, region, endpoint_prefix=None):
@@ -522,6 +545,9 @@ class Aws(S3CloudMixin):
             kwargs['endpoint_url'] = (
                 f'https://{prefix}.{region}.amazonaws.com.cn'
             )
+        LOG.debug('[_cn_client] service=%s, region=%s, cn=%s, endpoint=%s',
+                  service, region, self._is_cn_partition,
+                  kwargs.get('endpoint_url', 'default'))
         return self.session.client(service, **kwargs)
 
     def _is_region_usable(self, region):
@@ -572,6 +598,11 @@ class Aws(S3CloudMixin):
         return groups_by_id
 
     def validate_credentials(self, org_id=None):
+        LOG.info('[validate_credentials] partition=%s, region_name=%s, '
+                 'has_access_key=%s',
+                 self.partition,
+                 self.config.get('region_name'),
+                 bool(self.config.get('access_key_id')))
         region_name = self.config.get("region_name")
         if region_name and region_name not in self._get_coordinates_map():
             raise InvalidParameterException(f"Invalid region: {region_name}")
