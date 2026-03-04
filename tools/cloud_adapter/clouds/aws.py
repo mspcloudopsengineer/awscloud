@@ -202,11 +202,12 @@ class Aws(S3CloudMixin):
             sts = self._base_session().client('sts', config=IAM_CLIENT_CONFIG)
             identity = sts.get_caller_identity()
             arn = identity.get('Arn', '')
+            LOG.info('[partition-detect] global STS succeeded, ARN=%s', arn)
             parts = arn.split(':')
             if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
                 return parts[1]
-        except Exception:
-            pass
+        except Exception as exc:
+            LOG.info('[partition-detect] global STS failed: %s', exc)
 
         # If the default region failed, try the CN endpoint explicitly.
         # AWS CN credentials are invalid on global STS and vice-versa,
@@ -222,18 +223,21 @@ class Aws(S3CloudMixin):
             )
             identity = sts_cn.get_caller_identity()
             arn = identity.get('Arn', '')
+            LOG.info('[partition-detect] CN STS succeeded, ARN=%s', arn)
             parts = arn.split(':')
             if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
                 return parts[1]
             # Call succeeded on CN endpoint, so it's CN partition
             return 'aws-cn'
-        except Exception:
-            pass
+        except Exception as exc:
+            LOG.info('[partition-detect] CN STS failed: %s', exc)
 
         # Final fallback: check region_name prefix
         region = self.config.get('region_name', '')
         if region.startswith('cn-'):
+            LOG.info('[partition-detect] fallback to aws-cn via region prefix: %s', region)
             return 'aws-cn'
+        LOG.warning('[partition-detect] all probes failed, defaulting to aws')
         return 'aws'
 
     @property
@@ -373,6 +377,8 @@ class Aws(S3CloudMixin):
                 # Trigger partition detection before creating the session
                 # so CN credentials get a CN default region.
                 region = self._partition_config['default_s3_region']
+            LOG.info('[session] creating session with region=%s, partition=%s',
+                     region, self.partition)
             self._session = self.get_session(
                 self.config.get('access_key_id'),
                 self.config.get('secret_access_key'),
@@ -489,7 +495,10 @@ class Aws(S3CloudMixin):
 
         with self._allowed_regions_lock:
             if getattr(self, "_allowed_regions", None) is None:
-                ec2 = self.session.client("ec2", self._ec2_default_region)
+                ec2_region = self._ec2_default_region
+                LOG.info('[allowed_regions] partition=%s, ec2_region=%s',
+                         self.partition, ec2_region)
+                ec2 = self.session.client("ec2", ec2_region)
                 resp = ec2.describe_regions(AllRegions=True)
                 allowed = []
                 for r in resp.get("Regions", []):
