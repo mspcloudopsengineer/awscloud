@@ -195,9 +195,15 @@ class Aws(S3CloudMixin):
     SUPPORTS_REPORT_UPLOAD = True
 
     def _detect_partition(self):
-        """Detect AWS partition (aws or aws-cn) via STS ARN,
-        falling back to CN endpoint probe, then region_name prefix."""
-        # Try with the configured (or default) region first
+        """Detect AWS partition (aws or aws-cn) via region_name prefix,
+        then STS ARN probes as fallback."""
+        # 1. Fast check: region_name prefix (no network call)
+        region = self.config.get('region_name', '')
+        if region.startswith('cn-'):
+            LOG.info('[partition-detect] detected aws-cn via region prefix: %s', region)
+            return 'aws-cn'
+
+        # 2. Try global STS (works for standard AWS credentials)
         try:
             sts = self._base_session().client('sts', config=IAM_CLIENT_CONFIG)
             identity = sts.get_caller_identity()
@@ -206,12 +212,19 @@ class Aws(S3CloudMixin):
             parts = arn.split(':')
             if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
                 return parts[1]
+        except ClientError as exc:
+            code = (exc.response.get('Error') or {}).get('Code', '')
+            LOG.info('[partition-detect] global STS ClientError: %s', code)
+            # Auth errors on global STS strongly suggest CN credentials
+            if code in ('InvalidClientTokenId', 'SignatureDoesNotMatch',
+                        'AuthFailure'):
+                LOG.info('[partition-detect] global STS auth error, '
+                         'assuming aws-cn')
+                return 'aws-cn'
         except Exception as exc:
             LOG.info('[partition-detect] global STS failed: %s', exc)
 
-        # If the default region failed, try the CN endpoint explicitly.
-        # AWS CN credentials are invalid on global STS and vice-versa,
-        # so a successful call here means the credentials belong to CN.
+        # 3. Try CN STS endpoint explicitly
         try:
             cn_cfg = PARTITION_CONFIG['aws-cn']
             cn_session = self._base_session(region_name=cn_cfg['sts_region'])
@@ -227,16 +240,10 @@ class Aws(S3CloudMixin):
             parts = arn.split(':')
             if len(parts) >= 2 and parts[1] in PARTITION_CONFIG:
                 return parts[1]
-            # Call succeeded on CN endpoint, so it's CN partition
             return 'aws-cn'
         except Exception as exc:
             LOG.info('[partition-detect] CN STS failed: %s', exc)
 
-        # Final fallback: check region_name prefix
-        region = self.config.get('region_name', '')
-        if region.startswith('cn-'):
-            LOG.info('[partition-detect] fallback to aws-cn via region prefix: %s', region)
-            return 'aws-cn'
         LOG.warning('[partition-detect] all probes failed, defaulting to aws')
         return 'aws'
 
@@ -398,7 +405,7 @@ class Aws(S3CloudMixin):
 
     @property
     def ec2(self):
-        return self.session.client('ec2')
+        return self._ec2_client()
 
     @property
     def ec2_resource(self):
@@ -478,9 +485,29 @@ class Aws(S3CloudMixin):
             config=IAM_CLIENT_CONFIG,
         )
 
+    def _ec2_client(self, region=None):
+        """Create an EC2 client for the given region, using the correct
+        partition endpoint so CN credentials hit *.amazonaws.com.cn."""
+        r = region or self._ec2_default_region
+        kwargs = {'region_name': r}
+        if self._is_cn_partition:
+            kwargs['endpoint_url'] = f'https://ec2.{r}.amazonaws.com.cn'
+        return self.session.client('ec2', **kwargs)
+
+    def _cn_client(self, service, region, endpoint_prefix=None):
+        """Create a service client with partition-aware endpoint.
+        endpoint_prefix defaults to service name if not provided."""
+        prefix = endpoint_prefix or service
+        kwargs = {'region_name': region}
+        if self._is_cn_partition:
+            kwargs['endpoint_url'] = (
+                f'https://{prefix}.{region}.amazonaws.com.cn'
+            )
+        return self.session.client(service, **kwargs)
+
     def _is_region_usable(self, region):
         try:
-            self.session.client("ec2", region).describe_availability_zones()
+            self._ec2_client(region).describe_availability_zones()
             return True
         except ClientError as e:
             code = e.response["Error"]["Code"]
@@ -498,7 +525,7 @@ class Aws(S3CloudMixin):
                 ec2_region = self._ec2_default_region
                 LOG.info('[allowed_regions] partition=%s, ec2_region=%s',
                          self.partition, ec2_region)
-                ec2 = self.session.client("ec2", ec2_region)
+                ec2 = self._ec2_client(ec2_region)
                 resp = ec2.describe_regions(AllRegions=True)
                 allowed = []
                 for r in resp.get("Regions", []):
@@ -513,8 +540,7 @@ class Aws(S3CloudMixin):
             return self._allowed_regions
 
     def describe_security_groups(self, region, group_ids=None):
-        session = self.get_session()
-        ec2 = session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         all_groups = {sec_group['GroupId']: sec_group
                       for sec_group in self._retry(ec2.describe_security_groups)['SecurityGroups']}
         if group_ids:
@@ -592,7 +618,7 @@ class Aws(S3CloudMixin):
             resource_type, region, resource_obj.cloud_resource_id)
 
     def _discover_region_vpcs(self, region):
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         vpcs = ec2.describe_vpcs().get('Vpcs', [])
         # if there is no VpcId in vpc then it means that something is wrong
         # with that vpc so we can ignore it
@@ -607,7 +633,7 @@ class Aws(S3CloudMixin):
         :return: list(model.InstanceResource)
         """
         vpc_id_to_name = self._discover_region_vpcs(region)
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         next_token = None
         first_iteration = True
         while next_token or first_iteration:
@@ -659,7 +685,7 @@ class Aws(S3CloudMixin):
                 for r in self.list_regions()]
 
     def discover_region_volumes(self, region):
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         next_token = None
         first_iteration = True
         while next_token or first_iteration:
@@ -695,7 +721,7 @@ class Aws(S3CloudMixin):
 
     def discover_region_snapshots(self, region):
         account_id = self.validate_credentials()['account_id']
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         next_token = None
         first_iteration = True
         while next_token or first_iteration:
@@ -1091,8 +1117,7 @@ class Aws(S3CloudMixin):
         return tags
 
     def discover_region_lbs_v2(self, region):
-        session = self.get_session()
-        elb = session.client('elbv2', region)
+        elb = self._cn_client('elbv2', region, 'elasticloadbalancing')
         lbs = elb.describe_load_balancers().get('LoadBalancers', [])
         for lb in lbs:
             lb_arn = lb['LoadBalancerArn']
@@ -1116,8 +1141,7 @@ class Aws(S3CloudMixin):
 
     def discover_region_lbs(self, region):
         """Discover "classic" load balancer resources"""
-        session = self.get_session()
-        elb = session.client('elb', region)
+        elb = self._cn_client('elb', region, 'elasticloadbalancing')
         lbs = elb.describe_load_balancers().get(
             'LoadBalancerDescriptions', [])
         for lb in lbs:
@@ -1179,7 +1203,7 @@ class Aws(S3CloudMixin):
 
     def discover_region_ip_addresses(self, region):
         instance_map = {}
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         described_ip_addresses = ec2.describe_addresses()
         eni_ids = []
         instance_ids = []
@@ -1926,7 +1950,7 @@ class Aws(S3CloudMixin):
 
     @_wrap_timeout_exception()
     def get_spot_history(self, region, flavors):
-        return self.session.client('ec2', region).describe_spot_price_history(
+        return self._ec2_client(region).describe_spot_price_history(
             InstanceTypes=flavors,
             StartTime=datetime.now(tz=timezone.utc).replace(tzinfo=None),
         )
@@ -1957,7 +1981,7 @@ class Aws(S3CloudMixin):
         owners = []
         if by_owner:
             owners.append(self.validate_credentials()['account_id'])
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         all_images = ec2.describe_images(Owners=owners).get('Images', [])
         if filter_by and isinstance(filter_by, dict):
             all_images = self._filter_response(all_images, filter_by)
@@ -2001,8 +2025,7 @@ class Aws(S3CloudMixin):
 
     @_wrap_timeout_exception()
     def get_region_availability_zones(self, region):
-        resp = self.session.client(
-            'ec2', region_name=region).describe_availability_zones(
+        resp = self._ec2_client(region).describe_availability_zones(
             Filters=[{
                 'Name': 'opt-in-status',
                 'Values': ['opt-in-not-required']
@@ -2016,7 +2039,7 @@ class Aws(S3CloudMixin):
         session = self.get_session()
 
         instance_types = []
-        region_ec2 = session.client('ec2', region_name=region)
+        region_ec2 = self._ec2_client(region)
         resp = region_ec2.describe_instance_types()
         instance_types.extend(resp['InstanceTypes'])
         while resp.get('NextToken'):
@@ -2050,8 +2073,7 @@ class Aws(S3CloudMixin):
     def get_instance_types_present_in_all_regions(self, regions):
         type_regions_map = {}
         for region in regions:
-            types_in_region = self.session.client(
-                'ec2', region_name=region).describe_instance_types()
+            types_in_region = self._ec2_client(region).describe_instance_types()
             for i_type in types_in_region['InstanceTypes']:
                 type_name = i_type['InstanceType']
                 if type_name not in type_regions_map:
@@ -2169,7 +2191,7 @@ class Aws(S3CloudMixin):
         pass
 
     def start_instance(self, instance_ids: list, region):
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         try:
             return ec2.start_instances(InstanceIds=instance_ids)
         except ClientError as exc:
@@ -2181,7 +2203,7 @@ class Aws(S3CloudMixin):
                 raise
 
     def stop_instance(self, instance_ids: list, region):
-        ec2 = self.session.client('ec2', region)
+        ec2 = self._ec2_client(region)
         try:
             return ec2.stop_instances(InstanceIds=instance_ids)
         except ClientError as exc:
