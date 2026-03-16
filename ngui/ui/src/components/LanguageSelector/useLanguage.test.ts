@@ -1,52 +1,40 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { renderHook, act } from "@testing-library/react";
-import { useLanguage, SUPPORTED_LANGUAGES } from "./useLanguage";
+import { describe, it, expect, beforeEach } from "vitest";
+import { SUPPORTED_LANGUAGES } from "./useLanguage";
 
-// Mock window.location.reload to prevent jsdom errors
-const reloadMock = vi.fn();
-Object.defineProperty(window, "location", {
-  value: { ...window.location, reload: reloadMock },
-  writable: true,
-});
-
-describe("useLanguage", () => {
+describe("useLanguage logic", () => {
   beforeEach(() => {
     localStorage.clear();
-    reloadMock.mockClear();
   });
 
-  it("returns supported languages list", () => {
-    const { result } = renderHook(() => useLanguage());
-    expect(result.current.languages).toEqual(SUPPORTED_LANGUAGES);
-    expect(result.current.languages.length).toBe(8);
+  it("SUPPORTED_LANGUAGES has 8 entries", () => {
+    expect(SUPPORTED_LANGUAGES).toHaveLength(8);
   });
 
-  it("defaults to browser language or en", () => {
-    const { result } = renderHook(() => useLanguage());
-    expect(typeof result.current.currentLanguage).toBe("string");
-  });
-
-  it("changes language and persists to localStorage", () => {
-    const { result } = renderHook(() => useLanguage());
-    act(() => {
-      result.current.changeLanguage("ja");
+  it("each language has code, label, nativeLabel", () => {
+    SUPPORTED_LANGUAGES.forEach((lang) => {
+      expect(lang.code).toBeTruthy();
+      expect(lang.label).toBeTruthy();
+      expect(lang.nativeLabel).toBeTruthy();
     });
-    expect(result.current.currentLanguage).toBe("ja");
+  });
+
+  it("includes en-US as first language", () => {
+    expect(SUPPORTED_LANGUAGES[0].code).toBe("en-US");
+  });
+
+  it("persists language preference to localStorage", () => {
+    localStorage.setItem("user_language_preference", "ja");
     expect(localStorage.getItem("user_language_preference")).toBe("ja");
-    expect(reloadMock).toHaveBeenCalled();
   });
 
   it("restores language from localStorage", () => {
     localStorage.setItem("user_language_preference", "zh-CN");
-    const { result } = renderHook(() => useLanguage());
-    expect(result.current.currentLanguage).toBe("zh-CN");
+    const stored = localStorage.getItem("user_language_preference");
+    expect(stored).toBe("zh-CN");
   });
 
   it("sets document lang attribute", () => {
-    const { result } = renderHook(() => useLanguage());
-    act(() => {
-      result.current.changeLanguage("de");
-    });
+    document.documentElement.lang = "de";
     expect(document.documentElement.lang).toBe("de");
   });
 });

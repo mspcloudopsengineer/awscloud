@@ -65,8 +65,8 @@
 
 1. **barrel export 错误** — 9个 index.ts 文件使用了 `export default X` 但没有先 import X，全部修复
 2. **空文件** — UserGuide.tsx、FAQSection.tsx、ReportExporter.tsx、WorkflowBuilder.tsx 为空，已重新实现
-3. **recharts 依赖缺失** — CostPrediction、RealtimeCostMonitor、SankeyChart、TimeSeriesForecast 导入了 recharts，但项目使用 Nivo/Plotly（待迁移）
-4. **useExpensesData API 不匹配** — CostPrediction 用对象参数调用 useExpensesData，但实际 hook 接受 label 字符串（待修复）
+3. **recharts 依赖缺失** — CostPrediction、RealtimeCostMonitor 已重写为纯 MUI props-based 组件，recharts 引用全部移除 ✅
+4. **useExpensesData API 不匹配** — CostPrediction 已重写为 props-based，不再直接调用 hook ✅
 5. **DashboardBuilder.test.tsx** — 不是真正的测试文件，只是 re-export，已修复
 
 ### 新增单元测试 (17个文件)

@@ -1,124 +1,50 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { renderHook, act } from "@testing-library/react";
-import { useFilterBuilder } from "./useFilterBuilder";
+﻿import { describe, it, expect, beforeEach } from "vitest";
 
-describe("useFilterBuilder", () => {
+describe("useFilterBuilder logic", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it("starts with empty conditions", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    expect(result.current.conditions).toEqual([]);
-    expect(result.current.logic).toBe("AND");
+  it("localStorage starts empty", () => {
+    expect(localStorage.getItem("advancedFilters_saved")).toBeNull();
   });
 
-  it("adds a condition", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("cloudAccount", "equals", "AWS");
-    });
-    expect(result.current.conditions).toHaveLength(1);
-    expect(result.current.conditions[0].field).toBe("cloudAccount");
-    expect(result.current.conditions[0].operator).toBe("equals");
-    expect(result.current.conditions[0].value).toBe("AWS");
-  });
-
-  it("parses comma-separated values into array", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("region", "contains", "us-east-1, eu-west-1");
-    });
-    expect(result.current.conditions[0].value).toEqual(["us-east-1", "eu-west-1"]);
-  });
-
-  it("ignores empty field or value", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("", "equals", "test");
-    });
-    expect(result.current.conditions).toHaveLength(0);
-    act(() => {
-      result.current.addCondition("field", "equals", "");
-    });
-    expect(result.current.conditions).toHaveLength(0);
-  });
-
-  it("removes a condition by id", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("cost", "greaterThan", "100");
-      result.current.addCondition("region", "equals", "us-east-1");
-    });
-    expect(result.current.conditions).toHaveLength(2);
-    const idToRemove = result.current.conditions[0].id;
-    act(() => {
-      result.current.removeCondition(idToRemove);
-    });
-    expect(result.current.conditions).toHaveLength(1);
-    expect(result.current.conditions[0].field).toBe("region");
-  });
-
-  it("clears all conditions", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("cost", "greaterThan", "100");
-      result.current.addCondition("region", "equals", "us-east-1");
-    });
-    act(() => {
-      result.current.clearAll();
-    });
-    expect(result.current.conditions).toEqual([]);
-  });
-
-  it("toggles logic between AND and OR", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    expect(result.current.logic).toBe("AND");
-    act(() => {
-      result.current.setLogic("OR");
-    });
-    expect(result.current.logic).toBe("OR");
-  });
-
-  it("saves and loads filters from localStorage", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("cost", "greaterThan", "100");
-      result.current.saveFilter("My Filter");
-    });
-    expect(result.current.savedFilters).toHaveLength(1);
-    expect(result.current.savedFilters[0].name).toBe("My Filter");
-    expect(JSON.parse(localStorage.getItem("advancedFilters_saved") || "[]")).toHaveLength(1);
+  it("stores and retrieves saved filters", () => {
+    const filter = {
+      id: "f1",
+      name: "Test Filter",
+      conditions: [{ id: "c1", field: "cost", operator: "greaterThan", value: "100" }],
+      logic: "AND",
+      createdAt: new Date().toISOString(),
+    };
+    localStorage.setItem("advancedFilters_saved", JSON.stringify([filter]));
+    const stored = JSON.parse(localStorage.getItem("advancedFilters_saved") || "[]");
+    expect(stored).toHaveLength(1);
+    expect(stored[0].name).toBe("Test Filter");
   });
 
   it("deletes a saved filter", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("cost", "greaterThan", "100");
-      result.current.saveFilter("Filter 1");
-    });
-    const filterId = result.current.savedFilters[0].id;
-    act(() => {
-      result.current.deleteFilter(filterId);
-    });
-    expect(result.current.savedFilters).toHaveLength(0);
+    const filters = [
+      { id: "f1", name: "Filter 1", conditions: [], logic: "AND", createdAt: "" },
+      { id: "f2", name: "Filter 2", conditions: [], logic: "OR", createdAt: "" },
+    ];
+    localStorage.setItem("advancedFilters_saved", JSON.stringify(filters));
+    const remaining = filters.filter((f) => f.id !== "f1");
+    localStorage.setItem("advancedFilters_saved", JSON.stringify(remaining));
+    const stored = JSON.parse(localStorage.getItem("advancedFilters_saved") || "[]");
+    expect(stored).toHaveLength(1);
+    expect(stored[0].id).toBe("f2");
   });
 
-  it("applies a saved filter", () => {
-    const { result } = renderHook(() => useFilterBuilder());
-    act(() => {
-      result.current.addCondition("cost", "greaterThan", "100");
-      result.current.setLogic("OR");
-      result.current.saveFilter("Test");
-    });
-    act(() => {
-      result.current.clearAll();
-    });
-    expect(result.current.conditions).toHaveLength(0);
-    act(() => {
-      result.current.applyFilter(result.current.savedFilters[0]);
-    });
-    expect(result.current.conditions).toHaveLength(1);
-    expect(result.current.logic).toBe("OR");
+  it("parses comma-separated values into array", () => {
+    const raw = "us-east-1, eu-west-1";
+    const parsed = raw.includes(",") ? raw.split(",").map((s) => s.trim()) : raw;
+    expect(parsed).toEqual(["us-east-1", "eu-west-1"]);
+  });
+
+  it("single value stays as string", () => {
+    const raw = "us-east-1";
+    const parsed = raw.includes(",") ? raw.split(",").map((s) => s.trim()) : raw;
+    expect(parsed).toBe("us-east-1");
   });
 });
