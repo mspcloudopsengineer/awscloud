@@ -1,313 +1,222 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Card, CardContent, Typography, Grid, Chip, Alert } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { FormattedMessage, useIntl } from 'react-intl';
+import React, { useState, useEffect, useMemo } from "react";
+import { Box, Card, CardContent, Typography, Grid, Chip, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { FormattedMessage, FormattedNumber, useIntl } from "react-intl";
 
-// 实时成本数据类型
-interface RealtimeCostData {
-  timestamp: string;
-  cost: number;
-  resourcesCount: number;
-  cloudType: string;
+interface DataSourceDetail {
+  cost?: number;
+  forecast?: number;
+  last_month_cost?: number;
+  resources?: number;
 }
 
-// 实时成本监控组件
-export const RealtimeCostMonitor: React.FC = () => {
-  const [data, setData] = useState<RealtimeCostData[]>([]);
-  const [currentCost, setCurrentCost] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [connected, setConnected] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [autoRefresh, setAutoRefresh] = useState<boolean>(true);
-  const [refreshInterval, setRefreshInterval] = useState<number>(30000); // 30秒
+interface DataSource {
+  id: string;
+  name: string;
+  type: string;
+  last_import_at?: number;
+  details?: DataSourceDetail;
+}
 
+interface ExpensesData {
+  total?: number;
+  previous_total?: number;
+  id?: string;
+  [key: string]: unknown;
+}
+
+interface RealtimeCostMonitorProps {
+  expensesData: ExpensesData;
+  dataSources: DataSource[];
+  currency?: string;
+  currencySymbol?: string;
+  isLoading: boolean;
+}
+
+const cloudTypeLabels: Record<string, string> = {
+  aws_cnr: "AWS",
+  azure_cnr: "Azure",
+  azure_tenant: "Azure",
+  gcp_cnr: "GCP",
+  gcp_tenant: "GCP",
+  alibaba_cnr: "Alibaba",
+  nebius: "Nebius",
+  databricks: "Databricks",
+  kubernetes_cnr: "K8s",
+};
+
+export const RealtimeCostMonitor: React.FC<RealtimeCostMonitorProps> = ({
+  expensesData,
+  dataSources,
+  currency = "USD",
+  currencySymbol = "$",
+  isLoading,
+}) => {
   const intl = useIntl();
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
-  // WebSocket 连接
-  const connectWebSocket = useCallback(() => {
-    try {
-      // 模拟 WebSocket 连接
-      // 实际应该使用 WebSocket API
-      const ws = new WebSocket('ws://localhost:8080/cost-realtime');
-      
-      ws.onopen = () => {
-        setConnected(true);
-        setError(null);
-        console.log('WebSocket connected for cost monitoring');
-      };
-
-      ws.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        handleNewData(message);
-      };
-
-      ws.onclose = () => {
-        setConnected(false);
-        console.log('WebSocket disconnected');
-        // 3秒后重连
-        setTimeout(connectWebSocket, 3000);
-      };
-
-      ws.onerror = (error) => {
-        setError('WebSocket connection error');
-        setConnected(false);
-        console.error('WebSocket error:', error);
-      };
-
-      return ws;
-    } catch (err) {
-      setError('Failed to connect to WebSocket');
-      setConnected(false);
-      return null;
+  useEffect(() => {
+    if (!isLoading) {
+      setLastRefresh(new Date());
     }
-  }, []);
+  }, [isLoading, expensesData]);
 
-  // 处理新数据
-  const handleNewData = useCallback((newData: RealtimeCostData) => {
-    setData(prevData => {
-      const updatedData = [...prevData, newData];
-      // 保持最近 100 条数据
-      if (updatedData.length > 100) {
-        return updatedData.slice(-100);
-      }
-      return updatedData;
-    });
-    setCurrentCost(prev => prev + newData.cost);
-  }, []);
+  const totalCurrentCost = useMemo(() => {
+    return dataSources.reduce((sum, ds) => sum + (ds.details?.cost ?? 0), 0);
+  }, [dataSources]);
 
-  // 自动刷新
-  useEffect(() => {
-    if (!autoRefresh) return;
+  const totalForecast = useMemo(() => {
+    return dataSources.reduce((sum, ds) => sum + (ds.details?.forecast ?? 0), 0);
+  }, [dataSources]);
 
-    const interval = setInterval(() => {
-      // 模拟获取最新数据
-      const mockData: RealtimeCostData = {
-        timestamp: new Date().toISOString(),
-        cost: Math.random() * 10 + 5, // 随机成本
-        resourcesCount: Math.floor(Math.random() * 10) + 1,
-        cloudType: 'AWS',
-      };
-      handleNewData(mockData);
-    }, refreshInterval);
+  const totalLastMonth = useMemo(() => {
+    return dataSources.reduce((sum, ds) => sum + (ds.details?.last_month_cost ?? 0), 0);
+  }, [dataSources]);
 
-    return () => clearInterval(interval);
-  }, [autoRefresh, refreshInterval, handleNewData]);
+  const totalResources = useMemo(() => {
+    return dataSources.reduce((sum, ds) => sum + (ds.details?.resources ?? 0), 0);
+  }, [dataSources]);
 
-  // 初始化 WebSocket 连接
-  useEffect(() => {
-    const ws = connectWebSocket();
-    return () => {
-      if (ws) {
-        ws.close();
-      }
-    };
-  }, [connectWebSocket]);
+  const costChange = totalLastMonth > 0 ? ((totalCurrentCost - totalLastMonth) / totalLastMonth) * 100 : 0;
 
-  // 格式化时间
-  const formatTime = (timestamp: string) => {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  };
+  const formatCost = (value: number) =>
+    intl.formatNumber(value, { style: "currency", currency, minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  // 格式化成本
-  const formatCost = (cost: number) => {
-    return cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  };
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <Card>
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h6">
-            <FormattedMessage id="realtimeCostMonitor.title" defaultMessage="实时成本监控" />
-          </Typography>
-          <Box>
-            <Chip 
-              label={connected ? '已连接' : '未连接'} 
-              color={connected ? 'success' : 'error'}
-              size="small"
-            />
-            <Chip 
-              label={autoRefresh ? '自动刷新' : '手动刷新'} 
-              variant="outlined" 
-              size="small"
-              sx={{ ml: 1 }}
-            />
-          </Box>
-        </Box>
-
-        {/* 错误提示 */}
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        {/* 当前成本卡片 */}
-        <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ 
-              p: 2, 
-              bgcolor: 'primary.main', 
-              borderRadius: 1, 
-              color: 'primary.contrastText',
-              textAlign: 'center'
-            }}>
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                <FormattedMessage id="realtimeCostMonitor.currentCost" defaultMessage="当前成本" />
+    <Box>
+      {/* Summary Cards */}
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <Typography variant="body2" color="text.secondary">
+                <FormattedMessage id="realtimeCostMonitor.currentMonthCost" defaultMessage="Current Month Cost" />
               </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-                ${formatCost(currentCost)}
+              <Typography variant="h5" sx={{ fontWeight: "bold", mt: 1 }}>
+                {formatCost(totalCurrentCost)}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ 
-              p: 2, 
-              bgcolor: 'info.main', 
-              borderRadius: 1, 
-              color: 'info.contrastText',
-              textAlign: 'center'
-            }}>
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                <FormattedMessage id="realtimeCostMonitor.resources" defaultMessage="监控资源" />
-              </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-                {data.length > 0 ? data[data.length - 1].resourcesCount : 0}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ 
-              p: 2, 
-              bgcolor: 'secondary.main', 
-              borderRadius: 1, 
-              color: 'secondary.contrastText',
-              textAlign: 'center'
-            }}>
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                <FormattedMessage id="realtimeCostMonitor.refreshRate" defaultMessage="刷新频率" />
-              </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-                {refreshInterval / 1000}s
-              </Typography>
-            </Box>
-          </Grid>
+            </CardContent>
+          </Card>
         </Grid>
-
-        {/* 设置面板 */}
-        <Box sx={{ mb: 2, p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
-              <Typography variant="body2">
-                <FormattedMessage id="realtimeCostMonitor.autoRefresh" defaultMessage="自动刷新" />
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <Typography variant="body2" color="text.secondary">
+                <FormattedMessage id="realtimeCostMonitor.forecast" defaultMessage="Forecast" />
               </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2">30s</Typography>
-                <input
-                  type="range"
-                  min="10"
-                  max="120"
-                  step="10"
-                  value={refreshInterval / 1000}
-                  onChange={(e) => setRefreshInterval(Number(e.target.value) * 1000)}
-                  style={{ flex: 1 }}
-                />
-                <Typography variant="body2">120s</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <input
-                  type="checkbox"
-                  checked={autoRefresh}
-                  onChange={(e) => setAutoRefresh(e.target.checked)}
-                />
-                <Typography variant="body2">
-                  <FormattedMessage id="realtimeCostMonitor.enableAutoRefresh" defaultMessage="启用自动刷新" />
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
+              <Typography variant="h5" sx={{ fontWeight: "bold", mt: 1 }}>
+                {formatCost(totalForecast)}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <Typography variant="body2" color="text.secondary">
+                <FormattedMessage id="realtimeCostMonitor.lastMonth" defaultMessage="Last Month" />
+              </Typography>
+              <Typography variant="h5" sx={{ fontWeight: "bold", mt: 1 }}>
+                {formatCost(totalLastMonth)}
+              </Typography>
+              <Chip
+                label={`${costChange >= 0 ? "+" : ""}${costChange.toFixed(1)}%`}
+                color={costChange > 0 ? "error" : "success"}
+                size="small"
+                sx={{ mt: 0.5 }}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <Typography variant="body2" color="text.secondary">
+                <FormattedMessage id="realtimeCostMonitor.totalResources" defaultMessage="Total Resources" />
+              </Typography>
+              <Typography variant="h5" sx={{ fontWeight: "bold", mt: 1 }}>
+                <FormattedNumber value={totalResources} />
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
 
-        {/* 成本趋势图表 */}
-        <Box sx={{ height: 300, width: '100%' }}>
-          {data.length === 0 ? (
-            <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: 10 }}>
-              <FormattedMessage id="realtimeCostMonitor.noData" defaultMessage="等待实时数据..." />
+      {/* Data Sources Table */}
+      <Card>
+        <CardContent>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+            <Typography variant="h6">
+              <FormattedMessage id="realtimeCostMonitor.dataSources" defaultMessage="Cloud Data Sources" />
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              <FormattedMessage id="realtimeCostMonitor.lastRefresh" defaultMessage="Last refresh" />:{" "}
+              {lastRefresh.toLocaleTimeString()}
+            </Typography>
+          </Box>
+          {dataSources.length === 0 ? (
+            <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+              <FormattedMessage
+                id="realtimeCostMonitor.noDataSources"
+                defaultMessage="No cloud data sources connected. Add a data source to see real-time cost data."
+              />
             </Typography>
           ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                <XAxis 
-                  dataKey="timestamp"
-                  tick={{ fontSize: 10 }}
-                  tickFormatter={(value) => formatTime(value)}
-                  angle={-45}
-                  textAnchor="end"
-                  height={50}
-                />
-                <YAxis 
-                  tick={{ fontSize: 12 }} 
-                  tickFormatter={(value) => `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-                />
-                <Tooltip
-                  formatter={(value) => `$${(value as number).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-                  labelFormatter={(label) => `时间: ${formatTime(label)}`}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="cost"
-                  name={<FormattedMessage id="realtimeCostMonitor.cost" defaultMessage="成本" />}
-                  stroke="#4AB4EE"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <FormattedMessage id="name" defaultMessage="Name" />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id="type" defaultMessage="Type" />
+                    </TableCell>
+                    <TableCell align="right">
+                      <FormattedMessage id="cost" defaultMessage="Cost" />
+                    </TableCell>
+                    <TableCell align="right">
+                      <FormattedMessage id="forecast" defaultMessage="Forecast" />
+                    </TableCell>
+                    <TableCell align="right">
+                      <FormattedMessage id="resources" defaultMessage="Resources" />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id="lastImport" defaultMessage="Last Import" />
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {dataSources.map((ds) => (
+                    <TableRow key={ds.id} hover>
+                      <TableCell>{ds.name}</TableCell>
+                      <TableCell>
+                        <Chip label={cloudTypeLabels[ds.type] || ds.type} size="small" variant="outlined" />
+                      </TableCell>
+                      <TableCell align="right">{formatCost(ds.details?.cost ?? 0)}</TableCell>
+                      <TableCell align="right">{formatCost(ds.details?.forecast ?? 0)}</TableCell>
+                      <TableCell align="right">{ds.details?.resources ?? 0}</TableCell>
+                      <TableCell>
+                        {ds.last_import_at
+                          ? new Date(ds.last_import_at * 1000).toLocaleString()
+                          : intl.formatMessage({ id: "never", defaultMessage: "Never" })}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           )}
-        </Box>
-
-        {/* 最新数据列表 */}
-        {data.length > 0 && (
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="subtitle2" gutterBottom>
-              <FormattedMessage id="realtimeCostMonitor.latestData" defaultMessage="最新数据" />
-            </Typography>
-            <Box sx={{ maxHeight: 150, overflow: 'auto' }}>
-              {data.slice(-10).reverse().map((item, index) => (
-                <Box 
-                  key={index} 
-                  sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    p: 1, 
-                    borderBottom: '1px solid #e0e0e0',
-                    '&:last-child': { borderBottom: 'none' }
-                  }}
-                >
-                  <Typography variant="body2" color="text.secondary">
-                    {formatTime(item.timestamp)}
-                  </Typography>
-                  <Typography variant="body2" fontWeight="bold">
-                    ${formatCost(item.cost)}
-                  </Typography>
-                  <Chip 
-                    label={item.cloudType} 
-                    size="small" 
-                    color="info"
-                  />
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 

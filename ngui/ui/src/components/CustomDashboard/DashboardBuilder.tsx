@@ -1,140 +1,179 @@
-import React, { useState, useCallback } from 'react';
-import { Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography } from '@mui/material';
-import { DashboardWidget, widgetSizes } from './DashboardWidget';
+import React, { useState, useCallback, useMemo } from "react";
+import { Box, Button, Grid, Typography, Card, CardContent, CircularProgress, Chip } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { DashboardWidget } from "./DashboardWidget";
 
-// Widget 类型定义
+interface DataSourceDetail {
+  cost?: number;
+  forecast?: number;
+  last_month_cost?: number;
+  resources?: number;
+}
+
+interface DataSource {
+  id: string;
+  name: string;
+  type: string;
+  details?: DataSourceDetail;
+}
+
+interface DashboardBuilderProps {
+  dataSources: DataSource[];
+  expensesData: Record<string, unknown>;
+  currency?: string;
+  currencySymbol?: string;
+  isLoading: boolean;
+}
+
 export interface WidgetConfig {
   id: string;
   type: string;
   title: string;
-  size: 'small' | 'medium' | 'large';
-  settings?: Record<string, unknown>;
+  size: "small" | "medium" | "large";
 }
 
-// 可用的 Widget 列表
-const availableWidgets = [
-  { id: 'cost-trend', title: '成本趋势', type: 'cost-trend', size: 'large' },
-  { id: 'cloud-cost', title: '云成本分布', type: 'cloud-cost', size: 'medium' },
-  { id: 'resource-count', title: '资源数量', type: 'resource-count', size: 'small' },
-  { id: 'recommendations', title: '优化建议', type: 'recommendations', size: 'medium' },
-  { id: 'budget', title: '预算使用', type: 'budget', size: 'small' },
-  { id: 'anomalies', title: '异常检测', type: 'anomalies', size: 'medium' },
-];
+const cloudTypeLabels: Record<string, string> = {
+  aws_cnr: "AWS", azure_cnr: "Azure", azure_tenant: "Azure", gcp_cnr: "GCP",
+  gcp_tenant: "GCP", alibaba_cnr: "Alibaba", nebius: "Nebius", databricks: "Databricks", kubernetes_cnr: "K8s",
+};
 
-// 自定义仪表板构建器
-export const DashboardBuilder: React.FC = () => {
-  const [widgets, setWidgets] = useState<WidgetConfig[]>([]);
-  const [open, setOpen] = useState<boolean>(false);
-  const [selectedWidget, setSelectedWidget] = useState<WidgetConfig | null>(null);
+export const DashboardBuilder: React.FC<DashboardBuilderProps> = ({
+  dataSources, expensesData, currency = "USD", currencySymbol = "$", isLoading,
+}) => {
+  const intl = useIntl();
+  const [widgets, setWidgets] = useState<WidgetConfig[]>([
+    { id: "total-cost", type: "total-cost", title: intl.formatMessage({ id: "dashboard.totalCost", defaultMessage: "Total Cost" }), size: "small" },
+    { id: "forecast", type: "forecast", title: intl.formatMessage({ id: "dashboard.forecast", defaultMessage: "Forecast" }), size: "small" },
+    { id: "resources", type: "resources", title: intl.formatMessage({ id: "dashboard.resources", defaultMessage: "Resources" }), size: "small" },
+    { id: "data-sources", type: "data-sources", title: intl.formatMessage({ id: "dashboard.dataSources", defaultMessage: "Data Sources" }), size: "large" },
+  ]);
 
-  // 添加 Widget
-  const handleAddWidget = useCallback((widget: WidgetConfig) => {
-    setWidgets(prev => [...prev, { ...widget, id: `${widget.id}-${Date.now()}` }]);
+  const totalCost = useMemo(() => dataSources.reduce((s, ds) => s + (ds.details?.cost ?? 0), 0), [dataSources]);
+  const totalForecast = useMemo(() => dataSources.reduce((s, ds) => s + (ds.details?.forecast ?? 0), 0), [dataSources]);
+  const totalResources = useMemo(() => dataSources.reduce((s, ds) => s + (ds.details?.resources ?? 0), 0), [dataSources]);
+
+  const formatCost = (v: number) => intl.formatNumber(v, { style: "currency", currency, minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const availableWidgets: WidgetConfig[] = [
+    { id: "total-cost", type: "total-cost", title: intl.formatMessage({ id: "dashboard.totalCost", defaultMessage: "Total Cost" }), size: "small" },
+    { id: "forecast", type: "forecast", title: intl.formatMessage({ id: "dashboard.forecast", defaultMessage: "Forecast" }), size: "small" },
+    { id: "resources", type: "resources", title: intl.formatMessage({ id: "dashboard.resources", defaultMessage: "Resources" }), size: "small" },
+    { id: "data-sources", type: "data-sources", title: intl.formatMessage({ id: "dashboard.dataSources", defaultMessage: "Data Sources" }), size: "large" },
+    { id: "cost-by-provider", type: "cost-by-provider", title: intl.formatMessage({ id: "dashboard.costByProvider", defaultMessage: "Cost by Provider" }), size: "medium" },
+  ];
+
+  const handleAddWidget = useCallback((w: WidgetConfig) => {
+    setWidgets((prev) => [...prev, { ...w, id: `${w.id}-${Date.now()}` }]);
   }, []);
 
-  // 移除 Widget
   const handleRemoveWidget = useCallback((id: string) => {
-    setWidgets(prev => prev.filter(w => w.id !== id));
+    setWidgets((prev) => prev.filter((w) => w.id !== id));
   }, []);
 
-  // 编辑 Widget
-  const handleEditWidget = useCallback((widget: WidgetConfig) => {
-    setSelectedWidget(widget);
-    setOpen(true);
-  }, []);
-
-  // 保存 Widget 设置
-  const handleSaveSettings = useCallback(() => {
-    if (selectedWidget) {
-      setWidgets(prev => 
-        prev.map(w => w.id === selectedWidget.id ? selectedWidget : w)
-      );
+  const renderWidgetContent = (widget: WidgetConfig) => {
+    switch (widget.type) {
+      case "total-cost":
+        return (
+          <Box sx={{ textAlign: "center", py: 2 }}>
+            <Typography variant="h4" fontWeight="bold">{formatCost(totalCost)}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              <FormattedMessage id="dashboard.currentMonth" defaultMessage="Current Month" />
+            </Typography>
+          </Box>
+        );
+      case "forecast":
+        return (
+          <Box sx={{ textAlign: "center", py: 2 }}>
+            <Typography variant="h4" fontWeight="bold">{formatCost(totalForecast)}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              <FormattedMessage id="dashboard.monthEndForecast" defaultMessage="Month-End Forecast" />
+            </Typography>
+          </Box>
+        );
+      case "resources":
+        return (
+          <Box sx={{ textAlign: "center", py: 2 }}>
+            <Typography variant="h4" fontWeight="bold">{totalResources}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              <FormattedMessage id="dashboard.totalResources" defaultMessage="Total Resources" />
+            </Typography>
+          </Box>
+        );
+      case "data-sources":
+        return (
+          <Box>
+            {dataSources.length === 0 ? (
+              <Typography color="text.secondary" align="center" sx={{ py: 2 }}>
+                <FormattedMessage id="dashboard.noDataSources" defaultMessage="No data sources connected" />
+              </Typography>
+            ) : (
+              dataSources.map((ds) => (
+                <Box key={ds.id} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: 0.5, borderBottom: "1px solid", borderColor: "divider" }}>
+                  <Box>
+                    <Typography variant="body2">{ds.name}</Typography>
+                    <Chip label={cloudTypeLabels[ds.type] || ds.type} size="small" variant="outlined" />
+                  </Box>
+                  <Typography variant="body2" fontWeight="bold">{formatCost(ds.details?.cost ?? 0)}</Typography>
+                </Box>
+              ))
+            )}
+          </Box>
+        );
+      case "cost-by-provider": {
+        const byProvider: Record<string, number> = {};
+        dataSources.forEach((ds) => { byProvider[ds.type] = (byProvider[ds.type] || 0) + (ds.details?.cost ?? 0); });
+        return (
+          <Box>
+            {Object.entries(byProvider).sort(([, a], [, b]) => b - a).map(([type, cost]) => (
+              <Box key={type} sx={{ display: "flex", justifyContent: "space-between", py: 0.5 }}>
+                <Typography variant="body2">{cloudTypeLabels[type] || type}</Typography>
+                <Typography variant="body2" fontWeight="bold">{formatCost(cost)}</Typography>
+              </Box>
+            ))}
+          </Box>
+        );
+      }
+      default:
+        return <Typography color="text.secondary">{widget.title}</Typography>;
     }
-    setOpen(false);
-    setSelectedWidget(null);
-  }, [selectedWidget]);
+  };
+
+  if (isLoading) {
+    return <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}><CircularProgress /></Box>;
+  }
 
   return (
     <Box>
-      {/* Widget 选择器 */}
       <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle1" gutterBottom>
-          可用组件
+        <Typography variant="subtitle2" gutterBottom>
+          <FormattedMessage id="dashboard.addWidgets" defaultMessage="Add Widgets" />
         </Typography>
         <Grid container spacing={1}>
-          {availableWidgets.map(widget => (
-            <Grid item key={widget.id}>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => handleAddWidget(widget)}
-              >
-                {widget.title}
-              </Button>
+          {availableWidgets.map((w) => (
+            <Grid item key={w.id}>
+              <Button variant="outlined" size="small" startIcon={<Add />} onClick={() => handleAddWidget(w)}>{w.title}</Button>
             </Grid>
           ))}
         </Grid>
       </Box>
 
-      {/* 仪表板网格 */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle1" gutterBottom>
-          仪表板
-        </Typography>
-        <Grid container spacing={2}>
-          {widgets.map(widget => (
-            <Grid 
-              item 
-              key={widget.id} 
-              xs={12} 
-              sm={widgetSizes[widget.size].cols}
-              md={widgetSizes[widget.size].cols}
-            >
-              <DashboardWidget
-                title={widget.title}
-                size={widget.size}
-                onRemove={() => handleRemoveWidget(widget.id)}
-                onEdit={() => handleEditWidget(widget)}
-              >
-                {/* Widget 内容占位符 */}
-                <Box sx={{ p: 2, textAlign: 'center', color: 'text.secondary' }}>
-                  {widget.title} 内容
-                </Box>
-              </DashboardWidget>
-            </Grid>
-          ))}
-          {widgets.length === 0 && (
-            <Grid item xs={12}>
-              <Box sx={{ p: 4, textAlign: 'center', color: 'text.secondary', border: '1px dashed #ccc' }}>
-                拖拽或选择组件添加到仪表板
-              </Box>
-            </Grid>
-          )}
-        </Grid>
-      </Box>
-
-      {/* 保存按钮 */}
-      <Box sx={{ mt: 2 }}>
-        <Button variant="contained" color="primary">
-          保存仪表板
-        </Button>
-      </Box>
-
-      {/* Widget 设置对话框 */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>编辑 {selectedWidget?.title}</DialogTitle>
-        <DialogContent>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            {selectedWidget?.title} 设置
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>取消</Button>
-          <Button onClick={handleSaveSettings} variant="contained">
-            保存
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Grid container spacing={2}>
+        {widgets.map((widget) => (
+          <Grid item key={widget.id} xs={12} sm={widget.size === "small" ? 4 : widget.size === "medium" ? 6 : 12}>
+            <DashboardWidget title={widget.title} size={widget.size} onRemove={() => handleRemoveWidget(widget.id)}>
+              {renderWidgetContent(widget)}
+            </DashboardWidget>
+          </Grid>
+        ))}
+        {widgets.length === 0 && (
+          <Grid item xs={12}>
+            <Box sx={{ p: 4, textAlign: "center", color: "text.secondary", border: "1px dashed", borderColor: "divider", borderRadius: 1 }}>
+              <FormattedMessage id="dashboard.empty" defaultMessage="Add widgets to build your dashboard" />
+            </Box>
+          </Grid>
+        )}
+      </Grid>
     </Box>
   );
 };

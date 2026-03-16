@@ -1,7 +1,8 @@
-import React from 'react';
-import { Box, Card, CardContent, Typography, List, ListItemButton, ListItemText, ListItemIcon, Chip } from '@mui/material';
-import { Language, Check } from '@mui/icons-material';
-import { useLanguage } from './useLanguage';
+import React from "react";
+import { Box, Card, CardContent, Typography, List, ListItemButton, ListItemText, ListItemIcon, Chip, Alert } from "@mui/material";
+import { Language, Check, Info } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
+import { useLanguage } from "./useLanguage";
 
 export const LanguageSelector: React.FC = () => {
   const { currentLanguage, changeLanguage, languages } = useLanguage();
@@ -9,12 +10,19 @@ export const LanguageSelector: React.FC = () => {
   return (
     <Card>
       <CardContent>
-        <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
-          <Language sx={{ mr: 1 }} /> 语言设置
+        <Typography variant="h6" gutterBottom sx={{ display: "flex", alignItems: "center" }}>
+          <Language sx={{ mr: 1 }} />
+          <FormattedMessage id="languageSettings.title" defaultMessage="Language Settings" />
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          选择界面显示语言。更改后将立即生效。
+          <FormattedMessage id="languageSettings.description" defaultMessage="Select the interface display language. Changes take effect after page reload." />
         </Typography>
+        <Alert severity="info" icon={<Info />} sx={{ mb: 2 }}>
+          <FormattedMessage
+            id="languageSettings.note"
+            defaultMessage="Currently only English (US) has full translation support. Other languages will use English as fallback."
+          />
+        </Alert>
         <List>
           {languages.map((lang) => (
             <ListItemButton
@@ -31,7 +39,12 @@ export const LanguageSelector: React.FC = () => {
                 secondary={lang.label}
                 inset={currentLanguage !== lang.code}
               />
-              {currentLanguage === lang.code && <Chip label="当前" size="small" color="primary" />}
+              {currentLanguage === lang.code && (
+                <Chip label={<FormattedMessage id="current" defaultMessage="Current" />} size="small" color="primary" />
+              )}
+              {lang.code === "en-US" && currentLanguage !== lang.code && (
+                <Chip label={<FormattedMessage id="fullSupport" defaultMessage="Full Support" />} size="small" variant="outlined" color="success" />
+              )}
             </ListItemButton>
           ))}
         </List>
