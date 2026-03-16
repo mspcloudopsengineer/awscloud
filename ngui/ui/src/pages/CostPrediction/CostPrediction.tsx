@@ -1,6 +1,6 @@
 import React from 'react';
 import { CostPredictionContainer } from 'containers/CostPredictionContainer';
-import { PageContentWrapper } from 'components/PageContentWrapper';
+import PageContentWrapper from 'components/PageContentWrapper';
 import { PageTitle } from 'components/PageTitle';
 
 export const CostPredictionPage: React.FC = () => {

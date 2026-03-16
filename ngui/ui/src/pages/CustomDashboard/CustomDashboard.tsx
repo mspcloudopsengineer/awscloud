@@ -1,6 +1,6 @@
 import React from 'react';
 import { CustomDashboardContainer } from 'containers/CustomDashboardContainer';
-import { PageContentWrapper } from 'components/PageContentWrapper';
+import PageContentWrapper from 'components/PageContentWrapper';
 import { PageTitle } from 'components/PageTitle';
 
 export const CustomDashboardPage: React.FC = () => {
