@@ -1,0 +1,11 @@
+{
+  "title": "Realtime Cost Monitor",
+  "currentCost": "Current Cost",
+  "resources": "Monitored Resources",
+  "refreshRate": "Refresh Rate",
+  "autoRefresh": "Auto Refresh",
+  "enableAutoRefresh": "Enable Auto Refresh",
+  "noData": "Waiting for real-time data...",
+  "cost": "Cost",
+  "latestData": "Latest Data"
+}

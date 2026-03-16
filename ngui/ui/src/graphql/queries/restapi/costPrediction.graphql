@@ -1,0 +1,10 @@
+query GetCostPredictionData($dataSourceId: ID!, $startDate: DateTime!, $endDate: DateTime!) {
+  cloudAccount(id: $dataSourceId) {
+    id
+    name
+    expenses(startDay: $startDate, endDay: $endDate) {
+      day
+      cost
+    }
+  }
+}

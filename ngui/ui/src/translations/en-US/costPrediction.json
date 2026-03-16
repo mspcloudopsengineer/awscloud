@@ -1,0 +1,17 @@
+{
+  "title": "Cost Prediction",
+  "dataSource": "Data Source",
+  "allDataSources": "All Data Sources",
+  "timeRange": "Time Range",
+  "loading": "Calculating prediction...",
+  "actual": "Actual Cost",
+  "predicted": "Predicted Cost",
+  "lowerBound": "Lower Bound",
+  "upperBound": "Upper Bound",
+  "summary": "Prediction Summary",
+  "currentMonthPredicted": "Current Month Predicted",
+  "confidenceInterval": "Confidence Interval",
+  "trend": "Trend",
+  "daysAhead": "Days Ahead",
+  "noData": "No data available. Please select a data source and time range."
+}

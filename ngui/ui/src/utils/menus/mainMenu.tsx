@@ -1,8 +1,13 @@
 import MainMenuSectionTitle from "components/MainMenuSectionTitle";
 import { MAIN_MENU_SECTION_IDS } from "components/MenuGroupWrapper/reducer";
 import { OPTSCALE_CAPABILITY } from "utils/constants";
+import advancedCharts from "./advancedChartsMenuItem";
+import advancedFilters from "./advancedFiltersMenuItem";
 import anomalies from "./anomaliesMenuItem";
+import automationWorkflow from "./automationWorkflowMenuItem";
 import cloudCostComparisonMenuItem from "./cloudCostComparisonMenuItem";
+import costPrediction from "./costPredictionMenuItem";
+import customDashboard from "./customDashboardMenuItem";
 import dataSources from "./dataSourcesMenuItem";
 import environments from "./environmentsMenuItem";
 import events from "./eventsMenuItem";
@@ -12,21 +17,26 @@ import finOpsPortal from "./finOpsPortalMenuItem";
 import home from "./homeMenuItem";
 import integrations from "./integrationsMenuItem";
 import k8sRightsizing from "./k8sRightsizingMenuItem";
+import languageSettings from "./languageSettingsMenuItem";
 import mlArtifactsMenuItem from "./mlArtifactsMenuItem";
 import mlDatasets from "./mlDatasetsMenuItem";
 import mlHypertuningMenuItem from "./mlHypertuningMenuItem";
 import mlMetricsMenuItem from "./mlMetricsMenuItem";
 import mlModels from "./mlModelsMenuItem";
 import mlTasks from "./mlTasksMenuItem";
+import performanceMonitor from "./performanceMonitorMenuItem";
 import pools from "./poolsMenuItem";
 import powerSchedulesMenuItem from "./powerSchedulesMenuItem";
 import quotas from "./quotasMenuItem";
+import realtimeCostMonitor from "./realtimeCostMonitorMenuItem";
 import recommendationsArchive from "./recommendationsArchiveMenuItem";
 import recommendations from "./recommendationsMenuItem";
+import reportExport from "./reportExportMenuItem";
 import resourceLifecycle from "./resourceLifecycleMenuItem";
 import resources from "./resourcesMenuItem";
 import settings from "./settingsMenuItem";
 import taggingPolicies from "./taggingPoliciesMenuItem";
+import userGuide from "./userGuideMenuItem";
 import users from "./usersMenuItem";
 
 export default [
@@ -62,5 +72,21 @@ export default [
     id: MAIN_MENU_SECTION_IDS.SYSTEM,
     menuSectionTitle: <MainMenuSectionTitle messageId="system" />,
     items: [users, dataSources, integrations, events, settings],
+  },
+  {
+    id: MAIN_MENU_SECTION_IDS.ENHANCED,
+    menuSectionTitle: <MainMenuSectionTitle messageId="enhanced" />,
+    items: [
+      costPrediction,
+      realtimeCostMonitor,
+      customDashboard,
+      advancedFilters,
+      advancedCharts,
+      automationWorkflow,
+      performanceMonitor,
+      reportExport,
+      userGuide,
+      languageSettings,
+    ],
   },
 ];

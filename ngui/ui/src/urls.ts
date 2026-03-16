@@ -549,6 +549,18 @@ export const EDIT_POWER_SCHEDULE = concatenateUrl([POWER_SCHEDULES_BASE, POWER_S
 export const getPowerScheduleDetailsUrl = (id: string) => POWER_SCHEDULE_DETAILS.replace(POWER_SCHEDULE_IDENTIFIER, id);
 export const getEditPowerScheduleUrl = (id: string) => EDIT_POWER_SCHEDULE.replace(POWER_SCHEDULE_IDENTIFIER, id);
 
+// Enhanced Features
+export const COST_PREDICTION = "/cost-prediction";
+export const REALTIME_COST_MONITOR = "/realtime-cost-monitor";
+export const CUSTOM_DASHBOARD = "/custom-dashboard";
+export const ADVANCED_FILTERS = "/advanced-filters";
+export const LANGUAGE_SETTINGS = "/language-settings";
+export const ADVANCED_CHARTS = "/advanced-charts";
+export const AUTOMATION_WORKFLOW = "/automation-workflow";
+export const PERFORMANCE_MONITOR = "/performance-monitor";
+export const USER_GUIDE = "/user-guide";
+export const REPORT_EXPORT = "/report-export";
+
 // External urls
 export const PRODUCTION = "https://my.cloudhub.com";
 export const DEMO = "https://demo.cloudhub.com";

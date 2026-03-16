@@ -1,5 +1,8 @@
 import acceptInvitationRoute from "./acceptInvitationRoute";
+import advancedChartsRoute from "./advancedChartsRoute";
+import advancedFiltersRoute from "./advancedFiltersRoute";
 import anomaliesRoute from "./anomaliesRoute";
+import automationWorkflowRoute from "./automationWorkflowRoute";
 import anomalyRoute from "./anomalyRoute";
 import archivedRecommendationsRoute from "./archivedRecommendationsRoute";
 import assignmentRulesRoute from "./assignmentRulesRoute";
@@ -11,6 +14,12 @@ import cloudExpensesRoute from "./cloudExpensesRoute";
 import clusterTypesRoute from "./clusterTypesRoute";
 import connectJiraRoute from "./connectJiraRoute";
 import connectSlackRoute from "./connectSlackRoute";
+import costPredictionRoute from "./costPredictionRoute";
+import languageSettingsRoute from "./languageSettingsRoute";
+import performanceMonitorRoute from "./performanceMonitorRoute";
+import realtimeCostMonitorRoute from "./realtimeCostMonitorRoute";
+import reportExportRoute from "./reportExportRoute";
+import userGuideRoute from "./userGuideRoute";
 import createAnomalyRoute from "./createAnomalyRoute";
 import createAssignmentRuleRoute from "./createAssignmentRuleRoute";
 import createBIExportRoute from "./createBIExportRoute";
@@ -23,6 +32,7 @@ import createPowerScheduleRoute from "./createPowerScheduleRoute";
 import createQuotaAndBudgetPolicyRoute from "./createQuotaAndBudgetPolicyRoute";
 import createResourceAssignmentRuleRoute from "./createResourceAssignmentRuleRoute";
 import createTaggingPolicyRoute from "./createTaggingPolicyRoute";
+import customDashboardRoute from "./customDashboardRoute";
 import dataSourceOverviewRoute from "./dataSourceOverviewRoute";
 import dataSourcesRoute from "./dataSourcesRoute";
 import editAssignmentRuleRoute from "./editAssignmentRuleRoute";
@@ -194,6 +204,17 @@ export const routes = [
   emailVerificationRoute,
   publicMlRun,
   initializeRoute,
+  // Enhanced Features
+  costPredictionRoute,
+  realtimeCostMonitorRoute,
+  customDashboardRoute,
+  advancedFiltersRoute,
+  languageSettingsRoute,
+  advancedChartsRoute,
+  automationWorkflowRoute,
+  performanceMonitorRoute,
+  userGuideRoute,
+  reportExportRoute,
   // React router 6.x does not require the not found route (*) to be at the end,
   // but the matchPath hook that is used in the DocsPanel component seems to honor the order.
   // Moving it to the bottom for "safety" reasons.

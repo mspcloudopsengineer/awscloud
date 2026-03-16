@@ -9,6 +9,7 @@ export const MAIN_MENU_SECTION_IDS = Object.freeze({
   POLICIES: "policies",
   SANDBOX: "sandbox",
   SYSTEM: "system",
+  ENHANCED: "enhanced",
 });
 
 const reducer = (state = [MAIN_MENU_SECTION_IDS.SANDBOX], action) => {
